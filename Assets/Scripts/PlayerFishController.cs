@@ -59,6 +59,12 @@ public class PlayerFishController : MonoBehaviour
         Vector3 worldDirection = CalculateWorldDirection();
         currentMovement.x = worldDirection.x * currentSpeed;
         currentMovement.z = worldDirection.z * currentSpeed;
+        
+        if (moveAction.IsPressed())
+        {
+            currentMovement.y = mainCamera.transform.forward.y * currentSpeed;
+        }
+        else { currentMovement.y = 0; }
 
         characterController.Move(currentMovement * Time.deltaTime);
     }
