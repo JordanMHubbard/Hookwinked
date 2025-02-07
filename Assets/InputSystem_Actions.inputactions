@@ -496,7 +496,7 @@
                 {
                     "name": "up",
                     "id": "d94946f5-29f7-4462-8de4-0e5ae624a896",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -507,7 +507,7 @@
                 {
                     "name": "down",
                     "id": "4baaadf0-5899-4896-92f3-4442f747fcd0",
-                    "path": "<Keyboard>/q",
+                    "path": "<Keyboard>/leftCtrl",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",

@@ -72,12 +72,12 @@ public class PlayerFishController : MonoBehaviour
         currentMovement.z = worldDirection.z * currentSpeed;
         currentMovement.y = worldDirection.y * currentSpeed;
         
-        /* Code to allow player to move based on where camera is looking
+        // Code to allow player to move based on where camera is looking
         if (swimAction.IsPressed())
         {
-            currentMovement.y = mainCamera.transform.forward.y * currentSpeed;
+            currentMovement.y += mainCamera.transform.forward.y * currentSpeed;
         }
-        else { currentMovement.y = 0; }*/
+        else { currentMovement.y = 0; }
 
         characterController.Move(currentMovement * Time.deltaTime);
     }
