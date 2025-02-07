@@ -6,10 +6,10 @@ public class PlayerFishController : MonoBehaviour
 {
     [Header("Movement Speeds")]
     [SerializeField] private float swimSpeed = 3.0f;
-    [SerializeField] private float fastSwimSpeed = 6.0f;
+    [SerializeField] private float fastSwimSpeed = 4.5f;
 
     [Header("Look Parameters")]
-    [SerializeField] private float mouseSensitivity = 0.1f;
+    [SerializeField] private float mouseSensitivity = 1f;
     [SerializeField] private float upDownLookRange = 80f;
 
     [Header("References")]
@@ -17,7 +17,9 @@ public class PlayerFishController : MonoBehaviour
     [SerializeField] private Camera mainCamera;
     [SerializeField] public PlayerInput playerInput;
     
-    public InputAction moveAction;
+    public InputAction swimAction;
+    public InputAction swimFastAction;
+    public InputAction swimVerticalAction;
     public InputAction lookAction;
     private Vector3 currentMovement;
     private float verticalRotation;
@@ -29,9 +31,13 @@ public class PlayerFishController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         currentSpeed = swimSpeed;
+        mouseSensitivity /= 10f;
 
-        moveAction = playerInput.actions["Move"];
+        swimAction = playerInput.actions["Move"];
+        swimFastAction = playerInput.actions["Sprint"];
         lookAction = playerInput.actions["Look"];
+        swimVerticalAction = playerInput.actions["MoveVertical"];
+        
     }
 
     // Update is called once per frame
@@ -43,12 +49,15 @@ public class PlayerFishController : MonoBehaviour
 
     private Vector3 CalculateWorldDirection()
     {
-        if (moveAction == null) {return Vector3.zero;}
+        if (swimAction == null) {return Vector3.zero;}
 
-        float xInput = moveAction.ReadValue<Vector2>().x;
-        float yInput = moveAction.ReadValue<Vector2>().y;
+        // Action inputs mapped to vector2 have either x or y inputs
+        // These values correlate the direction the player is moving
+        float xInput = swimAction.ReadValue<Vector2>().x;
+        float zInput = swimAction.ReadValue<Vector2>().y;
+        float yInput = swimVerticalAction.ReadValue<Vector2>().y;
 
-        Vector3 inputDirection = new Vector3(xInput, 0f, yInput);
+        Vector3 inputDirection = new Vector3(xInput, yInput, zInput);
         Vector3 worldDirection = transform.TransformDirection(inputDirection);
 
         return worldDirection.normalized;
@@ -56,15 +65,19 @@ public class PlayerFishController : MonoBehaviour
 
     private void HandleMovement()
     {
+        CalculateSwimSpeed();
+
         Vector3 worldDirection = CalculateWorldDirection();
         currentMovement.x = worldDirection.x * currentSpeed;
         currentMovement.z = worldDirection.z * currentSpeed;
+        currentMovement.y = worldDirection.y * currentSpeed;
         
-        if (moveAction.IsPressed())
+        /* Code to allow player to move based on where camera is looking
+        if (swimAction.IsPressed())
         {
             currentMovement.y = mainCamera.transform.forward.y * currentSpeed;
         }
-        else { currentMovement.y = 0; }
+        else { currentMovement.y = 0; }*/
 
         characterController.Move(currentMovement * Time.deltaTime);
     }
@@ -89,5 +102,21 @@ public class PlayerFishController : MonoBehaviour
 
         ApplyHorizontalRotation(mouseXRotation);
         ApplyVerticalRotation(mouseYRotation);
+    }
+
+    private void CalculateSwimSpeed()
+    {
+        if (swimFastAction.IsPressed()) 
+        { 
+            if (currentSpeed < fastSwimSpeed)
+            {
+                currentSpeed = fastSwimSpeed;
+                //Debug.Log("Speed = " + currentSpeed);
+            }
+        }
+        else
+        { 
+            if (currentSpeed > swimSpeed) { currentSpeed = swimSpeed; }
+        }
     }
 }
