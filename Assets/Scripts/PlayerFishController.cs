@@ -34,9 +34,6 @@ public class PlayerFishController : MonoBehaviour
     private Vector3 smoothInputVelocity;
     private float currentVelocity;
     private bool isDashing;
-    private bool shouldEndDash;
-
-
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -76,6 +73,7 @@ public class PlayerFishController : MonoBehaviour
         float yInput = floatAction.ReadValue<Vector2>().y;
         Vector3 inputDirection = new Vector3(xInput, yInput, zInput);
 
+        // Interpolates input vector to desired input so that movement is smoothed
         currentInputVector = Vector3.SmoothDamp(currentInputVector, inputDirection, ref smoothInputVelocity, smoothInputSpeed);
         Vector3 worldDirection = transform.TransformDirection(currentInputVector);
         
@@ -84,14 +82,13 @@ public class PlayerFishController : MonoBehaviour
 
     private void HandleMovement()
     {
-        //CalculateSwimSpeed();
-
+        // Calculate current movement vector
         Vector3 worldDirection = CalculateWorldDirection();
         currentMovement.x = worldDirection.x * currentSpeed;
         currentMovement.z = worldDirection.z * currentSpeed;
         currentMovement.y = worldDirection.y * floatSpeed;
         
-        // Code to allow player to move based on where camera is looking
+        // Allow player to move forward based on where camera is looking
         if (swimAction.ReadValue<Vector2>().y > 0f)
         {
             currentMovement.y += mainCamera.transform.forward.y * currentSpeed;
@@ -128,7 +125,8 @@ public class PlayerFishController : MonoBehaviour
 
         float elapsedTime = 0f;
         float smoothTime = 0.2f; 
-
+        
+        // Interpolates speed to dash speed for smoothTime
         while (elapsedTime < smoothTime) 
         {
             currentSpeed = Mathf.SmoothDamp(currentSpeed, dashSpeed, ref currentVelocity, smoothTime);
@@ -147,6 +145,7 @@ public class PlayerFishController : MonoBehaviour
         float elapsedTime = 0f;
         float smoothTime = 0.2f; 
 
+        // Interpolates speed to normal speed for smoothTime
         while (elapsedTime < smoothTime) 
         {
             currentSpeed = Mathf.SmoothDamp(currentSpeed, swimSpeed, ref currentVelocity, smoothTime);
