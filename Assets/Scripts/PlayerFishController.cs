@@ -1,3 +1,6 @@
+using System;
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
@@ -5,11 +8,14 @@ using UnityEngine.Rendering;
 public class PlayerFishController : MonoBehaviour
 {
     [Header("Movement Speeds")]
-    [SerializeField] private float swimSpeed = 3.0f;
-    [SerializeField] private float fastSwimSpeed = 4.5f;
+    [SerializeField] private float swimSpeed = 4f;
+    [SerializeField] private float dashSpeed = 12f;
+    [SerializeField] private float floatSpeed = 2f;
+    [SerializeField] private float smoothInputSpeed = 0.1f;
+
 
     [Header("Look Parameters")]
-    [SerializeField] private float mouseSensitivity = 1f;
+    [SerializeField] private float mouseSensitivity = 0.5f;
     [SerializeField] private float upDownLookRange = 80f;
 
     [Header("References")]
@@ -18,12 +24,19 @@ public class PlayerFishController : MonoBehaviour
     [SerializeField] public PlayerInput playerInput;
     
     public InputAction swimAction;
-    public InputAction swimFastAction;
-    public InputAction swimVerticalAction;
+    public InputAction dashAction;
+    public InputAction floatAction;
     public InputAction lookAction;
     private Vector3 currentMovement;
     private float verticalRotation;
     private float currentSpeed;
+    private Vector3 currentInputVector;
+    private Vector3 smoothInputVelocity;
+    private float currentVelocity;
+    private bool isDashing;
+    private bool shouldEndDash;
+
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -34,9 +47,9 @@ public class PlayerFishController : MonoBehaviour
         mouseSensitivity /= 10f;
 
         swimAction = playerInput.actions["Move"];
-        swimFastAction = playerInput.actions["Sprint"];
+        dashAction = playerInput.actions["Sprint"];
         lookAction = playerInput.actions["Look"];
-        swimVerticalAction = playerInput.actions["MoveVertical"];
+        floatAction = playerInput.actions["MoveVertical"];
         
     }
 
@@ -45,6 +58,11 @@ public class PlayerFishController : MonoBehaviour
     {
         HandleMovement();
         HandleRoation();
+
+        if (dashAction.IsPressed() && !isDashing)
+        {
+            StartCoroutine(StartDash());
+        }
     }
 
     private Vector3 CalculateWorldDirection()
@@ -55,30 +73,30 @@ public class PlayerFishController : MonoBehaviour
         // These values correlate the direction the player is moving
         float xInput = swimAction.ReadValue<Vector2>().x;
         float zInput = swimAction.ReadValue<Vector2>().y;
-        float yInput = swimVerticalAction.ReadValue<Vector2>().y;
-
+        float yInput = floatAction.ReadValue<Vector2>().y;
         Vector3 inputDirection = new Vector3(xInput, yInput, zInput);
-        Vector3 worldDirection = transform.TransformDirection(inputDirection);
 
-        return worldDirection.normalized;
+        currentInputVector = Vector3.SmoothDamp(currentInputVector, inputDirection, ref smoothInputVelocity, smoothInputSpeed);
+        Vector3 worldDirection = transform.TransformDirection(currentInputVector);
+        
+        return worldDirection;
     }
 
     private void HandleMovement()
     {
-        CalculateSwimSpeed();
+        //CalculateSwimSpeed();
 
         Vector3 worldDirection = CalculateWorldDirection();
         currentMovement.x = worldDirection.x * currentSpeed;
         currentMovement.z = worldDirection.z * currentSpeed;
-        currentMovement.y = worldDirection.y * currentSpeed;
+        currentMovement.y = worldDirection.y * floatSpeed;
         
         // Code to allow player to move based on where camera is looking
-        if (swimAction.IsPressed())
+        if (swimAction.ReadValue<Vector2>().y > 0f)
         {
             currentMovement.y += mainCamera.transform.forward.y * currentSpeed;
         }
-        else { currentMovement.y = 0; }
-
+        
         characterController.Move(currentMovement * Time.deltaTime);
     }
 
@@ -104,19 +122,39 @@ public class PlayerFishController : MonoBehaviour
         ApplyVerticalRotation(mouseYRotation);
     }
 
-    private void CalculateSwimSpeed()
+    IEnumerator StartDash()
     {
-        if (swimFastAction.IsPressed()) 
-        { 
-            if (currentSpeed < fastSwimSpeed)
-            {
-                currentSpeed = fastSwimSpeed;
-                //Debug.Log("Speed = " + currentSpeed);
-            }
+        isDashing = true; 
+
+        float elapsedTime = 0f;
+        float smoothTime = 0.2f; 
+
+        while (elapsedTime < smoothTime) 
+        {
+            currentSpeed = Mathf.SmoothDamp(currentSpeed, dashSpeed, ref currentVelocity, smoothTime);
+            elapsedTime += Time.deltaTime;
+            yield return null;
         }
-        else
-        { 
-            if (currentSpeed > swimSpeed) { currentSpeed = swimSpeed; }
+
+        currentSpeed = dashSpeed;
+        yield return new WaitForSeconds(0.2f);
+
+        StartCoroutine(EndDash());
+    }
+
+    IEnumerator EndDash()
+    {
+        float elapsedTime = 0f;
+        float smoothTime = 0.2f; 
+
+        while (elapsedTime < smoothTime) 
+        {
+            currentSpeed = Mathf.SmoothDamp(currentSpeed, swimSpeed, ref currentVelocity, smoothTime);
+            elapsedTime += Time.deltaTime;
+            yield return null;
         }
+
+        currentSpeed = swimSpeed;
+        isDashing = false;
     }
 }

@@ -189,8 +189,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb0ee214c832f55449a4f20c705b726e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swimSpeed: 3
-  fastSwimSpeed: 4.5
+  swimSpeed: 4
+  dashSpeed: 12
+  floatSpeed: 2
+  smoothInputSpeed: 0.1
   mouseSensitivity: 0.5
   upDownLookRange: 80
   characterController: {fileID: 1392424294487994085}
@@ -205,11 +207,20 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  swimFastAction:
-    m_Name: Swim Fast
+  dashAction:
+    m_Name: Dash
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 29852e68-3cc8-4709-8703-30425d09dd75
+    m_Id: 45d04a31-bd19-45c3-9279-ce14af05fc14
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  floatAction:
+    m_Name: Float
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 7663d6af-cfe1-4c87-bad2-97a07ce6267e
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []

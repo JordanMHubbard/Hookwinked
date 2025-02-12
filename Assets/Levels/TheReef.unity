@@ -1159,8 +1159,32 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8946572098530432142, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
+      propertyPath: dashSpeed
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946572098530432142, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
+      propertyPath: swimSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946572098530432142, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
+      propertyPath: floatSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946572098530432142, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
       propertyPath: mouseSensitivity
       value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946572098530432142, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
+      propertyPath: smoothInputSpeed
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946572098530432142, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
+      propertyPath: dashAction.m_Name
+      value: Dash
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946572098530432142, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
+      propertyPath: floatAction.m_Name
+      value: Float
       objectReference: {fileID: 0}
     - target: {fileID: 8946572098530432142, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
       propertyPath: swimVerticalAction.m_Name
