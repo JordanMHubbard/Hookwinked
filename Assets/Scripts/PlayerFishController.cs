@@ -13,10 +13,18 @@ public class PlayerFishController : MonoBehaviour
     [SerializeField] private float floatSpeed = 2f;
     [SerializeField] private float smoothInputSpeed = 0.1f;
 
-
     [Header("Look Parameters")]
     [SerializeField] private float mouseSensitivity = 0.5f;
     [SerializeField] private float upDownLookRange = 80f;
+
+    [Header("View Bobbing")]
+    [SerializeField] private bool isBobbing;
+    [SerializeField] private float bobAmplitude = 0.004f;
+    [Range(1f,30f)]
+    [SerializeField] private float bobFrequency = 2f;
+    [Range(10f, 100f)]
+    [SerializeField] private float Smooth = 10f;
+    private Vector3 startPos;
 
     [Header("References")]
     [SerializeField] private CharacterController characterController;
@@ -30,9 +38,9 @@ public class PlayerFishController : MonoBehaviour
     private Vector3 currentMovement;
     private float verticalRotation;
     private float currentSpeed;
+    private float currentVelocity;
     private Vector3 currentInputVector;
     private Vector3 smoothInputVelocity;
-    private float currentVelocity;
     private bool isDashing;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -40,8 +48,9 @@ public class PlayerFishController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        currentSpeed = swimSpeed;
         mouseSensitivity /= 10f;
+        currentSpeed = swimSpeed;
+        startPos = mainCamera.transform.localPosition;
 
         swimAction = playerInput.actions["Move"];
         dashAction = playerInput.actions["Sprint"];
@@ -53,6 +62,7 @@ public class PlayerFishController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CheckForViewBob();
         HandleMovement();
         HandleRoation();
 
@@ -124,7 +134,7 @@ public class PlayerFishController : MonoBehaviour
         isDashing = true; 
 
         float elapsedTime = 0f;
-        float smoothTime = 0.2f; 
+        float smoothTime = 0.1f; 
         
         // Interpolates speed to dash speed for smoothTime
         while (elapsedTime < smoothTime) 
@@ -135,7 +145,7 @@ public class PlayerFishController : MonoBehaviour
         }
 
         currentSpeed = dashSpeed;
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.3f);
 
         StartCoroutine(EndDash());
     }
@@ -143,7 +153,7 @@ public class PlayerFishController : MonoBehaviour
     IEnumerator EndDash()
     {
         float elapsedTime = 0f;
-        float smoothTime = 0.2f; 
+        float smoothTime = 0.3f; 
 
         // Interpolates speed to normal speed for smoothTime
         while (elapsedTime < smoothTime) 
@@ -154,6 +164,37 @@ public class PlayerFishController : MonoBehaviour
         }
 
         currentSpeed = swimSpeed;
+
+        yield return new WaitForSeconds(3f);
+        
+        Debug.Log("Can Dash Again!");
         isDashing = false;
+    }
+
+    void CheckForViewBob()
+    {
+        if (swimAction.IsPressed() || floatAction.IsPressed())
+        {
+            StopViewBob();
+        }
+        else 
+        { 
+            ViewBob(); 
+        }
+
+    }
+
+    void ViewBob()
+    {
+        Vector3 pos = Vector3.zero;
+        float bobOffset = Mathf.Sin(Time.time * bobFrequency) * bobAmplitude;
+        pos.y += Mathf.Lerp(pos.y, bobOffset, Smooth * Time.deltaTime);
+        mainCamera.transform.localPosition += pos;
+    }
+
+    void StopViewBob()
+    {
+        if (Vector3.Distance(mainCamera.transform.localPosition, startPos) < 0.01f) { return; }
+        mainCamera.transform.localPosition = Vector3.Lerp(mainCamera.transform.localPosition, startPos, Time.deltaTime);
     }
 }

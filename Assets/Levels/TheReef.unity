@@ -1171,6 +1171,14 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8946572098530432142, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
+      propertyPath: bobAmplitude
+      value: 0.004
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946572098530432142, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
+      propertyPath: bobFrequency
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946572098530432142, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
       propertyPath: mouseSensitivity
       value: 0.7
       objectReference: {fileID: 0}
