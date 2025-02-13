@@ -586,6 +586,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 652563178}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!20 &690803488 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 133031847395031908, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
+  m_PrefabInstance: {fileID: 63018628243691724}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &697948582
 GameObject:
   m_ObjectHideFlags: 0
@@ -852,6 +857,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1296334452 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7440325418165233619, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
+  m_PrefabInstance: {fileID: 63018628243691724}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1296334457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1296334452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28655e63297e78b459300c90ab59c76b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InteractionDistance: 3
+  interactableLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  mainCamera: {fileID: 690803488}
 --- !u!1 &1806805533
 GameObject:
   m_ObjectHideFlags: 0
@@ -1218,6 +1245,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8946572098530432142, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
+      propertyPath: isViewBobEnabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946572098530432142, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
       propertyPath: mouseSensitivity
       value: 0.7
       objectReference: {fileID: 0}
@@ -1241,6 +1272,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7440325418165233619, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1296334457}
     - targetCorrespondingSourceObject: {fileID: 8735097673828181742, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
       insertIndex: -1
       addedObject: {fileID: 127113775}
@@ -1781,7 +1815,8 @@ GameObject:
   - component: {fileID: 8577614354117532858}
   - component: {fileID: 3886155221346378004}
   - component: {fileID: 8097064273423272568}
-  m_Layer: 2
+  - component: {fileID: 8577614354117532859}
+  m_Layer: 0
   m_Name: Ball_Part
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2226,6 +2261,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1448501443085806459}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &8577614354117532859
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5519764271386734523}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.49988753
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8980234965581135787
 GameObject:
   m_ObjectHideFlags: 0

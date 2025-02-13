@@ -11,14 +11,15 @@ public class PlayerFishController : MonoBehaviour
     [SerializeField] private float swimSpeed = 4f;
     [SerializeField] private float dashSpeed = 12f;
     [SerializeField] private float floatSpeed = 2f;
-    [SerializeField] private float smoothInputSpeed = 0.1f;
+    [SerializeField] private float smoothInputTime = 0.1f;
+     private float currentSpeed;
 
     [Header("Look Parameters")]
     [SerializeField] private float mouseSensitivity = 0.5f;
     [SerializeField] private float upDownLookRange = 80f;
 
     [Header("View Bobbing")]
-    [SerializeField] private bool isBobbing;
+    [SerializeField] private bool isViewBobEnabled = true;
     [SerializeField] private float bobAmplitude = 0.004f;
     [Range(1f,30f)]
     [SerializeField] private float bobFrequency = 2f;
@@ -34,24 +35,31 @@ public class PlayerFishController : MonoBehaviour
     private bool isTiltingRight;
     private bool isIdle;
 
+    [Header("Dash")]
+    [SerializeField] private float dashCooldown = 3f;
+    private bool isDashing;
+    private float currentVelocity;
+
     [Header("References")]
     [SerializeField] private CharacterController characterController;
     [SerializeField] private Camera mainCamera;
     [SerializeField] public PlayerInput playerInput;
     
+    // Actions
     public InputAction swimAction;
     public InputAction dashAction;
     public InputAction floatAction;
     public InputAction lookAction;
+
+    // Movement and Rotation
     private Vector3 currentMovement;
     private float verticalRotation;
-    private float currentSpeed;
-    private float currentVelocity;
+
+    // Input
     private Vector3 currentInputVector;
-    private Vector3 smoothInputVelocity;
-    private bool isDashing;
+    private Vector3 InputVelocity;
 
-
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -74,16 +82,15 @@ public class PlayerFishController : MonoBehaviour
         ShouldViewBob();
         HandleMovement();
         HandleRoation();
+        ShouldTilt();
 
         if (dashAction.IsPressed() && !isDashing)
         {
             StartCoroutine(StartDash());
         }
-
-        ShouldTilt();
     }
 
-    // General Swimming Movement
+    /* General Swimming Movement */
     private Vector3 CalculateWorldDirection()
     {
         if (swimAction == null) {return Vector3.zero;}
@@ -96,7 +103,7 @@ public class PlayerFishController : MonoBehaviour
         Vector3 inputDirection = new Vector3(xInput, yInput, zInput);
 
         // Interpolates input vector to desired input so that movement is smoothed
-        currentInputVector = Vector3.SmoothDamp(currentInputVector, inputDirection, ref smoothInputVelocity, smoothInputSpeed);
+        currentInputVector = Vector3.SmoothDamp(currentInputVector, inputDirection, ref InputVelocity, smoothInputTime);
         Vector3 worldDirection = transform.TransformDirection(currentInputVector);
         
         return worldDirection;
@@ -119,7 +126,7 @@ public class PlayerFishController : MonoBehaviour
         characterController.Move(currentMovement * Time.deltaTime);
     }
 
-    // Rotation
+    /* Rotation */
     private void ApplyHorizontalRotation(float rotationAmount)
     {
         transform.Rotate(0, rotationAmount, 0);
@@ -142,7 +149,7 @@ public class PlayerFishController : MonoBehaviour
         ApplyVerticalRotation(mouseYRotation);
     }
 
-    // Dashing
+    /* Dashing */
     IEnumerator StartDash()
     {
         isDashing = true; 
@@ -179,15 +186,17 @@ public class PlayerFishController : MonoBehaviour
 
         currentSpeed = swimSpeed;
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(dashCooldown);
         
         Debug.Log("Can Dash Again!");
         isDashing = false;
     }
 
-    //  View Bobbing
+    /*  View Bobbing */
     void ShouldViewBob()
     {
+        if (!isViewBobEnabled) return;
+        
         if (swimAction.IsPressed() || floatAction.IsPressed())
         {
             StopViewBob();
@@ -213,10 +222,12 @@ public class PlayerFishController : MonoBehaviour
         mainCamera.transform.localPosition = Vector3.Lerp(mainCamera.transform.localPosition, startPos, Time.deltaTime);
     }
 
+    /* Tilting */
     void ShouldTilt()
     {
         float horiztonalInput = swimAction.ReadValue<Vector2>().x;
 
+        // Checks if player is pressing a or d or is idling and plays the appropriate tilt animation
         if (horiztonalInput < 0f && !Physics.Raycast(transform.position, -transform.right, out hit, 1f, layers))
         {
             if (isTiltingLeft) { return; }
