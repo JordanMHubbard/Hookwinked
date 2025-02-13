@@ -119,6 +119,33 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &127113773 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8735097673828181742, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
+  m_PrefabInstance: {fileID: 63018628243691724}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &127113775
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127113773}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: eecde3121f453a84eb8fad3c31cb6e6f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &203844586
 GameObject:
   m_ObjectHideFlags: 0
@@ -1114,6 +1141,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4494702344355641686, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7440325418165233619, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
       propertyPath: m_Name
       value: PlayerFish
@@ -1167,6 +1198,10 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8946572098530432142, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
+      propertyPath: cameraAnim
+      value: 
+      objectReference: {fileID: 127113775}
+    - target: {fileID: 8946572098530432142, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
       propertyPath: floatSpeed
       value: 2
       objectReference: {fileID: 0}
@@ -1177,6 +1212,10 @@ PrefabInstance:
     - target: {fileID: 8946572098530432142, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
       propertyPath: bobFrequency
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946572098530432142, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
+      propertyPath: layers.m_Bits
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8946572098530432142, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
       propertyPath: mouseSensitivity
@@ -1201,7 +1240,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8735097673828181742, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 127113775}
   m_SourcePrefab: {fileID: 100100000, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
 --- !u!33 &285757673750222148
 MeshFilter:

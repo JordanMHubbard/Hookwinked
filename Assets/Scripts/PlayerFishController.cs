@@ -23,8 +23,16 @@ public class PlayerFishController : MonoBehaviour
     [Range(1f,30f)]
     [SerializeField] private float bobFrequency = 2f;
     [Range(10f, 100f)]
-    [SerializeField] private float Smooth = 10f;
+    [SerializeField] private float bobSmoothness = 10f;
     private Vector3 startPos;
+
+    [Header("Tilt")]
+    public Animator cameraAnim;
+    public LayerMask layers;
+    RaycastHit hit;
+    private bool isTiltingLeft;
+    private bool isTiltingRight;
+    private bool isIdle;
 
     [Header("References")]
     [SerializeField] private CharacterController characterController;
@@ -42,6 +50,7 @@ public class PlayerFishController : MonoBehaviour
     private Vector3 currentInputVector;
     private Vector3 smoothInputVelocity;
     private bool isDashing;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -62,7 +71,7 @@ public class PlayerFishController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CheckForViewBob();
+        ShouldViewBob();
         HandleMovement();
         HandleRoation();
 
@@ -70,8 +79,11 @@ public class PlayerFishController : MonoBehaviour
         {
             StartCoroutine(StartDash());
         }
+
+        ShouldTilt();
     }
 
+    // General Swimming Movement
     private Vector3 CalculateWorldDirection()
     {
         if (swimAction == null) {return Vector3.zero;}
@@ -107,6 +119,7 @@ public class PlayerFishController : MonoBehaviour
         characterController.Move(currentMovement * Time.deltaTime);
     }
 
+    // Rotation
     private void ApplyHorizontalRotation(float rotationAmount)
     {
         transform.Rotate(0, rotationAmount, 0);
@@ -129,6 +142,7 @@ public class PlayerFishController : MonoBehaviour
         ApplyVerticalRotation(mouseYRotation);
     }
 
+    // Dashing
     IEnumerator StartDash()
     {
         isDashing = true; 
@@ -171,7 +185,8 @@ public class PlayerFishController : MonoBehaviour
         isDashing = false;
     }
 
-    void CheckForViewBob()
+    //  View Bobbing
+    void ShouldViewBob()
     {
         if (swimAction.IsPressed() || floatAction.IsPressed())
         {
@@ -188,7 +203,7 @@ public class PlayerFishController : MonoBehaviour
     {
         Vector3 pos = Vector3.zero;
         float bobOffset = Mathf.Sin(Time.time * bobFrequency) * bobAmplitude;
-        pos.y += Mathf.Lerp(pos.y, bobOffset, Smooth * Time.deltaTime);
+        pos.y += Mathf.Lerp(pos.y, bobOffset, bobSmoothness * Time.deltaTime);
         mainCamera.transform.localPosition += pos;
     }
 
@@ -197,4 +212,47 @@ public class PlayerFishController : MonoBehaviour
         if (Vector3.Distance(mainCamera.transform.localPosition, startPos) < 0.01f) { return; }
         mainCamera.transform.localPosition = Vector3.Lerp(mainCamera.transform.localPosition, startPos, Time.deltaTime);
     }
+
+    void ShouldTilt()
+    {
+        float horiztonalInput = swimAction.ReadValue<Vector2>().x;
+
+        if (horiztonalInput < 0f && !Physics.Raycast(transform.position, -transform.right, out hit, 1f, layers))
+        {
+            if (isTiltingLeft) { return; }
+           
+            cameraAnim.ResetTrigger("idle");
+            cameraAnim.ResetTrigger("right");
+            cameraAnim.SetTrigger("left");
+
+            isTiltingLeft = true;
+            isTiltingRight = false;
+            isIdle = false;
+        }
+        else if (horiztonalInput > 0f &&  !Physics.Raycast(transform.position, transform.right, out hit, 1f, layers))
+        {
+            if (isTiltingRight) { return; }
+
+            cameraAnim.ResetTrigger("idle");
+            cameraAnim.ResetTrigger("left");
+            cameraAnim.SetTrigger("right");
+
+            isTiltingRight = true;
+            isTiltingLeft = false;
+            isIdle = false;
+        }
+        else 
+        {
+            if (isIdle) {return;}
+
+            cameraAnim.ResetTrigger("left");
+            cameraAnim.ResetTrigger("right");
+            cameraAnim.SetTrigger("idle");
+
+            isIdle = true;
+            isTiltingLeft = false;
+            isTiltingRight = false;
+        }
+    }
+ 
 }
