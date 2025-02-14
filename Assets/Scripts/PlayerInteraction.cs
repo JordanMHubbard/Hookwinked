@@ -1,18 +1,30 @@
-using System;
 using UnityEngine;
-
+using UnityEngine.InputSystem;
 public class PlayerInteraction : MonoBehaviour
 {
     [Header("Interaction")]
-    [SerializeField] private float InteractionDistance = 10f;
+    [SerializeField] private float InteractionDistance = 3f;
     [SerializeField] private LayerMask interactableLayer;
     [SerializeField] private Camera mainCamera;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private PlayerInput playerInput;
+    private Interactable currentInteractable;
+    
+    void Awake()
     {
-        
+        // Get PlayerInput component 
+        playerInput = GetComponent<PlayerInput>();
     }
+
+    public void OnEnable()
+    {
+        playerInput.actions["Interact"].performed += OnInteract;
+    }
+
+    public void OnDisable()
+    {
+        playerInput.actions["Interact"].performed -= OnInteract;
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -26,7 +38,25 @@ public class PlayerInteraction : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, InteractionDistance, interactableLayer))
         {
-            Debug.Log("Hit something!");
+            if (hit.collider.CompareTag("Interactable"))
+            {
+               currentInteractable = hit.collider.GetComponent<Interactable>();
+            } 
+        }
+        else
+        {
+            if (currentInteractable != null)
+            {
+                currentInteractable = null;
+            }
+        }
+    }
+
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        if (currentInteractable != null)
+        {
+            currentInteractable.Interact();
         }
     }
 }
