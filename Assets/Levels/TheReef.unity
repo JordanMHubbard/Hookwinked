@@ -1976,7 +1976,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8946572098530432142, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
       propertyPath: dashSpeed
-      value: 12
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8946572098530432142, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
       propertyPath: swimSpeed
@@ -2001,6 +2001,10 @@ PrefabInstance:
     - target: {fileID: 8946572098530432142, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
       propertyPath: layers.m_Bits
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8946572098530432142, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
+      propertyPath: dashChargeRate
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8946572098530432142, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
       propertyPath: isViewBobEnabled

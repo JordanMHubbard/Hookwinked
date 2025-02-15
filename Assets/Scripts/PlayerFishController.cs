@@ -7,13 +7,13 @@ public class PlayerFishController : MonoBehaviour
 {
     [Header("Movement Speeds")]
     [SerializeField] private float swimSpeed = 4f;
-    [SerializeField] private float dashSpeed = 12f;
+    [SerializeField] private float dashSpeed = 1f;
     [SerializeField] private float floatSpeed = 2f;
     [SerializeField] private float smoothInputTime = 0.1f;
      private float currentSpeed;
 
     [Header("Look Parameters")]
-    [SerializeField] private float mouseSensitivity = 0.5f;
+    [SerializeField] private float mouseSensitivity = 0.7f;
     [SerializeField] private float upDownLookRange = 80f;
 
     [Header("View Bobbing")]
@@ -35,6 +35,7 @@ public class PlayerFishController : MonoBehaviour
 
     [Header("Dash")]
     [SerializeField] private float dashCooldown = 3f;
+    [SerializeField] private float dashChargeRate = 8f;
     private bool isDashing;
     private float currentVelocity;
 
@@ -84,7 +85,7 @@ public class PlayerFishController : MonoBehaviour
 
         if (dashAction.IsPressed() && !isDashing)
         {
-            StartCoroutine(StartDash());
+            StartCoroutine(ChargeDash());
         }
     }
 
@@ -148,10 +149,25 @@ public class PlayerFishController : MonoBehaviour
     }
 
     /* Dashing */
-    IEnumerator StartDash()
+    IEnumerator ChargeDash()
     {
         isDashing = true; 
+        currentSpeed = 2f;
 
+        while (dashAction.IsPressed() && dashSpeed < 12f)
+        {
+            dashSpeed += dashChargeRate * Time.deltaTime;
+            Debug.Log("Dash speed: " + dashSpeed);
+            yield return null;
+        }
+
+        while (dashAction.IsPressed()) yield return null;
+
+        StartCoroutine(StartDash());
+    }
+
+    IEnumerator StartDash()
+    {
         float elapsedTime = 0f;
         float smoothTime = 0.1f; 
         
@@ -187,6 +203,7 @@ public class PlayerFishController : MonoBehaviour
         yield return new WaitForSeconds(dashCooldown);
         
         Debug.Log("Can Dash Again!");
+        dashSpeed = 0f;
         isDashing = false;
     }
 

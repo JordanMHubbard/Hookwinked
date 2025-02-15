@@ -192,7 +192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swimSpeed: 4
-  dashSpeed: 12
+  dashSpeed: 1
   floatSpeed: 2
   smoothInputTime: 0.1
   mouseSensitivity: 0.5
@@ -206,6 +206,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   dashCooldown: 3
+  dashChargeRate: 8
   characterController: {fileID: 1392424294487994085}
   mainCamera: {fileID: 133031847395031908}
   playerInput: {fileID: 8057932145516715874}
@@ -259,8 +260,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   valueText: {fileID: 0}
   energyBar: {fileID: 0}
-  smoothTime: 0.1
-  depreciateTime: 20
+  updateRate: 20
+  depreciateRate: 5
 --- !u!114 &52106068153816824
 MonoBehaviour:
   m_ObjectHideFlags: 0

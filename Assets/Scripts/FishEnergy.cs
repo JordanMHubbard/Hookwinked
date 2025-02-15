@@ -10,7 +10,7 @@ public class ProgressBarController : MonoBehaviour
     public Slider energyBar;
     private float currentProgress = 100;
     private float targetProgress;
-    private bool shouldIncrease;
+    private bool shoulUpdate;
     private bool shouldDecrease = true;
     [Tooltip("The rate at which currentProgress is updated to targetProgress")]
     [SerializeField] private float updateRate = 20f;
@@ -29,7 +29,7 @@ public class ProgressBarController : MonoBehaviour
 
     private void Update()
     {
-        if (shouldIncrease)
+        if (shoulUpdate)
         {
             StartCoroutine(UpdateProgress());
         }
@@ -43,17 +43,19 @@ public class ProgressBarController : MonoBehaviour
     public void SetTargetProgress(float progressVal)
     {
         targetProgress = Mathf.Clamp(currentProgress + progressVal, 0f, 100f);
-        shouldIncrease = true;
+        shoulUpdate = true;
     }
 
     // Updates energy progress when target progress value is changed
     IEnumerator UpdateProgress()
     {
-        shouldIncrease = false;
+        shoulUpdate = false;
+        
+        float rateOfChange = currentProgress < targetProgress ? updateRate : -updateRate;
         
         while (Math.Abs(currentProgress - targetProgress) > 0.1)
         {
-            currentProgress += updateRate * Time.deltaTime;
+            currentProgress += rateOfChange * Time.deltaTime;
             Debug.Log("CurrentProgress: "+ currentProgress);
             energyBar.value = currentProgress / 100f;
 
@@ -72,10 +74,10 @@ public class ProgressBarController : MonoBehaviour
         
         while (currentProgress > 0f)
         {
-            if (shouldIncrease) yield break;
+            if (shoulUpdate) yield break;
 
-            currentProgress -= 5 * Time.deltaTime;
-            Debug.Log("CurrentProgress: "+ currentProgress);
+            currentProgress -= depreciateRate * Time.deltaTime;
+            //Debug.Log("CurrentProgress: "+ currentProgress);
             energyBar.value = currentProgress / 100f;
 
             yield return null;
