@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/EenergyBarStyle.uss?fileID=7433441132597879392&amp;guid=d0aefb594ff5ee6479536d58cb98e485&amp;type=3#EenergyBarStyle" />
+    <ui:VisualElement style="flex-grow: 1; align-content: auto; justify-content: flex-end;">
+        <ui:ProgressBar value="22" title="Energy" high-value="100" name="EnergyBar" enabled="true" class="EnergyBar" style="align-items: stretch; justify-content: flex-start; align-self: flex-end; align-content: auto; top: auto; bottom: 80px; position: relative; width: 256px; right: 80px; height: 24px; background-color: rgba(255, 255, 255, 0); border-left-color: rgba(255, 255, 255, 0); border-right-color: rgba(255, 255, 255, 0); border-top-color: rgba(255, 255, 255, 0); border-bottom-color: rgba(255, 255, 255, 0); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; transform-origin: center; font-size: 12px; -unity-font-style: bold; -unity-background-image-tint-color: rgb(255, 255, 255); -unity-font-definition: initial;" />
+    </ui:VisualElement>
+</ui:UXML>

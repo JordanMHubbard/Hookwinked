@@ -1,0 +1,12 @@
+.EnergyBar {
+}
+
+.unity-progress-bar__background {
+    border-radius: 3px;
+}
+
+.unity-progress-bar__progress {
+    margin: 0;
+    border-radius: 3px;
+    background-color: #83bf54;
+}
