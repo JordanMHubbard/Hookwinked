@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 685683e220ef2ac4788e2c5300f8e6c1
+guid: 44f75cdef05613a46bf5d1690be8e485
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: EnergyBackground_0
+      name: EnergyBarBorder(1)_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1464
-        height: 148
+        width: 430
+        height: 228
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -125,8 +125,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b527b1b2aa38487458ccdeae8c1f10c5
-      internalID: 137941356
+      spriteID: d796779fa293d7a499a7dc715025e359
+      internalID: 1866627059
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 80450728c1834bf4d9b67217093c1242
+    spriteID: d3b249d842cfa7b458449bea2e73de0c
     internalID: 0
     vertices: []
     indices: 
@@ -145,7 +145,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      EnergyBackground_0: 137941356
+      EnergyBarBorder(1)_0: 1866627059
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

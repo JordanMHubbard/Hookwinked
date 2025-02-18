@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: abc186554786dcd46b44c810498783e2
+guid: 5c3a5a2472675b34bb43c593929cf16d
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,23 +110,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: EnergyProgress_0
+      name: Cursor_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1452
-        height: 136
+        width: 15
+        height: 15
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 16, y: 16, z: 16, w: 16}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9363799a0514cd8479210236e0bf99bb
-      internalID: 1648762720
+      spriteID: 7fffa318a8e9aee4d84f4b6142cc3728
+      internalID: 1153071780
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 749629885e842d94bb10c15e26ba32d9
+    spriteID: c73e79afa64577e4fa70c0fad0c832dc
     internalID: 0
     vertices: []
     indices: 
@@ -145,7 +145,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      EnergyProgress_0: 1648762720
+      Cursor_0: 1153071780
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

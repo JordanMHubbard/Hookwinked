@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerFishController : MonoBehaviour
 {
@@ -38,6 +39,8 @@ public class PlayerFishController : MonoBehaviour
     [SerializeField] private float dashChargeRate = 8f;
     private bool isDashing;
     private float currentVelocity;
+    public Slider dashChargeBar;
+    public CanvasGroup dashKeybind;
 
     [Header("References")]
     [SerializeField] private CharacterController characterController;
@@ -148,15 +151,20 @@ public class PlayerFishController : MonoBehaviour
         ApplyVerticalRotation(mouseYRotation);
     }
 
+     /* Floating */
+
     /* Dashing */
     IEnumerator ChargeDash()
     {
+        dashKeybind.alpha = 1f;
+        
         isDashing = true; 
         currentSpeed = 2f;
 
         while (dashAction.IsPressed() && dashSpeed < 12f)
         {
             dashSpeed += dashChargeRate * Time.deltaTime;
+            dashChargeBar.value = dashSpeed * 8.33f / 100f;
             Debug.Log("Dash speed: " + dashSpeed);
             yield return null;
         }
@@ -201,6 +209,15 @@ public class PlayerFishController : MonoBehaviour
         currentSpeed = swimSpeed;
 
         yield return new WaitForSeconds(dashCooldown);
+
+        while (dashChargeBar.value > 0)
+        {
+            dashChargeBar.value -= 2f  * Time.deltaTime;
+            yield return null;
+        }
+        
+        dashKeybind.alpha = 0.75f;
+        dashChargeBar.value = 0f;
         
         Debug.Log("Can Dash Again!");
         dashSpeed = 0f;
