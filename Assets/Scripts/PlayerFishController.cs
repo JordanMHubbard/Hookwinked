@@ -59,9 +59,16 @@ public class PlayerFishController : MonoBehaviour
 
     // Input
     private Vector3 currentInputVector;
-    private Vector3 InputVelocity;
+    private Vector3 inputVelocity;
 
-    
+    // Energy
+    private FishEnergy energyComp;
+
+     void Awake()
+    {
+        energyComp = GetComponent<FishEnergy>();
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -72,7 +79,7 @@ public class PlayerFishController : MonoBehaviour
         startPos = mainCamera.transform.localPosition;
 
         swimAction = playerInput.actions["Move"];
-        dashAction = playerInput.actions["Sprint"];
+        dashAction = playerInput.actions["Attack"];
         lookAction = playerInput.actions["Look"];
         floatAction = playerInput.actions["MoveVertical"];
         
@@ -105,7 +112,7 @@ public class PlayerFishController : MonoBehaviour
         Vector3 inputDirection = new Vector3(xInput, yInput, zInput);
 
         // Interpolates input vector to desired input so that movement is smoothed
-        currentInputVector = Vector3.SmoothDamp(currentInputVector, inputDirection, ref InputVelocity, smoothInputTime);
+        currentInputVector = Vector3.SmoothDamp(currentInputVector, inputDirection, ref inputVelocity, smoothInputTime);
         Vector3 worldDirection = transform.TransformDirection(currentInputVector);
         
         return worldDirection;
@@ -151,6 +158,22 @@ public class PlayerFishController : MonoBehaviour
         ApplyVerticalRotation(mouseYRotation);
     }
 
+    /* Attacking */
+    void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Entered: " + other.name);
+
+        if (other.CompareTag("Prey"))
+        {
+            // Make sound
+            // Add energy
+            // Add points?
+            //
+            energyComp.AddProgress(20);
+            other.gameObject.SetActive(false);
+        }
+    }
+
      /* Floating */
 
     /* Dashing */
@@ -165,7 +188,7 @@ public class PlayerFishController : MonoBehaviour
         {
             dashSpeed += dashChargeRate * Time.deltaTime;
             dashChargeBar.value = dashSpeed * 8.33f / 100f;
-            Debug.Log("Dash speed: " + dashSpeed);
+            //Debug.Log("Dash speed: " + dashSpeed);
             yield return null;
         }
 
@@ -219,7 +242,7 @@ public class PlayerFishController : MonoBehaviour
         dashKeybind.alpha = 0.75f;
         dashChargeBar.value = 0f;
         
-        Debug.Log("Can Dash Again!");
+        //Debug.Log("Can Dash Again!");
         dashSpeed = 0f;
         isDashing = false;
     }

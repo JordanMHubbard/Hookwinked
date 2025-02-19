@@ -3,19 +3,20 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ProgressBarController : MonoBehaviour
+public class FishEnergy : MonoBehaviour
 {
     [Header("Progress Bar")]
     public Text valueText;
     public Slider energyBar;
     private float currentProgress = 100;
     private float targetProgress;
-    private bool shoulUpdate;
+    private bool shouldUpdate;
     private bool shouldDecrease = true;
     [Tooltip("The rate at which currentProgress is updated to targetProgress")]
-    [SerializeField] private float updateRate = 20f;
+    [SerializeField] private float updateRate = 50f;
     [Tooltip("The rate at which currentProgress depreciates to 0")]
     [SerializeField] private float depreciateRate = 5f;
+    private Coroutine DepreciateCoroutine;
 
     private void Start()
     {
@@ -24,39 +25,40 @@ public class ProgressBarController : MonoBehaviour
             Debug.LogWarning($"{gameObject.name}: EnergyBar script is missing a Slider reference!");
             enabled = false;
         }
-        Debug.Log("CurrentProgress: "+ currentProgress);
+        //Debug.Log("CurrentProgress: "+ currentProgress);
     }
 
     private void Update()
     {
-        if (shoulUpdate)
+        if (shouldUpdate)
         {
+            StopCoroutine(DepreciateCoroutine);
             StartCoroutine(UpdateProgress());
         }
         else if (shouldDecrease) 
         {
-            StartCoroutine(DepreciateProgress());
+            DepreciateCoroutine = StartCoroutine(DepreciateProgress());
         }
 
     }
 
-    public void SetTargetProgress(float progressVal)
+    public void AddProgress(float progressVal)
     {
         targetProgress = Mathf.Clamp(currentProgress + progressVal, 0f, 100f);
-        shoulUpdate = true;
+        shouldUpdate = true;
     }
 
     // Updates energy progress when target progress value is changed
     IEnumerator UpdateProgress()
     {
-        shoulUpdate = false;
+        shouldUpdate = false; // PROBLEM, causes DepreciateProg coroutine to never stop
+        shouldDecrease = false;
         
         float rateOfChange = currentProgress < targetProgress ? updateRate : -updateRate;
-        
         while (Math.Abs(currentProgress - targetProgress) > 0.1)
         {
             currentProgress += rateOfChange * Time.deltaTime;
-            Debug.Log("CurrentProgress: "+ currentProgress);
+            //Debug.Log("CurrentProgress: "+ currentProgress);
             energyBar.value = currentProgress / 100f;
 
             yield return null;
@@ -72,10 +74,9 @@ public class ProgressBarController : MonoBehaviour
     {
         shouldDecrease = false;
         
-        while (currentProgress > 0f)
+        while (currentProgress > 0f && !shouldUpdate)
         {
-            if (shoulUpdate) yield break;
-
+            Debug.Log("just checkin ");
             currentProgress -= depreciateRate * Time.deltaTime;
             //Debug.Log("CurrentProgress: "+ currentProgress);
             energyBar.value = currentProgress / 100f;

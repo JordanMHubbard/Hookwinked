@@ -262,7 +262,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   valueText: {fileID: 0}
   energyBar: {fileID: 0}
-  updateRate: 20
+  updateRate: 50
   depreciateRate: 5
 --- !u!114 &52106068153816824
 MonoBehaviour:
