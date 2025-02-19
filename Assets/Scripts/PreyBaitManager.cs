@@ -4,6 +4,7 @@ public class PreyBaitManager : MonoBehaviour
 {
     [SerializeField] private float pointValue = 100f;
     [SerializeField] private float energyValue = 10f;
+    private bool isPrey = true;
 
     public float GetPointValue()
     {
@@ -13,5 +14,10 @@ public class PreyBaitManager : MonoBehaviour
     public float GetEnergyValue()
     {
         return energyValue;
+    }
+
+    public bool GetIsPrey()
+    {
+        return isPrey;
     }
 }
