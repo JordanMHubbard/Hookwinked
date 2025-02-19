@@ -63,10 +63,12 @@ public class PlayerFishController : MonoBehaviour
 
     // Energy
     private FishEnergy energyComp;
+    private SoundRandomizer eatSoundComp;
 
      void Awake()
     {
         energyComp = GetComponent<FishEnergy>();
+        eatSoundComp = GetComponent<SoundRandomizer>();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -165,11 +167,9 @@ public class PlayerFishController : MonoBehaviour
 
         if (other.CompareTag("Prey"))
         {
-            // Make sound
-            // Add energy
-            // Add points?
-            //
-            energyComp.AddProgress(20);
+            float energyProg = other.GetComponent<PreyBaitManager>().GetEnergyValue();
+            eatSoundComp.PlayRandomSound();
+            energyComp.AddProgress(energyProg);
             other.gameObject.SetActive(false);
         }
     }
