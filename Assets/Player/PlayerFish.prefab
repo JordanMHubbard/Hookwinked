@@ -208,7 +208,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   dashCooldown: 3
-  dashChargeRate: 8
+  dashChargeRate: 24
   dashChargeBar: {fileID: 0}
   dashKeybind: {fileID: 0}
   characterController: {fileID: 1392424294487994085}

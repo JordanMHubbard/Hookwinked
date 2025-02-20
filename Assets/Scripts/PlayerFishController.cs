@@ -8,7 +8,6 @@ public class PlayerFishController : MonoBehaviour
 {
     [Header("Movement Speeds")]
     [SerializeField] private float swimSpeed = 4f;
-    [SerializeField] private float dashSpeed = 1f;
     [SerializeField] private float floatSpeed = 2f;
     [SerializeField] private float smoothInputTime = 0.1f;
      private float currentSpeed;
@@ -36,7 +35,7 @@ public class PlayerFishController : MonoBehaviour
 
     [Header("Dash")]
     [SerializeField] private float dashCooldown = 3f;
-    [SerializeField] private float dashChargeRate = 8f;
+    [SerializeField] private float dashChargeRate = 24f;
     private bool isDashing;
     private float currentVelocity;
     public Slider dashChargeBar;
@@ -179,25 +178,26 @@ public class PlayerFishController : MonoBehaviour
     /* Dashing */
     IEnumerator ChargeDash()
     {
-        dashKeybind.alpha = 1f;
+        dashKeybind.alpha = 0.5f;
         
         isDashing = true; 
         currentSpeed = 2f;
 
-        while (dashAction.IsPressed() && dashSpeed < 12f)
+        while (dashAction.IsPressed() && currentSpeed < 12f)
         {
-            dashSpeed += dashChargeRate * Time.deltaTime;
-            dashChargeBar.value = dashSpeed * 8.33f / 100f;
+            currentSpeed += dashChargeRate * Time.deltaTime;
+            dashChargeBar.value = currentSpeed * 8.33f / 100f;
             //Debug.Log("Dash speed: " + dashSpeed);
             yield return null;
         }
 
-        while (dashAction.IsPressed()) yield return null;
+        yield return new WaitForSeconds(0.3f);
 
-        StartCoroutine(StartDash());
+        StartCoroutine(EndDash());
     }
 
-    IEnumerator StartDash()
+    // Old code for charged and release dash
+    /*IEnumerator StartDash()
     {
         float elapsedTime = 0f;
         float smoothTime = 0.1f; 
@@ -214,7 +214,7 @@ public class PlayerFishController : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
 
         StartCoroutine(EndDash());
-    }
+    }*/
 
     IEnumerator EndDash()
     {
@@ -228,22 +228,27 @@ public class PlayerFishController : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-
         currentSpeed = swimSpeed;
 
-        yield return new WaitForSeconds(dashCooldown);
-
+        // Reset charge bar
         while (dashChargeBar.value > 0)
         {
             dashChargeBar.value -= 2f  * Time.deltaTime;
             yield return null;
         }
-        
-        dashKeybind.alpha = 0.75f;
         dashChargeBar.value = 0f;
         
+        yield return new WaitForSeconds(dashCooldown);
+
+        // Reset charge keybind (represents cooldown)
+        while (dashKeybind.alpha < 1f)
+        {
+            dashKeybind.alpha += 2f  * Time.deltaTime;
+            yield return null;
+        }
+        dashKeybind.alpha = 1f;
+        
         //Debug.Log("Can Dash Again!");
-        dashSpeed = 0f;
         isDashing = false;
     }
 
