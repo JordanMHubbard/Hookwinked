@@ -1,0 +1,85 @@
+
+using UnityEngine;
+
+public class AIFishController : MonoBehaviour
+{
+    private bool hasTarget;
+    private bool iTurning;
+    private bool foundPrey;
+    private Vector3 targetLocation;
+    private Vector3 currentVelocity;
+    [SerializeField] private float swimSpeed = 3f;
+
+    private CharacterController characterController;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        characterController = GetComponent<CharacterController>();
+        
+        if (characterController == null)
+        {
+            Debug.LogWarning($"{gameObject.name}: characterController has not been set!");
+            enabled = false;
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        Debug.DrawLine(transform.position, transform.position + transform.forward * 2f, Color.blue);
+
+        if (!hasTarget)
+        {
+            hasTarget = FindTarget();
+        }
+        else 
+        {
+            RotateNPC();
+            MoveTowardsTarget();
+        }
+    }
+
+    private bool FindTarget()
+    {
+        if (foundPrey)
+        {
+            // targetLocation = Prey.location;
+        }
+        else 
+        {
+            // Later need to consider 1.unreachable points, 2.only getting points within a defined space 
+            Vector3 locationOffset = new Vector3 (Random.Range(-5,5), 0, Random.Range(-5,5));
+            targetLocation = transform.position + locationOffset;
+            Debug.Log("targetLocation = " + targetLocation);
+            hasTarget = true;
+        }
+        
+        return true;
+    }
+
+    private void RotateNPC()
+    {
+        float turnSpeed = swimSpeed * Random.Range(1f, 3f);
+        Vector3 lookAt = targetLocation - transform.position;
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookAt), turnSpeed * Time.deltaTime);
+    }
+
+    private void MoveTowardsTarget()
+    {
+        characterController.Move(transform.forward * swimSpeed * Time.deltaTime);
+        
+        float dist = Vector3.Distance(transform.position, targetLocation);
+        
+        if (dist < 1f)
+        {
+            if (foundPrey) //this will get unset once fish collides with prey
+            {   
+                targetLocation += transform.forward * 5f;
+                return;
+            }
+
+            hasTarget = false;
+        }
+    }
+}
