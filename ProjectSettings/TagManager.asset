@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Interactable
   - Prey
+  - Obstacle
   layers:
   - Default
   - TransparentFX
