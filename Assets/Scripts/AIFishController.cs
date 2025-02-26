@@ -3,16 +3,15 @@ using UnityEngine;
 
 public class AIFishController : MonoBehaviour
 {
+    [SerializeField] private float swimSpeed = 3f;
+    [SerializeField] private LayerMask interactableLayer;
+    private float viewDistance = 5f;
     private bool hasTarget;
     private bool isRepelling;
     private bool foundPrey;
-    private List<GameObject> currentObstacles;
+    private bool isReturningFromRepel;
     private Vector3 repelDirection;
     private Vector3 targetLocation;
-    [SerializeField] private float swimSpeed = 3f;
-    private float viewDistance = 5f;
-    [SerializeField] private LayerMask interactableLayer;
-
     private CharacterController characterController;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -25,8 +24,6 @@ public class AIFishController : MonoBehaviour
             Debug.LogWarning($"{gameObject.name}: characterController has not been set!");
             enabled = false;
         }
-
-        currentObstacles = new List<GameObject>();
     }
 
     // Update is called once per frame
@@ -47,8 +44,11 @@ public class AIFishController : MonoBehaviour
         }
     }
 
-    bool IsAreaBlocked(Vector3 checkPosition, Vector3 boxSize)
+    // Checks if randomly selected target area is accessible
+    bool IsAreaReachable(Vector3 checkPosition, Vector3 boxSize)
     {
+        bool isInReachableArea = false;
+
         Collider[] colliders = Physics.OverlapBox(checkPosition, boxSize * 0.5f, Quaternion.identity, interactableLayer);
         foreach (Collider col in colliders)
         {
@@ -56,11 +56,20 @@ public class AIFishController : MonoBehaviour
             {
                 return true;
             }
+
+            if (col.CompareTag("ReachableArea"))
+            {
+                isInReachableArea = true;
+                Debug.Log("In reachable area yipee");
+            }
         }
+
+        if (!isInReachableArea) return true;
 
         return false;
     }
 
+    // Determines whether to generate random target or follow prey
     private bool FindTarget()
     {
         if (foundPrey)
@@ -69,12 +78,12 @@ public class AIFishController : MonoBehaviour
         }
         else 
         {
-            // Later need to consider 1.unreachable points, 2.only getting points within a defined space 
-            Vector3 locationOffset = new Vector3 (Random.Range(-10,10), 0, Random.Range(-10,10));
+            // Later need to consider only getting points within a defined space 
+            Vector3 locationOffset = new Vector3 (Random.Range(-15,15), Random.Range(-5,5), Random.Range(-15,15));
             targetLocation = transform.position + locationOffset;
             Debug.Log("targetLocation = " + targetLocation);
 
-            if (IsAreaBlocked(targetLocation, new Vector3(2, 2, 2)))
+            if (IsAreaReachable(targetLocation, new Vector3(2, 2, 2)))
             {
                 Debug.Log("Area blocked!");
                 return false;
@@ -84,27 +93,33 @@ public class AIFishController : MonoBehaviour
         return true;
     }
 
+    // Determines fish orientation based on target location and obstacles
     private void Rotate()
     {   
-        //if (isRepelling) return;
-        
-        
+
         float turnSpeed = swimSpeed * Random.Range(1f, 2f);
         Vector3 targetDirection = targetLocation - transform.position;
         Vector3 lookAt;
+
         if (isRepelling) 
         {
-            Debug.Log("We are repelling now");
+            Debug.Log("Repelling now");
             lookAt = repelDirection;
             Debug.DrawLine(transform.position, transform.position + repelDirection * viewDistance, Color.red);
         }
-        else{
+        else
+        {
             lookAt = targetDirection;
         }
+         
+        if (isReturningFromRepel) return;
         //Vector3 lookAt = isRepelling ? (targetDirection + repelDirection) / 2 : targetDirection;
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookAt), turnSpeed * Time.deltaTime);
+
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookAt), 
+            turnSpeed * Time.deltaTime);
     }
 
+    // Moves fish towards target and evaluates if target has been reached
     private void MoveTowardsTarget()
     {
         characterController.Move(transform.forward * swimSpeed * Time.deltaTime);
@@ -147,13 +162,12 @@ public class AIFishController : MonoBehaviour
 
         Vector3 obstaclePosition = obstacle.transform.position;
         Vector3 directionToObstacle = obstaclePosition - transform.position; 
-        //Debug.DrawLine(transform.position, transform.position + directionToObstacle * viewDistance, Color.red);
         Ray ray = new Ray(transform.position, directionToObstacle);
         Physics.Raycast(ray, out RaycastHit hit, viewDistance, interactableLayer);
 
        
-        Vector3 leftDir = Quaternion.Euler(0, -45, 0) * transform.forward;
-        Vector3 rightDir = Quaternion.Euler(0, 45, 0) * transform.forward;
+        Vector3 leftDir = Quaternion.Euler(0, -60, 0) * transform.forward;
+        Vector3 rightDir = Quaternion.Euler(0, 60, 0) * transform.forward;
         Debug.DrawLine(transform.position, transform.position + leftDir * viewDistance, Color.green);
         Debug.DrawLine(transform.position, transform.position + rightDir * viewDistance, Color.green);
         
@@ -166,12 +180,12 @@ public class AIFishController : MonoBehaviour
         if (angleL < angleR)
         {
             repelDirection = rightDir;
-            Debug.Log("Going Right");
+            //Debug.Log("Going Right");
         }
         else
         {
             repelDirection = leftDir;
-            Debug.Log("Going Left");
+            //Debug.Log("Going Left");
         }
 
         if (!isRepelling) isRepelling = true;
@@ -179,50 +193,35 @@ public class AIFishController : MonoBehaviour
 
     private void IsObstacleInTargetDirection()
     {
-        //Maybe fix this so it covers a wider range of area?
-        
-        if (!isRepelling) 
-        {
-            //Debug.Log("I will not check if obstacle in target direction");
-            return;
-        }
+        if (!isRepelling) return;
         
         Vector3 desiredDirection = targetLocation - transform.position; 
         Ray ray = new Ray(transform.position, desiredDirection);
         Debug.DrawLine(transform.position, transform.position + desiredDirection * viewDistance, Color.magenta);
         bool obstacleInWay = Physics.Raycast(ray, out RaycastHit hit, viewDistance, interactableLayer);
 
-        if (obstacleInWay) 
-        {
-            //AddObstacle(hit.collider);
-            return;
-        }
+        // Checks to see if direction of obstacle is
+        float dot = Vector3.Dot(Vector3.Normalize(desiredDirection), Vector3.Normalize(transform.forward));
+        float angle = Mathf.Acos(dot) * Mathf.Rad2Deg;
 
-        //RemoveObstacle(hit.collider);
+        if (obstacleInWay && angle < 90f) return;
+        
+
         isRepelling = false; 
+        if (!isReturningFromRepel) StartCoroutine(RepelTimer());
     }
 
-
-    void AddObstacle(Collider other)
+    System.Collections.IEnumerator RepelTimer()
     {
-        if (other.CompareTag("Obstacle"))
-        {
-            if (!currentObstacles.Contains(other.gameObject))
-            {
-                currentObstacles.Add(other.gameObject);
-            }
-        }
-    }
+        isReturningFromRepel = true;
+        Debug.Log("Timer Start");
 
-    void RemoveObstacle(Collider other)
-    {
-        if (other.CompareTag("Obstacle"))
-        {
-            if (currentObstacles.Contains(other.gameObject))
-            {
-                currentObstacles.Remove(other.gameObject);
-            }
-        }
-    }
+        yield return new WaitForSeconds(1f);
+        
+        isReturningFromRepel = false;
 
+        Debug.Log("Timer End");
+        
+        yield return null;
+    }
 }
