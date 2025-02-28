@@ -4,10 +4,11 @@ public class AIFishController : MonoBehaviour
 {
     [SerializeField] private float swimSpeed = 3f;
     [SerializeField] private LayerMask interactableLayer;
-    private float viewDistance = 5f;
+    private float viewDistance = 3f;
     private bool hasTarget;
     private bool isRepelling;
     private bool isNearObstacle;
+    private bool isAvoiding;
     private int obstacleCount;
     private bool foundPrey;
     private Vector3 repelDirection;
@@ -106,8 +107,7 @@ public class AIFishController : MonoBehaviour
         {
             Repel();
         }
-        
-        if (!isRepelling)
+        else
         {
             lookAt = targetDirection;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookAt), 
@@ -140,19 +140,19 @@ public class AIFishController : MonoBehaviour
     {
         if (other.CompareTag("Obstacle"))
         {
-            NewAvoidObstacle();
+            AvoidObstacle();
             obstacleCount++;
+            isNearObstacle = true;
         }
     }
 
     void OnTriggerStay(Collider other)
     {
-        
         if (other.CompareTag("Obstacle"))
         {
-            IsObstacleInTargetDirection(true);
+            Vector3 targetDirection = (targetLocation - transform.position).normalized; 
+            IsObstacleInDirection(targetDirection, true, 90f);
         }
-        
     }
 
     void OnTriggerExit(Collider other)
@@ -164,7 +164,122 @@ public class AIFishController : MonoBehaviour
         }
     }
 
-    private void AvoidObstacle(Collider other)
+    private bool IsObstacleInDirection(Vector3 direction, bool doObstacleAvoidance, float angleThreshold = 30f)
+    {
+        // Checks if any obstacles are currently in the way in the given direction
+        Ray ray = new Ray(transform.position, direction);
+        bool obstacleInWay = Physics.Raycast(ray, out RaycastHit hit, viewDistance, interactableLayer);
+
+        // Calculate angle between current forward direction and the direction of interest (target or forward)
+        if (obstacleInWay)
+        {
+            Vector3 directionToObstacle = (hit.point - transform.position).normalized;
+            float dot = Vector3.Dot(directionToObstacle, transform.forward);
+            float angle = Mathf.Acos(dot) * Mathf.Rad2Deg;
+
+            //Debug.Log("angle is: " + angle);
+            // If obstacle is in the way and within the given angle threshold
+            if (angle < angleThreshold)
+            {
+                // Maybe make it so it can only fire again once avoid obstacle has been called?
+                Debug.DrawLine(transform.position, transform.position + direction * viewDistance, Color.red, 15f);
+                if (doObstacleAvoidance && !isRepelling)
+                {
+                    AvoidObstacle();
+                }
+                return true;
+            }
+            else return false;
+        }
+        else 
+        {
+            Debug.DrawLine(transform.position, transform.position + direction * viewDistance, Color.green, 15f);
+            if (isRepelling) isRepelling = false;
+            return false;
+        }
+    }
+
+    private void AvoidObstacle()
+    {
+        int i = 1;
+        int numPoints = 50;
+        float turnRatio = 1.618f;
+        float radius = viewDistance;
+        
+        while (i < numPoints)
+        {
+            Debug.Log("Counting: " + i);
+            //Projects points on a sphere
+            float angle  = 2 * Mathf.PI * turnRatio;
+            float t =  (float) i / numPoints;
+            float inclination = Mathf.Acos (1 - 2 * t);
+            float azimuth = angle * i;
+
+            float x = Mathf.Sin (inclination) * Mathf.Cos (azimuth);
+            float y = Mathf.Sin (inclination) * Mathf.Sin (azimuth);
+            float z = Mathf.Cos (inclination);
+
+            // Checks if obstacle is in way of potential point 
+            Vector3 worldOffset = (transform.right * x + transform.up * y + transform.forward * z) * radius;
+            Vector3 point = worldOffset + transform.position;
+            Vector3 directionToPoint = (point - transform.position).normalized; 
+            Ray ray = new Ray(transform.position, directionToPoint);
+            bool hitObstacle = Physics.Raycast(ray, out RaycastHit hit, viewDistance, interactableLayer);
+            Debug.DrawLine(transform.position, transform.position + directionToPoint * viewDistance, Color.yellow, 15f);
+            
+            if (!hitObstacle && !isObstacleAtPoint(point))
+            {
+                // Add a way to reevaluate point if current one too close to an obstacle?   
+                repelDirection = directionToPoint;
+                isRepelling = true;
+                isNearObstacle = true;
+                return;
+            }
+            //Debug.Log("our Location: " + transform.position);
+            i++;
+        }
+
+        return;
+    }
+
+    private void Repel()
+    {
+        float turnSpeed = swimSpeed * Random.Range(1f, 2f);
+        Vector3 lookAt;
+
+        lookAt = repelDirection;
+        Debug.DrawLine(transform.position, transform.position + repelDirection * viewDistance, Color.red);
+
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookAt), 
+            turnSpeed * Time.deltaTime);
+            
+        float dot = Vector3.Dot(Vector3.Normalize(lookAt), Vector3.Normalize(transform.forward));
+        float angle = Mathf.Acos(dot) * Mathf.Rad2Deg;
+
+        if (angle < 1f)
+        {
+            Debug.Log("angle: " + angle);
+            isRepelling = false;
+        }
+    }
+
+    private bool isObstacleAtPoint (Vector3 checkPoint)
+    {
+        // Should be roughly a bit bigger than the size of the fish
+        Collider[] colliders = Physics.OverlapSphere(checkPoint, 0.5f, interactableLayer);
+        foreach (Collider col in colliders)
+        {
+            if (col.CompareTag("Obstacle"))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // Deprecated (Initial version)
+    private void OldAvoidObstacle(Collider other)
     {
         GameObject obstacle = other.gameObject;
         if (obstacle == null) return;
@@ -206,107 +321,5 @@ public class AIFishController : MonoBehaviour
 
         if (!isRepelling) isRepelling = true;*/
 
-    }
-
-    private bool IsObstacleInTargetDirection(bool doObstacleAvoidance)
-    {
-        // Checks if any obstacles are currently in the way of npc's desired direction
-        Vector3 desiredDirection = (targetLocation - transform.position).normalized; 
-        Ray ray = new Ray(transform.position, desiredDirection);
-        Debug.DrawLine(transform.position, transform.position + desiredDirection * viewDistance, Color.magenta);
-        bool obstacleInWay = Physics.Raycast(ray, out RaycastHit hit, viewDistance, interactableLayer);
-
-        // Checks to see how close desired direction is to current forward direction
-        float dot = Vector3.Dot(Vector3.Normalize(desiredDirection), Vector3.Normalize(transform.forward));
-        float angle = Mathf.Acos(dot) * Mathf.Rad2Deg;
-
-        if (obstacleInWay && angle < 90f) 
-        {
-            if (doObstacleAvoidance) NewAvoidObstacle();
-            return true;
-        }
-        
-
-        isRepelling = false; 
-        return false;
-    }
-
-    private void NewAvoidObstacle()
-    {   
-        if (!IsObstacleInForwardDirection()) return;
-
-        if (!IsObstacleInTargetDirection(false)) return;
-
-        //if (!isRepelling) return Vector3.zero;
-        
-        //Use z (right) and y (up) axes
-
-        int i = 1;
-        float numPoints = 50f;
-        float turnRatio = 1.618f;
-        float radius = 20f;
-        
-        // Greater distance creates bigger swirl
-        while (i < numPoints)
-        {
-            //Convert to local space
-            float distance = i / numPoints;
-            float angle  = 2 * Mathf.PI * turnRatio * i;
-            float x = distance * Mathf.Cos(angle) * radius;
-            float y = distance * Mathf.Sin(angle) * radius; 
-
-            // Use viewDistance to project points
-            // Checks if obstacle is in way of potential point 
-            Vector3 worldOffset = transform.right * x + transform.up * y + transform.forward * viewDistance;
-            Vector3 point = worldOffset + transform.position;
-            Vector3 directionToPoint = (point - transform.position).normalized; 
-            Ray ray = new Ray(transform.position, directionToPoint);
-            bool hitObstacle = Physics.Raycast(ray, out RaycastHit hit, viewDistance, interactableLayer);
-            Debug.DrawLine(transform.position, transform.position + directionToPoint * viewDistance, Color.yellow, 15f);
-            
-            if (!hitObstacle)
-            {
-                // Add a way to reevaluate point if current one too close to an obstacle?
-
-                repelDirection = directionToPoint;
-                isRepelling = true;
-                isNearObstacle = true;
-                return;
-            }
-            //Debug.Log("our Location: " + transform.position);
-            i++;
-        }
-
-        return;
-    }
-
-    private void Repel()
-    {
-        float turnSpeed = swimSpeed * Random.Range(1f, 2f);
-        Vector3 lookAt;
-
-        lookAt = repelDirection;
-        Debug.DrawLine(transform.position, transform.position + repelDirection * viewDistance, Color.red);
-
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookAt), 
-            turnSpeed * Time.deltaTime);
-            
-        float dot = Vector3.Dot(Vector3.Normalize(lookAt), Vector3.Normalize(transform.forward));
-        float angle = Mathf.Acos(dot) * Mathf.Rad2Deg;
-
-        if (angle < 1f)
-        {
-            Debug.Log("angle: " + angle);
-            isRepelling = false;
-        }
-    }
-
-    private bool IsObstacleInForwardDirection()
-    {
-        Ray ray = new Ray(transform.position, transform.forward);
-        bool hitObstacle = Physics.Raycast(ray, out RaycastHit hit, viewDistance, interactableLayer);
-        Debug.DrawLine(transform.position, transform.position + transform.forward * viewDistance, Color.red, 15f);
-
-        return hitObstacle;
     }
 }
