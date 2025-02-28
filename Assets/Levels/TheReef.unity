@@ -4614,6 +4614,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 533257401338940029, guid: f5be706788631e24b8d58fbe188f8ddf, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 550998454320423428, guid: f5be706788631e24b8d58fbe188f8ddf, type: 3}
+      propertyPath: interactableLayer.m_Bits
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1891237236518474352, guid: f5be706788631e24b8d58fbe188f8ddf, type: 3}
       propertyPath: m_Size.x
       value: 2
