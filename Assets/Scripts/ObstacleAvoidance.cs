@@ -34,7 +34,7 @@ public class ObstacleAvoidance : MonoBehaviour
         if (other.CompareTag("Obstacle"))
         {
             Vector3 targetDirection = (controller.GetTargetLocation() - transform.position).normalized; 
-            IsObstacleInDirection(targetDirection, true, 90f);
+            IsObstacleInDirection(targetDirection, true, 70f);
         }
     }
 
@@ -91,7 +91,6 @@ public class ObstacleAvoidance : MonoBehaviour
         
         while (i < numPoints)
         {
-            Debug.Log("Counting: " + i);
             //Projects points on a sphere
             float angle  = 2 * Mathf.PI * turnRatio;
             float t =  (float) i / numPoints;
