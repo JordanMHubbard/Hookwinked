@@ -3,7 +3,27 @@ guid: 7400b4410d2386d448963d4a73b86464
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eyes
+    second: {fileID: 2100000, guid: 052d70f3d3f7d394991e8970dcc7f944, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Lionfish_Fins
+    second: {fileID: 2100000, guid: 61b741de69290ea47a0bda41fbc8777a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Lionfish_Light
+    second: {fileID: 2100000, guid: ea573fbf7a314104992c1e9cbd94ed45, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Lionfish_Main
+    second: {fileID: 2100000, guid: ef58fc9513e25dd4a92ec3ff622eb73f, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -88,7 +108,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.0025
+    globalScale: 0.25
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

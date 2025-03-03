@@ -3,7 +3,27 @@ guid: f116126246ae7ca4ab6efdb8df3b8515
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eyes
+    second: {fileID: 2100000, guid: ac0cb026ffc93c64f87a08fcd4ea6695, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Puffefish_Black
+    second: {fileID: 2100000, guid: ef229cc89a78a3a48994ea8cf7dc8f2b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pufferfish_Light
+    second: {fileID: 2100000, guid: 0294051edab68fa4f845776253dc8db6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pufferfish_Main
+    second: {fileID: 2100000, guid: 6b59447d709ca5f4d9c47f780645f24a, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -88,7 +108,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.0025
+    globalScale: 0.25
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

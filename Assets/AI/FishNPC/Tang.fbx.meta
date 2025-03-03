@@ -3,7 +3,32 @@ guid: ca18e881efaffb24e8d335dfa66c807b
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eyes
+    second: {fileID: 2100000, guid: d6174e185b58e15479c5a5eb48317dc5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tang_Dark
+    second: {fileID: 2100000, guid: e4d7ab9816c11ce4288137b1e8e372a5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tang_Light
+    second: {fileID: 2100000, guid: d1897e941fff68f48817a3e4e8d5d2f7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tang_Light2
+    second: {fileID: 2100000, guid: 3d1757d0d73160c4aa8caa22ecb0d9ff, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tang_Main
+    second: {fileID: 2100000, guid: 31e620a350eeec44fa425b9f6d3c14e7, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -88,7 +113,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.0025
+    globalScale: 0.25
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

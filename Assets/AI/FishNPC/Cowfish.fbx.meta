@@ -3,7 +3,27 @@ guid: 5c4448cd080d703448ed6559346c25d1
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cowfish_Dark
+    second: {fileID: 2100000, guid: f5ac45f2fb643c74b8e4234df6cc9b25, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cowfish_Light
+    second: {fileID: 2100000, guid: 419cb0765a950d942b7ca46f7e56aae4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cowfish_Main
+    second: {fileID: 2100000, guid: 738f04d6018ab1d4e9a8a75a3713cb60, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eyes
+    second: {fileID: 2100000, guid: 84c49f94d783e904eabc3ffac8636067, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -88,7 +108,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.0025
+    globalScale: 0.25
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

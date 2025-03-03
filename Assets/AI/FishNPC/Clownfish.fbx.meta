@@ -3,7 +3,27 @@ guid: b7e92ff5999101442acabfbfd47c7421
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Clownfish_Dark
+    second: {fileID: 2100000, guid: d0a4bd407a8df9b4f832e371f2e61fec, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Clownfish_Light
+    second: {fileID: 2100000, guid: 3c71b6b232157754dbd1444b69b603fd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Clownfish_Main
+    second: {fileID: 2100000, guid: 55b7e5b3ee9783c4a9f9f216e3369001, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eyes
+    second: {fileID: 2100000, guid: 7e3dbf45aa3cbaf48871082c91e6e476, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -88,7 +108,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.0025
+    globalScale: 0.25
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

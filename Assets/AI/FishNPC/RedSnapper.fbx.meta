@@ -3,7 +3,27 @@ guid: 9c2a3be9c229cad4581dbd6054feb610
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eyes
+    second: {fileID: 2100000, guid: f0a2acd50e9669d488be51b53409544a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: RedSnapper_Fins
+    second: {fileID: 2100000, guid: 5f367e5d2e927404896de94d972e1b7d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: RedSnapper_Light
+    second: {fileID: 2100000, guid: 9257a83e8e2d8fc4ba6199e1c39f8af6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: RedSnapper_Main
+    second: {fileID: 2100000, guid: d85d13b739652aa4f9e35e1f837ede24, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -88,7 +108,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.0025
+    globalScale: 0.25
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

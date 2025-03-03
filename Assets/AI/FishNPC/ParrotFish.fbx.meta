@@ -3,7 +3,32 @@ guid: f819c9a078fe1094c91cb482af1cf170
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eyes
+    second: {fileID: 2100000, guid: d9a46cd5a32007e4ea9cb7ccc91c6fcd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ParrotFish_Fins
+    second: {fileID: 2100000, guid: 9e111f4737b343245bb256e9dc1101ad, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ParrotFish_Light
+    second: {fileID: 2100000, guid: a6248d3ef057224419c6e3515a8760a7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ParrotFish_Main
+    second: {fileID: 2100000, guid: 71b3466d11050e348b439640bd46d18e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ParrotFish_Teeth
+    second: {fileID: 2100000, guid: 329287ac1f8ce0649b8470872b36b7ca, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -88,7 +113,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.0025
+    globalScale: 0.25
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

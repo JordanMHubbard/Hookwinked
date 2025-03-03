@@ -3,7 +3,27 @@ guid: 07c2d59a81c14824993d13cefc702af3
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eyes
+    second: {fileID: 2100000, guid: 6f413bf32d19f6848b6b2777e5d27849, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: GoblinShark_Dark
+    second: {fileID: 2100000, guid: 474dcc125c951b649bba17e646f9485d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: GoblinShark_Light
+    second: {fileID: 2100000, guid: 5d6fdaf0582502741a276daa75009331, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: GoblinShark_Main
+    second: {fileID: 2100000, guid: 5af4105b9e2468748ad80e4228efc235, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -88,7 +108,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.0025
+    globalScale: 0.25
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

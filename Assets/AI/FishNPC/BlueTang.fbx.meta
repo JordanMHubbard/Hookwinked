@@ -3,7 +3,27 @@ guid: f418ca56c41d0d84785af23aad3b18d5
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BlueTang_Dark
+    second: {fileID: 2100000, guid: 48cdef621e5e18a42ac8082344187347, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BlueTang_Fins
+    second: {fileID: 2100000, guid: cb2f8545c4d150b4ba0cf96fded064b3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BlueTang_Main
+    second: {fileID: 2100000, guid: 21fa94e1444e88f449c4309b80d6baa5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eyes
+    second: {fileID: 2100000, guid: dfab0af98c532504db5e4f20c4f5faa1, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -88,7 +108,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.0025
+    globalScale: 0.25
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

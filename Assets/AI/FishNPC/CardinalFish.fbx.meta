@@ -3,7 +3,27 @@ guid: 46fa51a6435c09b4390505462b922da8
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CardinalFish_Fins
+    second: {fileID: 2100000, guid: e77518ff4be10cb499fbacc717a87162, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CardinalFish_Light
+    second: {fileID: 2100000, guid: 8280f58014d6cfa4990aa7d7c7ffd398, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CardinalFish_Main
+    second: {fileID: 2100000, guid: f236cfec539037348ad4268a7af319b3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eyes
+    second: {fileID: 2100000, guid: c237bc01493ecc84ab147eb019b1e417, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -88,7 +108,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.0025
+    globalScale: 0.25
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

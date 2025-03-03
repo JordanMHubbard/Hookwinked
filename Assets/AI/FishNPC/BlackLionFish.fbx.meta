@@ -3,7 +3,27 @@ guid: a2b48ad27b64855409085f12d0d34877
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BlackLionFish_Dark
+    second: {fileID: 2100000, guid: c1bc00aac8779d44f95817a7e025ecf7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BlackLionFish_Light
+    second: {fileID: 2100000, guid: 74741b0a260615a43b7afe6a3cc2a5b8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BlackLionFish_Main
+    second: {fileID: 2100000, guid: ae0c3013d6d716043addda2764a3a921, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eyes
+    second: {fileID: 2100000, guid: b0fdc4c53fa8d7b488c8069a3e567962, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -88,7 +108,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.0025
+    globalScale: 0.25
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

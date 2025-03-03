@@ -3,7 +3,27 @@ guid: 1ad52e2e64224444c9f26b4fb6c85d59
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eyes
+    second: {fileID: 2100000, guid: 22fb8b9f8d1363341b58c8f35184afb0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Humphead_Dark
+    second: {fileID: 2100000, guid: 0772da0cb56d6764aab93d5036bcd4de, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Humphead_Fins
+    second: {fileID: 2100000, guid: 2d0052d1ea70e3c4a81d1ab486076478, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Humphead_Main
+    second: {fileID: 2100000, guid: b40ab78dd7de50c4590bf92152ea2627, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -88,7 +108,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.0025
+    globalScale: 0.25
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

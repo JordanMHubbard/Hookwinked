@@ -3,7 +3,32 @@ guid: 9a810dcdef4308b4d8623073b743a2c7
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eyes
+    second: {fileID: 2100000, guid: 07b3bd2445a58fe4d9bfda5a2fa35b61, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Koi_Dark
+    second: {fileID: 2100000, guid: 7efeeb2491c8a6046a0bbe62efaba9ce, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Koi_Fins
+    second: {fileID: 2100000, guid: 322bc1abdcb6bb544afe255394d6442d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Koi_Light
+    second: {fileID: 2100000, guid: f7e446b094bf16d458ffeb8d4e697113, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Koi_Main
+    second: {fileID: 2100000, guid: d623e429268bcde43bf665d4cb580026, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -88,7 +113,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.0025
+    globalScale: 0.25
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

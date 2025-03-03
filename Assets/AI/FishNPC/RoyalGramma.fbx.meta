@@ -3,7 +3,27 @@ guid: 866260f1a3c1d0e43aaa07e0ca5c1234
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eyes
+    second: {fileID: 2100000, guid: a86a6a512f1dcc743909f8bd161f7381, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: RoyalGramma_Fins
+    second: {fileID: 2100000, guid: 3695a23498764c74d9f7e4dc0128c928, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: RoyalGramma_Light
+    second: {fileID: 2100000, guid: 43eaad6c32e29bd4596bb0188068ced5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: RoyalGramma_Main
+    second: {fileID: 2100000, guid: ed765a003641a344580b0c5cd9ffbac7, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -88,7 +108,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.0025
+    globalScale: 0.25
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

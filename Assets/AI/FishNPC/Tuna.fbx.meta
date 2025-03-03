@@ -3,7 +3,32 @@ guid: e68c50068edc7064f9e6093796fdf033
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eyes
+    second: {fileID: 2100000, guid: 2e1165d5675d1d34489be473b6212309, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tuna_Dark
+    second: {fileID: 2100000, guid: 5cd21c26e8846bf44b203d673f21963c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tuna_Fins
+    second: {fileID: 2100000, guid: 79e44462040e98d4481367ca3df0eb4c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tuna_Main
+    second: {fileID: 2100000, guid: 92f1adde1c870bd47a7f10520bdb488b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tuna_Top
+    second: {fileID: 2100000, guid: d6e80f38bbae01e468d51d8ce474f8bb, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -88,7 +113,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.0025
+    globalScale: 0.25
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

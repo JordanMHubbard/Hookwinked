@@ -3,7 +3,32 @@ guid: 1dbf95b02b4177e4299ba97773f04b8c
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eyes
+    second: {fileID: 2100000, guid: 46888c1bdb01dd94a906016eeb28c849, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Flatfish_Fins
+    second: {fileID: 2100000, guid: fb4b6ddb89d3efc46a985e9a795915ef, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Flatfish_Light
+    second: {fileID: 2100000, guid: 18c168ba9d1df224c976a7ebea9e55f1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Flatfish_Main
+    second: {fileID: 2100000, guid: aead1065225e5ef4a9fa95eb2244e170, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Flatfish_Teeth
+    second: {fileID: 2100000, guid: 4d734c60510e6c14eab9b4fd81826ee9, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -88,7 +113,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.0025
+    globalScale: 0.25
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
