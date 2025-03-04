@@ -26,11 +26,5 @@ public class FishAnimManager : MonoBehaviour
     void Update()
     {
         animator.SetFloat("Speed", controller.velocity.magnitude/3);
-        
-        /*if (animator.GetCurrentAnimatorStateInfo(0).IsName("Swim"))
-        {
-            Debug.Log("Swim");
-        }*/
-        //Debug.Log("Speed: " + animator.GetFloat("Speed"));
     }
 }

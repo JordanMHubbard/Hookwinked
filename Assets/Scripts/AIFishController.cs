@@ -62,7 +62,7 @@ public class AIFishController : MonoBehaviour
         {
             if (col.CompareTag("Obstacle"))
             {
-                return true;
+                return false;
             }
 
             if (col.CompareTag("ReachableArea"))
@@ -72,9 +72,7 @@ public class AIFishController : MonoBehaviour
             }
         }
 
-        if (!isInReachableArea) return true;
-
-        return false;
+        return isInReachableArea;
     }
 
     // Determines whether to generate random target or follow prey
@@ -91,7 +89,7 @@ public class AIFishController : MonoBehaviour
             targetLocation = transform.position + locationOffset;
             //Debug.Log("targetLocation = " + targetLocation);
 
-            if (IsAreaReachable(targetLocation, new Vector3(2, 2, 2)))
+            if (!IsAreaReachable(targetLocation, new Vector3(2, 2, 2)))
             {
                 //Debug.Log("Area blocked!");
                 return false;

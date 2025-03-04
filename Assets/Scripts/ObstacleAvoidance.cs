@@ -31,6 +31,11 @@ public class ObstacleAvoidance : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
+        if (controller == null )
+        {
+           return;
+        }
+
         if (other.CompareTag("Obstacle"))
         {
             Vector3 targetDirection = (controller.GetTargetLocation() - transform.position).normalized; 
@@ -84,6 +89,11 @@ public class ObstacleAvoidance : MonoBehaviour
 
     public void AvoidObstacle()
     {
+        if (controller == null)
+        {
+            return;
+        }
+        
         int i = 1;
         int numPoints = 50;
         float turnRatio = 1.618f;
