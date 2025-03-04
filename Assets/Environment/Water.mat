@@ -60,14 +60,14 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaClip: 0
-    - _Depth: 0.2
+    - _Depth: 0.1
     - _Displacement: 0.5
     - _NormalStrength: 0.25
     - _QueueControl: 0
     - _QueueOffset: 0
     - _RefractionStrength: 1
     - _Smoothness: 0.85
-    - _Strength: 1.49
+    - _Strength: 2
     m_Colors:
     - _DeepWaterColor: {r: 0.14173192, g: 0.52855396, b: 0.8584906, a: 1}
     - _Scale: {r: 50, g: 50, b: 0, a: 0}

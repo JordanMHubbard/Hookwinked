@@ -11,7 +11,6 @@ public class AIFishController : MonoBehaviour
     private Vector3 repelDirection;
     private Vector3 targetLocation;
     private CharacterController characterController;
-
     // Getters
     public Vector3 GetTargetLocation() { return targetLocation; }
     public bool GetIsRepelling() { return isRepelling; }
