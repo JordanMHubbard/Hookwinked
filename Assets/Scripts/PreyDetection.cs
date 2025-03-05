@@ -5,7 +5,7 @@ public class PreyDetection : MonoBehaviour
 {
     private List<GameObject> nearbyPrey;
     private AIFishController controller;
-    void Start()
+    private void Start()
     {
         
         controller = GetComponentInParent<AIFishController>();
@@ -17,7 +17,7 @@ public class PreyDetection : MonoBehaviour
         nearbyPrey = new List<GameObject>();
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Prey"))
         {
@@ -26,16 +26,7 @@ public class PreyDetection : MonoBehaviour
         }
     }
 
-    void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Prey"))
-        {
-            nearbyPrey.Remove(other.gameObject);
-            if (nearbyPrey.Count == 0) controller.SetfoundPrey(false);
-        }
-    }
-
-    void ApproachClosestPrey()
+    private void ApproachClosestPrey()
     {
         float closestDistance = 50f;
         GameObject closestPrey = null;
@@ -52,8 +43,16 @@ public class PreyDetection : MonoBehaviour
 
         if (closestPrey != null ) 
         {
+            Debug.Log("set prey target");
             controller.SetfoundPrey(true);
-            controller.SetTargetPosition(closestPrey.transform.position);
+            Vector3 offset = (closestPrey.transform.position - transform.position).normalized * 2f;
+            controller.SetTargetPosition(closestPrey.transform.position + offset);
         }
+    }
+
+    public void RemovePrey(GameObject prey)
+    {
+        if (nearbyPrey.Contains(prey)) nearbyPrey.Remove(prey);
+        if (nearbyPrey.Count == 0) controller.SetfoundPrey(false);
     }
 }

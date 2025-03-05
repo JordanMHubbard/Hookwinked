@@ -4,6 +4,7 @@ using UnityEngine;
 public class AIFishSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject fishPrefab;
+    [SerializeField] private bool isEnabled = true;
     [SerializeField] private int numFish = 20;
     [SerializeField] private float paddingXZ = 20f;
     [SerializeField] private float paddingY = 5f;
@@ -14,14 +15,17 @@ public class AIFishSpawner : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        box = GetComponent<BoxCollider>();
-        SpawnFish();
-    }
+        if (!isEnabled) return;
 
-    // Update is called once per frame
-    void Update()
-    {
+        box = GetComponent<BoxCollider>();
         
+        if (box == null)
+        {
+            Debug.LogWarning($"{gameObject.name}: box has not been set!");
+            return;
+        }
+
+        SpawnFish();
     }
 
     private Vector3 GetRandomPoint()

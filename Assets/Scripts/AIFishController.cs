@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class AIFishController : MonoBehaviour
@@ -22,7 +23,6 @@ public class AIFishController : MonoBehaviour
     public void SetRepelDirection(Vector3 direction) { repelDirection = direction; }
     public void SetfoundPrey(bool isFound) { foundPrey = isFound; }
 
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -34,6 +34,7 @@ public class AIFishController : MonoBehaviour
             enabled = false;
         }
     }
+
 
     // Update is called once per frame
     void Update()
@@ -68,7 +69,7 @@ public class AIFishController : MonoBehaviour
             if (col.CompareTag("ReachableArea"))
             {
                 isInReachableArea = true;
-                //Debug.Log("In reachable area yipee");
+                Debug.Log("In reachable area yipee");
             }
         }
 
@@ -78,23 +79,17 @@ public class AIFishController : MonoBehaviour
     // Determines whether to generate random target or follow prey
     private bool FindTarget()
     {
-        if (foundPrey)
-        {
-            // targetLocation = Prey.location;
-        }
-        else 
-        {
-            // Later need to consider only getting points within a defined space 
-            Vector3 locationOffset = new Vector3 (Random.Range(-15,15), Random.Range(-5,5), Random.Range(-15,15));
-            targetLocation = transform.position + locationOffset;
-            //Debug.Log("targetLocation = " + targetLocation);
+        
+        // Later need to consider only getting points within a defined space 
+        Vector3 locationOffset = new Vector3 (Random.Range(-15,15), Random.Range(-5,5), Random.Range(-15,15));
+        targetLocation = transform.position + locationOffset;
+        //Debug.Log("targetLocation = " + targetLocation);
 
-            if (!IsAreaReachable(targetLocation, new Vector3(2, 2, 2)))
-            {
-                //Debug.Log("Area blocked!");
-                return false;
-            } 
-        }
+        if (!IsAreaReachable(targetLocation, new Vector3(2, 2, 2)))
+        {
+            //Debug.Log("Area blocked!");
+            return false;
+        } 
         
         return true;
     }
@@ -132,12 +127,6 @@ public class AIFishController : MonoBehaviour
         
         if (dist < 1f)
         {
-            if (foundPrey) //this will get unset once fish collides with prey
-            {   
-                targetLocation += transform.forward * 5f;
-                return;
-            }
-
             hasTarget = false;
         }
     }

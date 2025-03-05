@@ -57,7 +57,7 @@ public class ObstacleAvoidance : MonoBehaviour
         // Checks if any obstacles are currently in the way in the given direction
         Ray ray = new Ray(transform.position, direction);
         bool obstacleInWay = Physics.Raycast(ray, out RaycastHit hit, viewDistance, interactableLayer);
-
+        
         // Calculate angle between current forward direction and the direction of interest (target or forward)
         if (obstacleInWay)
         {
@@ -93,7 +93,7 @@ public class ObstacleAvoidance : MonoBehaviour
         {
             return;
         }
-        
+
         int i = 1;
         int numPoints = 50;
         float turnRatio = 1.618f;
