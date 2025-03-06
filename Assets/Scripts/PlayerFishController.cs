@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -166,10 +167,10 @@ public class PlayerFishController : MonoBehaviour
 
         if (other.CompareTag("Prey"))
         {
-            float energyProg = other.GetComponent<PreyBaitManager>().GetEnergyValue();
+            float energyProg = other.GetComponent<PreyManager>().GetEnergyValue();
             eatSoundComp.PlayRandomSound();
             energyComp.AddProgress(energyProg);
-            other.gameObject.SetActive(false);
+            GameManager.Instance.PreyConsumed(other.gameObject);
         }
     }
 

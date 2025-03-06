@@ -22,8 +22,8 @@ public class AIEatPrey : MonoBehaviour
         if (other.CompareTag("Prey"))
         {
             eatSoundComp.PlayRandomSound();
-            other.gameObject.SetActive(false);
             preyDetect.RemovePrey(other.gameObject);
+            GameManager.Instance.PreyConsumed(other.gameObject);
         }
     }
 }
