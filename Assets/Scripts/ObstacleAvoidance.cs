@@ -70,7 +70,7 @@ public class ObstacleAvoidance : MonoBehaviour
             if (angle < angleThreshold)
             {
                 // Maybe make it so it can only fire again once avoid obstacle has been called?
-                Debug.DrawLine(transform.position, transform.position + direction * viewDistance, Color.red, 15f);
+                //Debug.DrawLine(transform.position, transform.position + direction * viewDistance, Color.red, 15f);
                 if (doObstacleAvoidance && !controller.GetIsRepelling())
                 {
                     AvoidObstacle();
@@ -81,7 +81,7 @@ public class ObstacleAvoidance : MonoBehaviour
         }
         else 
         {
-            Debug.DrawLine(transform.position, transform.position + direction * viewDistance, Color.green, 15f);
+            //Debug.DrawLine(transform.position, transform.position + direction * viewDistance, Color.green, 15f);
             if (controller.GetIsRepelling()) controller.SetIsRepelling(false);
             return false;
         }
@@ -117,7 +117,7 @@ public class ObstacleAvoidance : MonoBehaviour
             Vector3 directionToPoint = (point - transform.position).normalized; 
             Ray ray = new Ray(transform.position, directionToPoint);
             bool hitObstacle = Physics.Raycast(ray, out RaycastHit hit, viewDistance, interactableLayer);
-            Debug.DrawLine(transform.position, transform.position + directionToPoint * viewDistance, Color.yellow, 15f);
+            //Debug.DrawLine(transform.position, transform.position + directionToPoint * viewDistance, Color.yellow, 15f);
             
             if (!hitObstacle && !isObstacleAtPoint(point))
             {

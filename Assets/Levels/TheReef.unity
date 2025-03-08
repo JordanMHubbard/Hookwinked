@@ -2137,7 +2137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fishPrefab: {fileID: 2802294388433091577, guid: f5be706788631e24b8d58fbe188f8ddf, type: 3}
-  isEnabled: 0
+  isEnabled: 1
   numFish: 10
   paddingXZ: 20
   paddingY: 5
