@@ -69,7 +69,7 @@ public class AIFishController : MonoBehaviour
             if (col.CompareTag("ReachableArea"))
             {
                 isInReachableArea = true;
-                Debug.Log("In reachable area yipee");
+                //Debug.Log("In reachable area yipee");
             }
         }
 
@@ -138,7 +138,7 @@ public class AIFishController : MonoBehaviour
 
         if (angle < 1f)
         {
-            Debug.Log("angle: " + angle);
+            //Debug.Log("angle: " + angle);
             isRepelling = false;
         }
     }

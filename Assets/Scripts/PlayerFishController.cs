@@ -163,7 +163,7 @@ public class PlayerFishController : MonoBehaviour
     /* Attacking */
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Entered: " + other.name);
+        //Debug.Log("Entered: " + other.name);
 
         if (other.CompareTag("Prey"))
         {

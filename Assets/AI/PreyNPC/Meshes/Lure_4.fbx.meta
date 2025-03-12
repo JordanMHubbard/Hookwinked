@@ -1,9 +1,39 @@
 fileFormatVersion: 2
-guid: d9689dd5602641e4bace678a5e83a205
+guid: ac0d29dada0414d44ab505417df8585d
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Black
+    second: {fileID: 2100000, guid: 3d7d90795f43b5f4eb32f1decb24054d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Lure_Blue
+    second: {fileID: 2100000, guid: 9abf50ce57643ad4b900d7e88e5497e3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Lure_Green
+    second: {fileID: 2100000, guid: 62b5e46a1e04b0a4385ece4cbe957d5a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Lure_Red
+    second: {fileID: 2100000, guid: 9d12e4f1e4741904dbf5db133b0ab707, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Lure_Yellow
+    second: {fileID: 2100000, guid: ca3672f6a017a4741a277010054c4d12, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal
+    second: {fileID: 2100000, guid: 09f6776625b402149a1f39a37e22b90d, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

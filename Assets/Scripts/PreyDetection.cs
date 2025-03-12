@@ -19,8 +19,10 @@ public class PreyDetection : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+
         if (other.CompareTag("Prey"))
         {
+            if (other.gameObject == null) return;
             nearbyPrey.Add(other.gameObject);
             ApproachClosestPrey();
         }
@@ -43,7 +45,7 @@ public class PreyDetection : MonoBehaviour
 
         if (closestPrey != null ) 
         {
-            Debug.Log("set prey target");
+            //Debug.Log("set prey target");
             controller.SetfoundPrey(true);
             Vector3 offset = (closestPrey.transform.position - transform.position).normalized * 2f;
             controller.SetTargetPosition(closestPrey.transform.position + offset);
