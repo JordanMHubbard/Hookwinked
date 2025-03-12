@@ -23,6 +23,7 @@ public class PreyDetection : MonoBehaviour
         if (other.CompareTag("Prey"))
         {
             if (other.gameObject == null) return;
+            if (nearbyPrey == null) return;
             nearbyPrey.Add(other.gameObject);
             ApproachClosestPrey();
         }
