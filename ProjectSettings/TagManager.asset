@@ -8,6 +8,7 @@ TagManager:
   - Prey
   - Obstacle
   - ReachableArea
+  - Bait
   layers:
   - Default
   - TransparentFX
