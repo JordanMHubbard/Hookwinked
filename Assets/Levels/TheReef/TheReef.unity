@@ -1977,7 +1977,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   preyPrefab: {fileID: 2531865066220570688, guid: 86df29908cb05df41bcf383edd0266c0, type: 3}
   isEnabled: 1
-  numPrey: 20
+  numPrey: 40
   paddingXZ: 20
   paddingY: 1
   interactableLayer:
@@ -3601,6 +3601,10 @@ PrefabInstance:
       propertyPath: energyBar
       value: 
       objectReference: {fileID: 885160424}
+    - target: {fileID: 2078965542548107645, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
+      propertyPath: depreciateRate
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2697439467013281173, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
       propertyPath: m_Enabled
       value: 1

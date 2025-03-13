@@ -13,8 +13,8 @@ public class PreyManager : MonoBehaviour
     }
     private void DetermineBaitStatus()
     {
-        // 1/4 chance prey will be bait
-        int choice = Random.Range(0, 4);
+        // 1/6 chance prey will be bait
+        int choice = Random.Range(0, 6);
         
         if (choice == 0) 
         {
@@ -23,7 +23,7 @@ public class PreyManager : MonoBehaviour
         }
         else isBait = false;
 
-        Debug.Log("is Bait? " + isBait);
+        //Debug.Log("is Bait? " + isBait);
         
     }
 

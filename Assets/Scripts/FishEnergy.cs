@@ -15,7 +15,7 @@ public class FishEnergy : MonoBehaviour
     [Tooltip("The rate at which currentProgress is updated to targetProgress")]
     [SerializeField] private float updateRate = 50f;
     [Tooltip("The rate at which currentProgress depreciates to 0")]
-    [SerializeField] private float depreciateRate = 5f;
+    [SerializeField] private float depreciateRate = 2f;
     private Coroutine DepreciateCoroutine;
 
     private void Start()
@@ -51,15 +51,27 @@ public class FishEnergy : MonoBehaviour
     // Updates energy progress when target progress value is changed
     IEnumerator UpdateProgress()
     {
-        shouldUpdate = false; // PROBLEM, causes DepreciateProg coroutine to never stop
+        shouldUpdate = false;
         shouldDecrease = false;
         
         float rateOfChange = currentProgress < targetProgress ? updateRate : -updateRate;
         while (Math.Abs(currentProgress - targetProgress) > 0.1)
         {
             currentProgress += rateOfChange * Time.deltaTime;
+            //Debug.Log("rate of change: "+ rateOfChange);
+            //Debug.Log("current-target: "+ Math.Abs(currentProgress - targetProgress));
+            //Debug.Log("TargetProgress: "+ targetProgress);
             //Debug.Log("CurrentProgress: "+ currentProgress);
             energyBar.value = currentProgress / 100f;
+            
+            if (updateRate > 0)
+            {
+                if (currentProgress > targetProgress) break;
+            }
+            else 
+            {
+                if (currentProgress < targetProgress) break;
+            }
 
             yield return null;
         }

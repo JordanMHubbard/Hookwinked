@@ -106,7 +106,7 @@ public class PreySpawner : MonoBehaviour
 
     private void SpawnNewPrey(GameObject prey)
     {
-        Debug.Log("We about to spawn new prey.");
+        //Debug.Log("We about to spawn new prey.");
         StartCoroutine(SpawnPreyDelayed(prey));
     }
 }
