@@ -1930,7 +1930,7 @@ MonoBehaviour:
   isEnabled: 1
   numFish: 10
   paddingXZ: 20
-  paddingY: 5
+  paddingY: 1
   fishMeshes:
   - {fileID: 3738563700609943110, guid: 6f427e025e6f4d14ba4fb6b50df2587a, type: 3}
   - {fileID: 7419086326482808619, guid: d6a7b4e2e1653464e87f72f2f1eacebe, type: 3}
@@ -1979,7 +1979,7 @@ MonoBehaviour:
   isEnabled: 1
   numPrey: 20
   paddingXZ: 20
-  paddingY: 5
+  paddingY: 1
   interactableLayer:
     serializedVersion: 2
     m_Bits: 1

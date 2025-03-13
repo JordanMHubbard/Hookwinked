@@ -164,14 +164,23 @@ public class PlayerFishController : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         //Debug.Log("Entered: " + other.name);
+        if (other.CompareTag("Prey")) EatPrey(other);
+        else if (other.CompareTag("Bait")) StartStruggleMinigame(other);
+    }
 
-        if (other.CompareTag("Prey"))
-        {
-            float energyProg = other.GetComponent<PreyManager>().GetEnergyValue();
-            eatSoundComp.PlayRandomSound();
-            energyComp.AddProgress(energyProg);
-            GameManager.Instance.PreyConsumed(other.gameObject);
-        }
+    void EatPrey (Collider other)
+    {
+        float energyProg = other.GetComponent<PreyManager>().GetEnergyValue();
+        eatSoundComp.PlayRandomSound();
+        energyComp.AddProgress(energyProg);
+        GameManager.Instance.PreyConsumed(other.gameObject);
+    }
+
+    void StartStruggleMinigame (Collider other)
+    {
+        GameManager.Instance.PreyConsumed(other.gameObject);
+        Debug.Log("Fightfor your life!");
+        energyComp.AddProgress(-10f);
     }
 
      /* Floating */

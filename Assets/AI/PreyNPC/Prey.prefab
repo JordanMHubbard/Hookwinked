@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2222780829435266296}
   - component: {fileID: 7814772967951755116}
   - component: {fileID: 2210087301066364961}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Prey
   m_TagString: Prey
   m_Icon: {fileID: 0}

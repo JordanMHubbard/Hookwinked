@@ -7,7 +7,7 @@ public class PreySpawner : MonoBehaviour
     [SerializeField] private bool isEnabled = true;
     [SerializeField] private int numPrey = 40;
     [SerializeField] private float paddingXZ = 20f;
-    [SerializeField] private float paddingY = 5f;
+    [SerializeField] private float paddingY = 1f;
     [SerializeField] private LayerMask interactableLayer;
     private BoxCollider box;
 

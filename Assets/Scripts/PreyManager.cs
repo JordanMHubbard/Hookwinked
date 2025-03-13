@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PreyManager : MonoBehaviour
@@ -15,8 +16,15 @@ public class PreyManager : MonoBehaviour
         // 1/4 chance prey will be bait
         int choice = Random.Range(0, 4);
         
-        if (choice == 0) isBait = true;
+        if (choice == 0) 
+        {
+            isBait = true;
+            gameObject.tag = "Bait";
+        }
         else isBait = false;
+
+        Debug.Log("is Bait? " + isBait);
+        
     }
 
     public float GetPointValue()
