@@ -1684,6 +1684,14 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 15c354a1-93bd-4cce-968a-7bdbdf86b4c3
     m_ActionName: 'HookedMinigame/Shake[/Mouse/delta,/Pen/delta]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a177d1c7-b8ff-45e2-80f5-81e41279951a
+    m_ActionName: 'Player/MenuOpen[/Keyboard/escape]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 36a6ef28-8428-4d54-9dc7-1a4438c6426c
+    m_ActionName: 'UI/MenuClose[/Keyboard/escape]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -2688,7 +2696,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 2
   boundsOffset: 5
-  playerInput: {fileID: 63018628243691732}
 --- !u!4 &1135487116 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3764427661604061869, guid: 950e059794c583b42aa4558d0d071e6d, type: 3}
@@ -2819,8 +2826,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -24, y: -270}
-  m_SizeDelta: {x: 380.818, y: 113.947}
+  m_AnchoredPosition: {x: -0.000015258789, y: -291.7656}
+  m_SizeDelta: {x: 632, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1240224040
 MonoBehaviour:
@@ -2842,7 +2849,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: SHAKE!
+  m_text: FIGHT FOR YOUR LIFE!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 52387268763ab93498d5fc8a83ad9807, type: 2}
   m_sharedMaterial: {fileID: -7589364615943570464, guid: 52387268763ab93498d5fc8a83ad9807, type: 2}
@@ -2869,7 +2876,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 89
+  m_fontSize: 69
   m_fontSizeBase: 100
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -4381,6 +4388,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8057932145516715874, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 8057932145516715874, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
+      propertyPath: m_ActionEvents.Array.data[20].m_ActionId
+      value: a177d1c7-b8ff-45e2-80f5-81e41279951a
+      objectReference: {fileID: 0}
+    - target: {fileID: 8057932145516715874, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
+      propertyPath: m_ActionEvents.Array.data[21].m_ActionId
+      value: 36a6ef28-8428-4d54-9dc7-1a4438c6426c
+      objectReference: {fileID: 0}
+    - target: {fileID: 8057932145516715874, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
+      propertyPath: m_ActionEvents.Array.data[22].m_ActionId
+      value: 15c354a1-93bd-4cce-968a-7bdbdf86b4c3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8057932145516715874, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
+      propertyPath: m_ActionEvents.Array.data[20].m_ActionName
+      value: 'Player/MenuOpen[/Keyboard/escape]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8057932145516715874, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
+      propertyPath: m_ActionEvents.Array.data[21].m_ActionName
+      value: 'UI/MenuClose[/Keyboard/escape]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8057932145516715874, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
+      propertyPath: m_ActionEvents.Array.data[22].m_ActionName
+      value: 'HookedMinigame/Shake[/Mouse/delta,/Pen/delta]'
+      objectReference: {fileID: 0}
     - target: {fileID: 8478309598313259356, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
       propertyPath: m_Layer
       value: 0
@@ -4413,51 +4448,10 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7440325418165233619, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 63018628243691726}
     - targetCorrespondingSourceObject: {fileID: 8735097673828181742, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
       insertIndex: -1
       addedObject: {fileID: 127113775}
   m_SourcePrefab: {fileID: 100100000, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
---- !u!1 &63018628243691725 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7440325418165233619, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
-  m_PrefabInstance: {fileID: 63018628243691724}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &63018628243691726
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 63018628243691725}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!114 &63018628243691732 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8057932145516715874, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
-  m_PrefabInstance: {fileID: 63018628243691724}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 63018628243691725}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &8080454606334249531
 PrefabInstance:
   m_ObjectHideFlags: 0

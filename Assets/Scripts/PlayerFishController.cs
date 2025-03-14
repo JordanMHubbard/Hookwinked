@@ -162,8 +162,8 @@ public class PlayerFishController : MonoBehaviour
     void StartStruggleMinigame (Collider other)
     {
         GameManager.Instance.PreyConsumed(other.gameObject);
-        Debug.Log("Fightfor your life!");
-        InputManager.PlayerInput.SwitchCurrentActionMap("HookedMinigame");
+        Debug.Log("Fight for your life!");
+        InputManager.instance.SwitchCurrentMap(InputManager.ActionMap.HookedMinigame);
         energyComp.AddProgress(-10f);
     }
 

@@ -6,6 +6,15 @@
             "id": "df70fa95-8a34-4494-b137-73ab6b9c7d37",
             "actions": [
                 {
+                    "name": "MenuOpen",
+                    "type": "Button",
+                    "id": "a177d1c7-b8ff-45e2-80f5-81e41279951a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Move",
                     "type": "Value",
                     "id": "351f2ccd-1f9f-44bf-9bec-d62ac5c5f408",
@@ -483,6 +492,28 @@
                     "isPartOfComposite": false
                 },
                 {
+                    "name": "",
+                    "id": "7d7a9488-2c0d-49b2-82b9-0d55cae90292",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "MenuOpen",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cc78f75f-0057-407f-93f5-2875980abe4e",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "MenuOpen",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
                     "name": "2D Vector",
                     "id": "44b372ab-1f08-4fe3-85af-ea48c160c7bc",
                     "path": "2DVector",
@@ -521,6 +552,15 @@
             "name": "UI",
             "id": "272f6d14-89ba-496f-b7ff-215263d3219f",
             "actions": [
+                {
+                    "name": "MenuClose",
+                    "type": "Button",
+                    "id": "36a6ef28-8428-4d54-9dc7-1a4438c6426c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
                 {
                     "name": "Navigate",
                     "type": "PassThrough",
@@ -876,6 +916,28 @@
                     "action": "Navigate",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "ce28a8d0-5013-4b2e-97e8-f71f81de9df3",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "MenuClose",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4dfb89b9-8a8c-442e-ac40-94cec35fd293",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "MenuClose",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 },
                 {
                     "name": "",

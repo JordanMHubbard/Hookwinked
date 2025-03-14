@@ -6,23 +6,27 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private float InteractionDistance = 3f;
     [SerializeField] private LayerMask interactableLayer;
     [SerializeField] private Camera mainCamera;
-    private PlayerInput playerInput;
     private Interactable currentInteractable;
     
     void Awake()
     {
-        // Get PlayerInput component 
-        playerInput = GetComponent<PlayerInput>();
+        
     }
 
     public void OnEnable()
     {
-        playerInput.actions["Interact"].performed += OnInteract;
+        if (InputManager.instance != null)
+        {
+            InputManager.PlayerInput.actions["Interact"].performed += OnInteract;
+        }
     }
 
     public void OnDisable()
     {
-        playerInput.actions["Interact"].performed -= OnInteract;
+        if (InputManager.instance != null)
+        {
+            InputManager.PlayerInput.actions["Interact"].performed -= OnInteract;
+        }
     }
 
 

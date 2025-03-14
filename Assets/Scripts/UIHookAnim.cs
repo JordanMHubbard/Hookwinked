@@ -8,26 +8,23 @@ public class UIHookAnim : MonoBehaviour
 {
     [SerializeField] private float duration = 2f;
     [SerializeField] private float boundsOffset = 5f;
-    [SerializeField] public PlayerInput playerInput;
     private bool isGrowing;
     private Vector3 originalPos;
     private Vector2 currentInput;
     private Vector2 previousInput;
     private float currentSpeed;
     private RectTransform rectTransform;
-    private InputAction shakeAction;
+    private bool isSwitched;
 
 
     private void Awake()
     {
-        shakeAction = playerInput.actions["Shake"];
         originalPos = transform.position;
         rectTransform = GetComponent<RectTransform>();
     }
 
     private void Start()
     {
-        //StartCoroutine(Bounce());
 
     }
 
@@ -44,12 +41,11 @@ public class UIHookAnim : MonoBehaviour
     private void Update()
     {
         CalculatePosition();
-        //transform.position += new Vector3(shakeAction.ReadValue<Vector2>().x, shakeAction.ReadValue<Vector2>().y, 0f) * 0.05f;
     }
 
     private void CalculatePosition()
     {
-        currentInput = shakeAction.ReadValue<Vector2>();
+        currentInput = InputManager.instance.ShakeInput;
         float xOffset = Mathf.Clamp(currentInput.x, -boundsOffset, boundsOffset);
         float yOffset = Mathf.Clamp(currentInput.y, -boundsOffset, boundsOffset);
         transform.position += new Vector3(xOffset, yOffset, 0f) * 0.05f;
@@ -62,10 +58,9 @@ public class UIHookAnim : MonoBehaviour
         currentSpeed = (input - previousInput).magnitude;
         //Debug.Log("currentSpeed: " + currentSpeed);
         float struggleRate = Mathf.Clamp(currentSpeed * 0.1f, 0f, 5f) / 20f;
-        Debug.Log("struggleRate: " + struggleRate);
+        //Debug.Log("struggleRate: " + struggleRate);
         
         if (struggleRate > 0.1f && !isGrowing) StartCoroutine(Grow(struggleRate));
-        else if (struggleRate < 0.1f) isGrowing = false;
     }
 
     private IEnumerator Grow(float rate)
@@ -78,5 +73,15 @@ public class UIHookAnim : MonoBehaviour
         }
         
         isGrowing = false;
+        SwitchBack();
+    }
+
+    private void SwitchBack()
+    {
+        if (!isSwitched)
+        {
+            isSwitched = true;
+            InputManager.instance.SwitchCurrentMap(InputManager.ActionMap.Player);
+        }
     }
 }
