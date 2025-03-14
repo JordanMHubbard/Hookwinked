@@ -4257,6 +4257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67c4d8c9061c24b4fa28ce6ce3decc9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerHUD: {fileID: 1331854657}
   HookedMinigame: {fileID: 1112362738}
 --- !u!4 &2045437721
 Transform:

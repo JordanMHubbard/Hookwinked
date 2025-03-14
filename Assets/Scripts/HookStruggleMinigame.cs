@@ -38,7 +38,6 @@ public class HookStruggleMinigame : MonoBehaviour
 
     private void CalculateStruggle()
     {
-        Debug.Log("That's a clock it!");
         currentInput = InputManager.instance.ShakeInput;
         float xOffset = Mathf.Clamp(currentInput.x, -boundsOffset, boundsOffset);
         float yOffset = Mathf.Clamp(currentInput.y, -boundsOffset, boundsOffset);
@@ -64,7 +63,6 @@ public class HookStruggleMinigame : MonoBehaviour
         // Free from hook
         isGrowing = false;
         rectTransform.localScale = new Vector3(1f, 1f, 1f);
-        InputManager.instance.SwitchCurrentMap(InputManager.ActionMap.Player);
-        gameObject.SetActive(false);
+        GameManager.Instance.ExitHookedMinigame();
     }
 }

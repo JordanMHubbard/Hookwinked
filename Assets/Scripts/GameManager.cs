@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour
     // Singleton
     public static GameManager Instance {get; private set;}
     public event System.Action<GameObject> OnPreyConsumed;
+    [SerializeField] private GameObject PlayerHUD;
     [SerializeField] private GameObject HookedMinigame;
 
 
@@ -27,10 +28,20 @@ public class GameManager : MonoBehaviour
 
     public void StartHookedMinigame()
     {
-        if (HookedMinigame == null) return;
+        if (HookedMinigame == null ||  PlayerHUD == null) return;
 
+        PlayerHUD.SetActive(false);
         HookedMinigame.SetActive(true);
         InputManager.instance.SwitchCurrentMap(InputManager.ActionMap.HookedMinigame);
+    }
+
+    public void ExitHookedMinigame()
+    {
+        if (HookedMinigame == null ||  PlayerHUD == null) return;
+
+        HookedMinigame.SetActive(false);
+        PlayerHUD.SetActive(true);
+        InputManager.instance.SwitchCurrentMap(InputManager.ActionMap.Player);
     }
 
    
