@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class PlayerFishController : MonoBehaviour
@@ -10,7 +9,7 @@ public class PlayerFishController : MonoBehaviour
     [SerializeField] private float swimSpeed = 4f;
     [SerializeField] private float floatSpeed = 2f;
     [SerializeField] private float smoothInputTime = 0.1f;
-     private float currentSpeed;
+    private float currentSpeed;
 
     [Header("Look Parameters")]
     [SerializeField] private float mouseSensitivity = 0.7f;
@@ -44,13 +43,6 @@ public class PlayerFishController : MonoBehaviour
     [Header("References")]
     [SerializeField] private CharacterController characterController;
     [SerializeField] private Camera mainCamera;
-    [SerializeField] public PlayerInput playerInput;
-    
-    // Actions
-    public InputAction swimAction;
-    public InputAction dashAction;
-    public InputAction floatAction;
-    public InputAction lookAction;
 
     // Movement and Rotation
     private Vector3 currentMovement;
@@ -70,12 +62,6 @@ public class PlayerFishController : MonoBehaviour
         energyComp = GetComponent<FishEnergy>();
         eatSoundComp = GetComponent<SoundRandomizer>();
 
-        // Initialize Input
-        swimAction = playerInput.actions["Move"];
-        dashAction = playerInput.actions["Attack"];
-        lookAction = playerInput.actions["Look"];
-        floatAction = playerInput.actions["MoveVertical"];
-
         // Setup
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -92,7 +78,7 @@ public class PlayerFishController : MonoBehaviour
         HandleRoation();
         ShouldTilt();
 
-        if (dashAction.IsPressed() && !isDashing)
+        if (InputManager.instance.DashInput && !isDashing)
         {
             StartCoroutine(ChargeDash());
         }
@@ -101,13 +87,13 @@ public class PlayerFishController : MonoBehaviour
     /* General Swimming Movement */
     private Vector3 CalculateWorldDirection()
     {
-        if (swimAction == null) {return Vector3.zero;}
+        if (InputManager.instance == null) {return Vector3.zero;}
 
         // Action inputs mapped to vector2 have either x or y inputs
         // These values correlate the direction the player is moving
-        float xInput = swimAction.ReadValue<Vector2>().x;
-        float zInput = swimAction.ReadValue<Vector2>().y;
-        float yInput = floatAction.ReadValue<Vector2>().y;
+        float xInput = InputManager.instance.SwimInput.x;
+        float zInput = InputManager.instance.SwimInput.y;
+        float yInput = InputManager.instance.FloatInput.y;
         Vector3 inputDirection = new Vector3(xInput, yInput, zInput);
 
         // Interpolates input vector to desired input so that movement is smoothed
@@ -126,7 +112,7 @@ public class PlayerFishController : MonoBehaviour
         currentMovement.y = worldDirection.y * floatSpeed;
         
         // Allow player to move forward based on where camera is looking
-        if (swimAction.ReadValue<Vector2>().y > 0f)
+        if (InputManager.instance.SwimInput.y > 0f)
         {
             currentMovement.y += mainCamera.transform.forward.y * currentSpeed;
         }
@@ -148,10 +134,10 @@ public class PlayerFishController : MonoBehaviour
 
     private void HandleRoation()
     {
-        if (lookAction == null) {return;}
+        if (InputManager.instance == null) {return;}
 
-        float mouseXRotation = lookAction.ReadValue<Vector2>().x * mouseSensitivity;
-        float mouseYRotation = lookAction.ReadValue<Vector2>().y * mouseSensitivity;
+        float mouseXRotation = InputManager.instance.LookInput.x * mouseSensitivity;
+        float mouseYRotation = InputManager.instance.LookInput.y * mouseSensitivity;
 
         ApplyHorizontalRotation(mouseXRotation);
         ApplyVerticalRotation(mouseYRotation);
@@ -177,7 +163,7 @@ public class PlayerFishController : MonoBehaviour
     {
         GameManager.Instance.PreyConsumed(other.gameObject);
         Debug.Log("Fightfor your life!");
-        playerInput.SwitchCurrentActionMap("HookedMinigame");
+        InputManager.PlayerInput.SwitchCurrentActionMap("HookedMinigame");
         energyComp.AddProgress(-10f);
     }
 
@@ -191,7 +177,7 @@ public class PlayerFishController : MonoBehaviour
         isDashing = true; 
         currentSpeed = 2f;
 
-        while (dashAction.IsPressed() && currentSpeed < 12f)
+        while (InputManager.instance.DashInput && currentSpeed < 12f)
         {
             currentSpeed += dashChargeRate * Time.deltaTime;
             dashChargeBar.value = currentSpeed * 8.33f / 100f;
@@ -265,7 +251,7 @@ public class PlayerFishController : MonoBehaviour
     {
         if (!isViewBobEnabled) return;
         
-        if (swimAction.IsPressed() || floatAction.IsPressed())
+        if (InputManager.instance.SwimIsPressed || InputManager.instance.FloatIsPressed)
         {
             StopViewBob();
         }
@@ -293,7 +279,7 @@ public class PlayerFishController : MonoBehaviour
     /* Tilting */
     void ShouldTilt()
     {
-        float horiztonalInput = swimAction.ReadValue<Vector2>().x;
+        float horiztonalInput = InputManager.instance.SwimInput.x;
 
         // Checks if player is pressing a or d or is idling and plays the appropriate tilt animation
         if (horiztonalInput < 0f && !Physics.Raycast(transform.position, -transform.right, out hit, 1f, layers))

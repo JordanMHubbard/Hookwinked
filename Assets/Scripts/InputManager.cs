@@ -4,16 +4,15 @@ using UnityEngine;
 public class InputManager : MonoBehaviour
 {
     public static InputManager instance;
-
+    public static PlayerInput PlayerInput;
+    
     public Vector2 SwimInput { get; private set;}
-    public bool swimIsPressed { get; private set;}
-    public bool dashInput { get; private set;}
-    public Vector2 lookInput { get; private set;}
-    public Vector2 floatInput { get; private set;}
-    public bool floatIsPressed { get; private set;}
+    public bool SwimIsPressed { get; private set;}
+    public bool DashInput { get; private set;}
+    public Vector2 LookInput { get; private set;}
+    public Vector2 FloatInput { get; private set;}
+    public bool FloatIsPressed { get; private set;}
     public bool MenuOpenInput { get; private set;}
-
-    public static PlayerInput playerInput;
     
     private InputAction swimAction;
     private InputAction dashAction;
@@ -25,22 +24,23 @@ public class InputManager : MonoBehaviour
     {
         if (instance == null) instance = this;
 
-        playerInput = GetComponent<PlayerInput>();
+        PlayerInput = GetComponent<PlayerInput>();
 
-        swimAction = playerInput.actions["Move"];
-        lookAction = playerInput.actions["Look"];
-        dashAction = playerInput.actions["Attack"];
-        floatAction = playerInput.actions["MoveVertical"];
+        swimAction = PlayerInput.actions["Move"];
+        lookAction = PlayerInput.actions["Look"];
+        dashAction = PlayerInput.actions["Attack"];
+        floatAction = PlayerInput.actions["MoveVertical"];
     }
 
     private void Update()
     {
+
         SwimInput = swimAction.ReadValue<Vector2>();
-        swimIsPressed = swimAction.WasPressedThisFrame();
-        lookInput = lookAction.ReadValue<Vector2>();
-        dashInput = dashAction.WasPressedThisFrame();
-        floatInput = floatAction.ReadValue<Vector2>();
-        floatIsPressed = floatAction.WasPressedThisFrame();
-        MenuOpenInput = menuOpenAction.WasPressedThisFrame();
+        SwimIsPressed = swimAction.IsPressed();
+        LookInput = lookAction.ReadValue<Vector2>();
+        DashInput = dashAction.IsPressed();
+        FloatInput = floatAction.ReadValue<Vector2>();
+        FloatIsPressed = floatAction.IsPressed();
+        //MenuOpenInput = menuOpenAction.WasPressedThisFrame();
     }
 }
