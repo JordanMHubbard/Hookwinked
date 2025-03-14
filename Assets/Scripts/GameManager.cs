@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -29,11 +30,19 @@ public class GameManager : MonoBehaviour
     public void StartHookedMinigame()
     {
         if (HookedMinigame == null ||  PlayerHUD == null) return;
+        
+        StartCoroutine(ActivateHookedMinigame());
+    }
+
+    private IEnumerator ActivateHookedMinigame()
+    {
+        yield return new WaitForSeconds(1f);
 
         PlayerHUD.SetActive(false);
         HookedMinigame.SetActive(true);
         InputManager.instance.SwitchCurrentMap(InputManager.ActionMap.HookedMinigame);
     }
+
 
     public void ExitHookedMinigame()
     {

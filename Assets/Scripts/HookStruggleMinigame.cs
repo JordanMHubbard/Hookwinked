@@ -15,13 +15,18 @@ public class HookStruggleMinigame : MonoBehaviour
     private Vector2 currentInput;
     private Vector2 previousInput;
     private float currentSpeed;
-    private bool hasStarted = false;
+    private bool isAcceptingInput = false;
 
 
     private void Awake()
     {
         originalPos = FishHookUI.transform.position;
         rectTransform = FishHookUI.GetComponent<RectTransform>();
+    }
+
+    private void OnEnable()
+    {
+        isAcceptingInput = true;
     }
 
     private IEnumerator Bounce()
@@ -33,7 +38,7 @@ public class HookStruggleMinigame : MonoBehaviour
 
     private void Update()
     {
-        CalculateStruggle();
+        if (isAcceptingInput) CalculateStruggle();
     }
 
     private void CalculateStruggle()
@@ -60,9 +65,16 @@ public class HookStruggleMinigame : MonoBehaviour
             yield return null;
         }
         
-        // Free from hook
-        isGrowing = false;
+        // Play animation of fish freeing from hook HERE
         rectTransform.localScale = new Vector3(1f, 1f, 1f);
+        isGrowing = false;
+        isAcceptingInput = false;
+        StartCoroutine(EndMinigame()); // End game
+    }
+
+    private IEnumerator EndMinigame()
+    {
+        yield return new WaitForSeconds(1f);
         GameManager.Instance.ExitHookedMinigame();
     }
 }
