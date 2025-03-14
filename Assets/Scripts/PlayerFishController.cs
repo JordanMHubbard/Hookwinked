@@ -56,7 +56,7 @@ public class PlayerFishController : MonoBehaviour
     private FishEnergy energyComp;
     private SoundRandomizer eatSoundComp;
 
-     void Awake()
+    private void Awake()
     {
         // Initialize components
         energyComp = GetComponent<FishEnergy>();
@@ -71,7 +71,7 @@ public class PlayerFishController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         ShouldViewBob();
         HandleMovement();
@@ -144,14 +144,14 @@ public class PlayerFishController : MonoBehaviour
     }
 
     /* Attacking */
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         //Debug.Log("Entered: " + other.name);
         if (other.CompareTag("Prey")) EatPrey(other);
         else if (other.CompareTag("Bait")) StartStruggleMinigame(other);
     }
 
-    void EatPrey (Collider other)
+    private void EatPrey (Collider other)
     {
         float energyProg = other.GetComponent<PreyManager>().GetEnergyValue();
         eatSoundComp.PlayRandomSound();
@@ -159,18 +159,18 @@ public class PlayerFishController : MonoBehaviour
         GameManager.Instance.PreyConsumed(other.gameObject);
     }
 
-    void StartStruggleMinigame (Collider other)
+    private void StartStruggleMinigame (Collider other)
     {
         GameManager.Instance.PreyConsumed(other.gameObject);
         Debug.Log("Fight for your life!");
-        InputManager.instance.SwitchCurrentMap(InputManager.ActionMap.HookedMinigame);
+        GameManager.Instance.StartHookedMinigame();
         energyComp.AddProgress(-10f);
     }
 
      /* Floating */
 
     /* Dashing */
-    IEnumerator ChargeDash()
+    private IEnumerator ChargeDash()
     {
         dashKeybind.alpha = 0.5f;
         
@@ -210,7 +210,7 @@ public class PlayerFishController : MonoBehaviour
         StartCoroutine(EndDash());
     }*/
 
-    IEnumerator EndDash()
+    private IEnumerator EndDash()
     {
         float elapsedTime = 0f;
         float smoothTime = 0.3f; 
@@ -247,7 +247,7 @@ public class PlayerFishController : MonoBehaviour
     }
 
     /*  View Bobbing */
-    void ShouldViewBob()
+    private void ShouldViewBob()
     {
         if (!isViewBobEnabled) return;
         
@@ -262,7 +262,7 @@ public class PlayerFishController : MonoBehaviour
 
     }
 
-    void ViewBob()
+    private void ViewBob()
     {
         Vector3 pos = Vector3.zero;
         float bobOffset = Mathf.Sin(Time.time * bobFrequency) * bobAmplitude;
@@ -270,14 +270,14 @@ public class PlayerFishController : MonoBehaviour
         mainCamera.transform.localPosition += pos;
     }
 
-    void StopViewBob()
+    private void StopViewBob()
     {
         if (Vector3.Distance(mainCamera.transform.localPosition, startPos) < 0.01f) { return; }
         mainCamera.transform.localPosition = Vector3.Lerp(mainCamera.transform.localPosition, startPos, Time.deltaTime);
     }
 
     /* Tilting */
-    void ShouldTilt()
+    private void ShouldTilt()
     {
         float horiztonalInput = InputManager.instance.SwimInput.x;
 

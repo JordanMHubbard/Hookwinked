@@ -69,10 +69,6 @@ public class InputManager : MonoBehaviour
                 HandleHookedMinigameInput();
                 break;
         }
-        
-        //HandlePlayerInput();
-        //HandleUIInput();
-        //HandleHookedMinigameInput();
     }
 
     private void HandlePlayerInput()
@@ -98,15 +94,14 @@ public class InputManager : MonoBehaviour
 
     public void SwitchCurrentMap(ActionMap map)
     {
-        // Switch maps
         PlayerInput.SwitchCurrentActionMap(map.ToString());
         FlushInput();
-
         currentMap = map;
     }
 
     private void FlushInput()
     {
+        // Player
         SwimInput = Vector2.zero;
         SwimIsPressed = false;
         LookInput = Vector2.zero;
@@ -114,5 +109,9 @@ public class InputManager : MonoBehaviour
         FloatInput = Vector2.zero;
         FloatIsPressed = false;
         MenuOpenInput = false;
+        // UI
+        UIMenuCloseInput = false;
+        // Hooked Minigame
+        ShakeInput = Vector2.zero;
     }
 }
