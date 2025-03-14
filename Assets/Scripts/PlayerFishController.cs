@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -67,24 +66,22 @@ public class PlayerFishController : MonoBehaviour
 
      void Awake()
     {
+        // Initialize components
         energyComp = GetComponent<FishEnergy>();
         eatSoundComp = GetComponent<SoundRandomizer>();
-    }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
+        // Initialize Input
+        swimAction = playerInput.actions["Move"];
+        dashAction = playerInput.actions["Attack"];
+        lookAction = playerInput.actions["Look"];
+        floatAction = playerInput.actions["MoveVertical"];
+
+        // Setup
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         mouseSensitivity /= 10f;
         currentSpeed = swimSpeed;
         startPos = mainCamera.transform.localPosition;
-
-        swimAction = playerInput.actions["Move"];
-        dashAction = playerInput.actions["Attack"];
-        lookAction = playerInput.actions["Look"];
-        floatAction = playerInput.actions["MoveVertical"];
-        
     }
 
     // Update is called once per frame
@@ -180,6 +177,7 @@ public class PlayerFishController : MonoBehaviour
     {
         GameManager.Instance.PreyConsumed(other.gameObject);
         Debug.Log("Fightfor your life!");
+        playerInput.SwitchCurrentActionMap("HookedMinigame");
         energyComp.AddProgress(-10f);
     }
 
