@@ -49,7 +49,7 @@ public class FishEnergy : MonoBehaviour
     }
 
     // Updates energy progress when target progress value is changed
-    IEnumerator UpdateProgress()
+    private IEnumerator UpdateProgress()
     {
         shouldUpdate = false;
         shouldDecrease = false;
@@ -82,7 +82,7 @@ public class FishEnergy : MonoBehaviour
     }
 
     // Depreciates energy constantly unless energy is being updated
-    IEnumerator DepreciateProgress()
+    private IEnumerator DepreciateProgress()
     {
         shouldDecrease = false;
         
