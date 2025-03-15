@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
     // Singleton
     public static GameManager Instance {get; private set;}
     public event System.Action<GameObject> OnPreyConsumed;
+    public event System.Action OnHookedMinigameFinished;
     [SerializeField] private GameObject PlayerHUD;
     [SerializeField] private GameObject HookedMinigame;
 
@@ -51,6 +52,8 @@ public class GameManager : MonoBehaviour
         HookedMinigame.SetActive(false);
         PlayerHUD.SetActive(true);
         InputManager.instance.SwitchCurrentMap(InputManager.ActionMap.Player);
+        //Increase player speed temporarily
+        OnHookedMinigameFinished?.Invoke();
     }
 
    

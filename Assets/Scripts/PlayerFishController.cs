@@ -45,6 +45,7 @@ public class PlayerFishController : MonoBehaviour
     [SerializeField] private Camera mainCamera;
 
     // Movement and Rotation
+    private bool isFrozen;
     private Vector3 currentMovement;
     private float verticalRotation;
 
@@ -70,7 +71,11 @@ public class PlayerFishController : MonoBehaviour
         startPos = mainCamera.transform.localPosition;
     }
 
-    // Update is called once per frame
+    private void OnEnable()
+    {
+        GameManager.Instance.OnHookedMinigameFinished += OnEndHookedMinigame;
+    }
+
     private void Update()
     {
         ShouldViewBob();
@@ -105,6 +110,7 @@ public class PlayerFishController : MonoBehaviour
 
     private void HandleMovement()
     {
+        if (isFrozen) return;
         // Calculate current movement vector
         Vector3 worldDirection = CalculateWorldDirection();
         currentMovement.x = worldDirection.x * currentSpeed;
@@ -148,10 +154,10 @@ public class PlayerFishController : MonoBehaviour
     {
         //Debug.Log("Entered: " + other.name);
         if (other.CompareTag("Prey")) EatPrey(other);
-        else if (other.CompareTag("Bait")) StartStruggleMinigame(other);
+        else if (other.CompareTag("Bait")) StartHookedMinigame(other);
     }
 
-    private void EatPrey (Collider other)
+    private void EatPrey(Collider other)
     {
         float energyProg = other.GetComponent<PreyManager>().GetEnergyValue();
         eatSoundComp.PlayRandomSound();
@@ -159,7 +165,7 @@ public class PlayerFishController : MonoBehaviour
         GameManager.Instance.PreyConsumed(other.gameObject);
     }
 
-    private void StartStruggleMinigame (Collider other)
+    private void StartHookedMinigame(Collider other)
     {
         GameManager.Instance.PreyConsumed(other.gameObject);
         Debug.Log("Fight for your life!");
@@ -167,7 +173,31 @@ public class PlayerFishController : MonoBehaviour
         energyComp.AddProgress(-10f);
     }
 
-     /* Floating */
+    private void OnEndHookedMinigame()
+    {
+        currentSpeed = 12f;
+        isFrozen = true;
+        StartCoroutine(PostHookedDashReset());
+    }
+
+    private IEnumerator PostHookedDashReset()
+    {
+        float elapsedTime = 0f;
+        float taperOffRate = (currentSpeed - swimSpeed) / 1.5f; // subtract desired end speed
+
+        while (elapsedTime < 1.5f)
+        {
+            transform.position += transform.forward * currentSpeed  * Time.deltaTime;
+            if (currentSpeed > swimSpeed) currentSpeed -= taperOffRate * Time.deltaTime;
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        
+        isFrozen = false;
+        currentSpeed = swimSpeed;
+    }
+
+    /* Floating */
 
     /* Dashing */
     private IEnumerator ChargeDash()
