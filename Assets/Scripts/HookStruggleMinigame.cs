@@ -8,6 +8,9 @@ public class HookStruggleMinigame : MonoBehaviour
     [SerializeField] private GameObject FishHookUI;
     [SerializeField] private float duration = 2f;
     [SerializeField] private float boundsOffset = 5f;
+    [SerializeField] private GameObject fishImage;
+    [SerializeField] private GameObject hookImage;
+    [SerializeField] private GameObject hook2Image;
     
     private bool isGrowing;
     private Vector3 originalPos;
@@ -67,6 +70,7 @@ public class HookStruggleMinigame : MonoBehaviour
         
         // Play animation of fish freeing from hook HERE
         rectTransform.localScale = new Vector3(1f, 1f, 1f);
+        BreakFreeHookAnim();
         isGrowing = false;
         isAcceptingInput = false;
         StartCoroutine(EndMinigame()); // End game
@@ -76,5 +80,23 @@ public class HookStruggleMinigame : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         GameManager.Instance.ExitHookedMinigame();
+    }
+
+    private void BreakFreeAnim()
+    {
+
+    }
+
+    private void BreakFreeHookAnim()
+    {
+        hookImage.SetActive(false);
+        hook2Image.SetActive(true);
+        hook2Image.transform.DORotate(hookImage.transform.rotation.eulerAngles + new Vector3(0f, 0f, 50f), 0.5f);
+        hook2Image.transform.DOMove(hookImage.transform.position + new Vector3(90f, 125f, 0f), 0.5f).SetEase(Ease.OutCubic);
+    }
+
+    private void BreakFreeFishAnim()
+    {
+        
     }
 }
