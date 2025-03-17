@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public event System.Action OnHookedMinigameFinished;
     [SerializeField] private GameObject PlayerHUD;
     [SerializeField] private GameObject HookedMinigame;
+    [SerializeField] private GameObject DeathScreen;
 
     public void EnableHUD() { PlayerHUD.SetActive(true); }
     public void DisableHUD() { PlayerHUD.SetActive(false); }
@@ -19,6 +20,7 @@ public class GameManager : MonoBehaviour
         else Destroy(gameObject);
 
         HookedMinigame.SetActive(false);
+        DeathScreen.SetActive(false);
     }
 
     // Despawns prey and spawns new one after random amount of time
@@ -56,6 +58,11 @@ public class GameManager : MonoBehaviour
         InputManager.instance.SwitchCurrentMap(InputManager.ActionMap.Player);
         //Increase player speed temporarily
         OnHookedMinigameFinished?.Invoke();
+    }
+
+    public void ShowDeathScreen()
+    {
+        DeathScreen.SetActive(true);
     }
 
 }

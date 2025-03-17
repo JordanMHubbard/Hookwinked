@@ -9,6 +9,7 @@ TagManager:
   - Obstacle
   - ReachableArea
   - Bait
+  - CamParent
   layers:
   - Default
   - TransparentFX
