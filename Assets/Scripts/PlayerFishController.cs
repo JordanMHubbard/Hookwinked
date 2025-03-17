@@ -57,6 +57,10 @@ public class PlayerFishController : MonoBehaviour
     private FishEnergy energyComp;
     private SoundRandomizer eatSoundComp;
 
+    // Hooked Minigame
+    private int timesHooked = 0;
+    private int maxTimesHooked = 2;
+
     private void Awake()
     {
         // Initialize components
@@ -149,12 +153,25 @@ public class PlayerFishController : MonoBehaviour
         ApplyVerticalRotation(mouseYRotation);
     }
 
-    /* Attacking */
+    /* Attacking Prey */
     private void OnTriggerEnter(Collider other)
     {
         //Debug.Log("Entered: " + other.name);
-        if (other.CompareTag("Prey")) EatPrey(other);
-        else if (other.CompareTag("Bait")) StartHookedMinigame(other);
+        if (other.CompareTag("Prey")) 
+        {
+            EatPrey(other);
+        }
+        else if (other.CompareTag("Bait")) 
+        {
+            if (timesHooked++ < maxTimesHooked)
+            {
+                BeginHookedMinigame(other);
+            }
+            else 
+            {
+                StartCoroutine(Death());
+            }
+        }
     }
 
     private void EatPrey(Collider other)
@@ -165,22 +182,31 @@ public class PlayerFishController : MonoBehaviour
         GameManager.Instance.PreyConsumed(other.gameObject);
     }
 
-    private void StartHookedMinigame(Collider other)
+    private IEnumerator Death()
+    {
+        yield return new WaitForSeconds(1f);
+        
+        GameManager.Instance.DisableHUD();
+        InputManager.instance.SwitchCurrentMap(InputManager.ActionMap.HookedMinigame);
+        cameraAnim.Play("death", 0);
+    }
+
+    private void BeginHookedMinigame(Collider other)
     {
         GameManager.Instance.PreyConsumed(other.gameObject);
         Debug.Log("Fight for your life!");
         GameManager.Instance.StartHookedMinigame();
-        energyComp.AddProgress(-10f);
     }
 
     private void OnEndHookedMinigame()
     {
         currentSpeed = 12f;
         isFrozen = true;
-        StartCoroutine(PostHookedDashReset());
+        energyComp.AddProgress(-10f);
+        StartCoroutine(PostHookedDash());
     }
 
-    private IEnumerator PostHookedDashReset()
+    private IEnumerator PostHookedDash()
     {
         float elapsedTime = 0f;
         float taperOffRate = (currentSpeed - swimSpeed) / 1.5f; // subtract desired end speed
@@ -196,8 +222,6 @@ public class PlayerFishController : MonoBehaviour
         isFrozen = false;
         currentSpeed = swimSpeed;
     }
-
-    /* Floating */
 
     /* Dashing */
     private IEnumerator ChargeDash()

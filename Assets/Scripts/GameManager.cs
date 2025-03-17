@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject PlayerHUD;
     [SerializeField] private GameObject HookedMinigame;
 
+    public void EnableHUD() { PlayerHUD.SetActive(true); }
+    public void DisableHUD() { PlayerHUD.SetActive(false); }
 
     private void Awake()
     {
@@ -55,8 +57,5 @@ public class GameManager : MonoBehaviour
         //Increase player speed temporarily
         OnHookedMinigameFinished?.Invoke();
     }
-
-   
-
 
 }

@@ -11,7 +11,7 @@ public class FishEnergy : MonoBehaviour
     private float currentProgress = 100;
     private float targetProgress;
     private bool shouldUpdate;
-    private bool shouldDecrease = true;
+    private bool shouldDepreciate = true;
     [Tooltip("The rate at which currentProgress is updated to targetProgress")]
     [SerializeField] private float updateRate = 50f;
     [Tooltip("The rate at which currentProgress depreciates to 0")]
@@ -35,7 +35,7 @@ public class FishEnergy : MonoBehaviour
             StopCoroutine(DepreciateCoroutine);
             StartCoroutine(UpdateProgress());
         }
-        else if (shouldDecrease) 
+        else if (shouldDepreciate) 
         {
             DepreciateCoroutine = StartCoroutine(DepreciateProgress());
         }
@@ -52,19 +52,15 @@ public class FishEnergy : MonoBehaviour
     private IEnumerator UpdateProgress()
     {
         shouldUpdate = false;
-        shouldDecrease = false;
+        shouldDepreciate = false;
         
         float rateOfChange = currentProgress < targetProgress ? updateRate : -updateRate;
         while (Math.Abs(currentProgress - targetProgress) > 0.1)
         {
             currentProgress += rateOfChange * Time.deltaTime;
-            //Debug.Log("rate of change: "+ rateOfChange);
-            //Debug.Log("current-target: "+ Math.Abs(currentProgress - targetProgress));
-            //Debug.Log("TargetProgress: "+ targetProgress);
-            //Debug.Log("CurrentProgress: "+ currentProgress);
             energyBar.value = currentProgress / 100f;
             
-            if (updateRate > 0)
+            if (rateOfChange > 0)
             {
                 if (currentProgress > targetProgress) break;
             }
@@ -78,13 +74,13 @@ public class FishEnergy : MonoBehaviour
 
         currentProgress = targetProgress;
         
-        if (currentProgress > 0f) shouldDecrease = true;
+        if (currentProgress > 0f) shouldDepreciate = true;
     }
 
     // Depreciates energy constantly unless energy is being updated
     private IEnumerator DepreciateProgress()
     {
-        shouldDecrease = false;
+        shouldDepreciate = false;
         
         while (currentProgress > 0f && !shouldUpdate)
         {
