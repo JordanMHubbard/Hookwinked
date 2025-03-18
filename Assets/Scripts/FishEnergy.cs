@@ -10,6 +10,7 @@ public class FishEnergy : MonoBehaviour
     public Slider energyBar;
     private float currentProgress = 100;
     private float targetProgress;
+    private bool isPaused;
     private bool shouldUpdate;
     private bool shouldDepreciate = true;
     [Tooltip("The rate at which currentProgress is updated to targetProgress")]
@@ -18,6 +19,8 @@ public class FishEnergy : MonoBehaviour
     [SerializeField] private float depreciateRate = 2f;
     private Coroutine DepreciateCoroutine;
 
+    public void setIsPaused(bool shouldPause) { isPaused = shouldPause; }
+
     private void Start()
     {
         if (energyBar == null)
@@ -25,6 +28,7 @@ public class FishEnergy : MonoBehaviour
             Debug.LogWarning($"{gameObject.name}: EnergyBar script is missing a Slider reference!");
             enabled = false;
         }
+
         //Debug.Log("CurrentProgress: "+ currentProgress);
     }
 
@@ -75,6 +79,7 @@ public class FishEnergy : MonoBehaviour
         currentProgress = targetProgress;
         
         if (currentProgress > 0f) shouldDepreciate = true;
+        else { GameManager.Instance.ShowDeathScreen(DeathScreenManager.DeathType.Exhaustion); }
     }
 
     // Depreciates energy constantly unless energy is being updated
@@ -84,6 +89,8 @@ public class FishEnergy : MonoBehaviour
         
         while (currentProgress > 0f && !shouldUpdate)
         {
+            if (isPaused) yield break;
+
             currentProgress -= depreciateRate * Time.deltaTime;
             //Debug.Log("CurrentProgress: "+ currentProgress);
             energyBar.value = currentProgress / 100f;
@@ -92,5 +99,8 @@ public class FishEnergy : MonoBehaviour
         }
 
         currentProgress = 0f;
+
+        yield return new WaitForSeconds(1f);
+        GameManager.Instance.ShowDeathScreen(DeathScreenManager.DeathType.Exhaustion);
     }
 }

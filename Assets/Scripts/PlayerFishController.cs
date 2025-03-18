@@ -186,6 +186,7 @@ public class PlayerFishController : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         
+        energyComp.setIsPaused(true);
         GameManager.Instance.DisableHUD();
         InputManager.instance.SwitchCurrentMap(InputManager.ActionMap.HookedMinigame);
         cameraAnim.Play("death", 0);
@@ -193,6 +194,7 @@ public class PlayerFishController : MonoBehaviour
 
     private void BeginHookedMinigame(Collider other)
     {
+        energyComp.setIsPaused(true);
         GameManager.Instance.PreyConsumed(other.gameObject);
         Debug.Log("Fight for your life!");
         GameManager.Instance.StartHookedMinigame();
@@ -203,6 +205,7 @@ public class PlayerFishController : MonoBehaviour
         currentSpeed = 12f;
         isFrozen = true;
         energyComp.AddProgress(-10f);
+        energyComp.setIsPaused(false);
         StartCoroutine(PostHookedDash());
     }
 

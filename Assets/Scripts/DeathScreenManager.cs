@@ -1,10 +1,15 @@
+using System.Collections;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
 public class DeathScreenManager : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI Text;
-    private static readonly string[] messages = new string[] {
+    [SerializeField] TextMeshProUGUI textTMP;
+    [SerializeField] private CanvasGroup textGroup;
+    public enum DeathType {Hooked, Exhaustion}
+    public DeathType causeOfDeath {get; private set;}
+    private static readonly string[] hookedMessages = new string[] {
         "YOU WERE PACKAGED AND SOLD TO THE LOCAL SUPERMARKET",
         "YOU WERE MADE INTO SOME DELICIOUS FISH AND CHIPS",
         "YOU JOINED SOME OLD FRIENDS AT MY AUNT'S FISH FRY",
@@ -13,15 +18,37 @@ public class DeathScreenManager : MonoBehaviour
         "YOU ENDED UP AS AN UNDERCOOKED DISASTER ON A GORDON RAMSAY REALITY SHOW"
     };
 
+    private static readonly string[] exhaustionMessages = new string[] {
+        "YOU RAN OUT OF ENERGY..."
+    };
+
     private void OnEnable()
     {
-        if (Text == null) return;
-        Text.text = ChooseRandomMessage();
+        StartCoroutine(FadeText());
     }
 
-    private string ChooseRandomMessage()
+    public void ChooseRandomMessage(DeathType causeOfDeath)
     {
-        int index = Random.Range(0, messages.Length - 1);
-        return messages[index];
+        if (textTMP == null) return;
+        int index;
+
+        switch (causeOfDeath)
+        {
+            case DeathType.Hooked:
+                index = Random.Range(0, hookedMessages.Length - 1);
+                textTMP.text = hookedMessages[index];
+                break;
+            
+            case DeathType.Exhaustion:
+                index = 0;
+                textTMP.text = exhaustionMessages[index];
+                break;
+        }
+    }
+
+    private IEnumerator FadeText()
+    {
+        yield return new WaitForSeconds(1.5f);
+        textGroup.DOFade(1f, 2f);
     }
 }

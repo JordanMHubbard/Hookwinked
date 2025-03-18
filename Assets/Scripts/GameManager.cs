@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject PlayerHUD;
     [SerializeField] private GameObject HookedMinigame;
     [SerializeField] private GameObject DeathScreen;
+    private DeathScreenManager deathScreenManager;
 
     public void EnableHUD() { PlayerHUD.SetActive(true); }
     public void DisableHUD() { PlayerHUD.SetActive(false); }
@@ -21,6 +22,7 @@ public class GameManager : MonoBehaviour
 
         HookedMinigame.SetActive(false);
         DeathScreen.SetActive(false);
+        deathScreenManager = DeathScreen.GetComponent<DeathScreenManager>();
     }
 
     // Despawns prey and spawns new one after random amount of time
@@ -60,8 +62,9 @@ public class GameManager : MonoBehaviour
         OnHookedMinigameFinished?.Invoke();
     }
 
-    public void ShowDeathScreen()
+    public void ShowDeathScreen(DeathScreenManager.DeathType deathType)
     {
+        deathScreenManager.ChooseRandomMessage(deathType);
         DeathScreen.SetActive(true);
     }
 

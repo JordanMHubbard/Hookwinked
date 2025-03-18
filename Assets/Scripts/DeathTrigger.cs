@@ -6,7 +6,7 @@ public class DeathTrigger : MonoBehaviour
     {
         if (other.CompareTag("CamParent"))
         {
-            GameManager.Instance.ShowDeathScreen();
+            GameManager.Instance.ShowDeathScreen(DeathScreenManager.DeathType.Hooked);
         }
     }
 }
