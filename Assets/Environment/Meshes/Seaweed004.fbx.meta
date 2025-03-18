@@ -3,7 +3,12 @@ guid: 8956b56dd564edd4eb423e60241ff850
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Seaweed004
+    second: {fileID: 2100000, guid: 1e718a2f5f0999141a812e6872fa0ea7, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

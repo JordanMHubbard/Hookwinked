@@ -8,7 +8,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Coral005
-    second: {fileID: 2100000, guid: 386b3ce9e64174d4990d211483bf9fcb, type: 2}
+    second: {fileID: 2100000, guid: fc429b431a51121449a7c9cd4aafc14d, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

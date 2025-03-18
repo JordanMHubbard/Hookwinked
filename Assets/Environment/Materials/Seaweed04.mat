@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Coral005
+  m_Name: Seaweed04
   m_Shader: {fileID: -6465566751694194690, guid: 9749f7e296bec604f92fd18cdcef1c3d, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -38,13 +38,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Bias: -0.23
+    - _Bias: -0.4
     - _IsVertical: 1
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _BottomColor: {r: 0.21176471, g: 0.5294118, b: 0.5264812, a: 0}
-    - _TopColor: {r: 0.41019437, g: 0.8490566, b: 0.3003738, a: 0}
+    - _BottomColor: {r: 0.23137255, g: 0.5372549, b: 0.23137255, a: 0}
+    - _TopColor: {r: 0.72156864, g: 0.7529412, b: 0.40784314, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &3503421670953707176
