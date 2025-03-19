@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7533438310193574567}
-  - component: {fileID: -8449467646880142364}
   - component: {fileID: 1523853430170279575}
   - component: {fileID: 7578252461422030453}
+  - component: {fileID: 1572256232547240818}
   m_Layer: 0
   m_Name: FishNPC
   m_TagString: Untagged
@@ -38,22 +38,6 @@ Transform:
   - {fileID: 775032120177412522}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-8449467646880142364
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2802294388433091577}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34d52d4a93cdda34cbde7fcd064ca6cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  swimSpeed: 1.5
-  interactableLayer:
-    serializedVersion: 2
-    m_Bits: 1
 --- !u!143 &1523853430170279575
 CharacterController:
   m_ObjectHideFlags: 0
@@ -106,6 +90,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1572256232547240818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2802294388433091577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 682ffffe3175eef4fb3080d066aa0ec2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swimSpeed: 1.5
+  interactableLayer:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!1 &3569174245825300410
 GameObject:
   m_ObjectHideFlags: 0

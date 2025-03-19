@@ -176,10 +176,11 @@ public class PlayerFishController : MonoBehaviour
 
     private void EatPrey(Collider other)
     {
+        Debug.Log("We eating prey 2nite");
         float energyProg = other.GetComponent<PreyManager>().GetEnergyValue();
         eatSoundComp.PlayRandomSound();
         energyComp.AddProgress(energyProg);
-        GameManager.Instance.PreyConsumed(other.gameObject);
+        GameManager.Instance.PreyConsumed(other.transform.parent.gameObject);
     }
 
     private IEnumerator Death()
@@ -195,7 +196,7 @@ public class PlayerFishController : MonoBehaviour
     private void BeginHookedMinigame(Collider other)
     {
         energyComp.setIsPaused(true);
-        GameManager.Instance.PreyConsumed(other.gameObject);
+        GameManager.Instance.PreyConsumed(other.transform.parent.gameObject);
         Debug.Log("Fight for your life!");
         GameManager.Instance.StartHookedMinigame();
     }

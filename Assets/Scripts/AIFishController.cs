@@ -8,20 +8,17 @@ public class AIFishController : MonoBehaviour
     [SerializeField] private LayerMask interactableLayer;
     private bool hasTarget;
     private bool isRepelling;
-    private bool foundPrey;
     private Vector3 repelDirection;
     private Vector3 targetLocation;
     private CharacterController characterController;
     // Getters
     public Vector3 GetTargetLocation() { return targetLocation; }
     public bool GetIsRepelling() { return isRepelling; }
-    public bool GetFoundPrey() { return foundPrey; }
 
     // Setters
     public void SetTargetPosition(Vector3 position) { targetLocation = position; }
     public void SetIsRepelling(bool shouldRepel ) {isRepelling = shouldRepel; }
     public void SetRepelDirection(Vector3 direction) { repelDirection = direction; }
-    public void SetfoundPrey(bool isFound) { foundPrey = isFound; }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

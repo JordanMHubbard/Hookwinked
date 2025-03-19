@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class AIFishSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject fishPrefab;
+    [SerializeField] protected GameObject fishPrefab;
     [SerializeField] private bool isEnabled = true;
     [SerializeField] private int numFish = 20;
     [SerializeField] private float paddingXZ = 20f;
@@ -28,7 +28,7 @@ public class AIFishSpawner : MonoBehaviour
         SpawnFish();
     }
 
-    private Vector3 GetRandomPoint()
+    protected Vector3 GetRandomPoint()
     {
         bool isReachable = false;
         Vector3 point = Vector3.zero;

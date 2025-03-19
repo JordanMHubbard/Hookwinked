@@ -1,25 +1,18 @@
-using System.Collections;
-using NUnit.Framework;
 using UnityEngine;
 
-public class PreyController : MonoBehaviour
+public class PreyController : AIFishController
 {
-    [SerializeField] private float floatFrequency = 2f;
-    [SerializeField] private float floatAmplitude = 0.01f;
-    [SerializeField] private float floatSmoothness = 10f;
+    private Collider characterCollider;
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-        Float();
+        characterCollider = GetComponent<CharacterController>();
     }
-
-    private void Float()
+    private void OnTriggerEnter(Collider other)
     {
-        Vector3 pos = Vector3.zero;
-        float offset = Mathf.Sin(Time.time * floatFrequency) * floatAmplitude;
-        pos.y += Mathf.Lerp(pos.y, offset, floatSmoothness * Time.deltaTime);
-        transform.position += pos;
-        //Debug.Log("pos: " + transform.position);
+        if (other.CompareTag("Player") || other.CompareTag("Fish"))
+        {
+            Physics.IgnoreCollision(characterCollider, other);
+        }
     }
 }

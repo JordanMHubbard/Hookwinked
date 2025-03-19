@@ -4,11 +4,11 @@ using UnityEngine;
 public class PreyDetection : MonoBehaviour
 {
     private List<GameObject> nearbyPrey;
-    private AIFishController controller;
+    private PredatorController controller;
     private void Start()
     {
         
-        controller = GetComponentInParent<AIFishController>();
+        controller = GetComponentInParent<PredatorController>();
         if (controller == null )
         {
             Debug.LogError("ObstacleAvoidance: No AIFishController found on " + gameObject.name);
