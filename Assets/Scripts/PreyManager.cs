@@ -23,7 +23,7 @@ public class PreyManager : MonoBehaviour
         }
         else isBait = false;
 
-        //Debug.Log("is Bait? " + isBait);
+        Debug.Log("is Bait? " + gameObject.tag);
         
     }
 

@@ -195,6 +195,7 @@ public class PlayerFishController : MonoBehaviour
 
     private void BeginHookedMinigame(Collider other)
     {
+        eatSoundComp.PlayRandomSound();
         energyComp.setIsPaused(true);
         GameManager.Instance.PreyConsumed(other.transform.parent.gameObject);
         Debug.Log("Fight for your life!");
