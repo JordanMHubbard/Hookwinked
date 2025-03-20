@@ -2826,7 +2826,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fishPrefab: {fileID: 2802294388433091577, guid: 5a381af5b04d1144b8be0f28eb8c202b, type: 3}
   isEnabled: 1
-  numFish: 5
+  numFish: 10
   paddingXZ: 20
   paddingY: 1
   fishMeshes:
@@ -5350,6 +5350,10 @@ PrefabInstance:
       value: PlayerFish
       objectReference: {fileID: 0}
     - target: {fileID: 7440325418165233619, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7440325418165233619, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
@@ -5423,7 +5427,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8478309598313259356, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8735097673828181742, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8735097673828181742, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
       propertyPath: m_TagString

@@ -103,6 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swimSpeed: 1.5
+  defaultSwimSpeed: 1.5
   interactableLayer:
     serializedVersion: 2
     m_Bits: 1

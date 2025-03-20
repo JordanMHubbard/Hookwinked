@@ -1,18 +1,27 @@
+using System.Collections;
 using UnityEngine;
 
 public class PreyController : AIFishController
 {
-    private Collider characterCollider;
-
-    private void Awake()
-    {
-        characterCollider = GetComponent<CharacterController>();
-    }
+    /*[SerializeField] private float speedUpCooldown = 5f;
+    private bool isSpeedUpOnCooldown;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") || other.CompareTag("Fish"))
+        if (other.CompareTag("Player"))
         {
-            Physics.IgnoreCollision(characterCollider, other);
+            // May have to adjust trigger size
+            FindTarget(); // Find new target location
+            StartCoroutine(SpeedUp());
         }
     }
+
+    private IEnumerator SpeedUp()
+    {   
+        //change speed
+        yield return new WaitForSeconds(2f);
+        
+        isSpeedUpOnCooldown = true;
+        yield return new WaitForSeconds(speedUpCooldown);
+        isSpeedUpOnCooldown = false;
+    }*/
 }

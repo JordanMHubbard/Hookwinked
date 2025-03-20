@@ -5,6 +5,7 @@ public class AIFishController : MonoBehaviour
 {
     // Variables
     [SerializeField] private float swimSpeed = 3f;
+    [SerializeField] private float defaultSwimSpeed = 3f;
     [SerializeField] private LayerMask interactableLayer;
     private bool hasTarget;
     private bool isRepelling;
@@ -14,14 +15,16 @@ public class AIFishController : MonoBehaviour
     // Getters
     public Vector3 GetTargetLocation() { return targetLocation; }
     public bool GetIsRepelling() { return isRepelling; }
+    public float GetDefaultSwimSpeed() { return defaultSwimSpeed; }
 
     // Setters
     public void SetTargetPosition(Vector3 position) { targetLocation = position; }
     public void SetIsRepelling(bool shouldRepel ) {isRepelling = shouldRepel; }
     public void SetRepelDirection(Vector3 direction) { repelDirection = direction; }
+    public void SetSwimSpeed(float speed) { swimSpeed = speed; }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Start()
     {
         characterController = GetComponent<CharacterController>();
         
@@ -34,7 +37,7 @@ public class AIFishController : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         
         Debug.DrawLine(transform.position, transform.position + transform.forward * 2f, Color.blue);
@@ -51,7 +54,7 @@ public class AIFishController : MonoBehaviour
     }
 
     // Checks if randomly selected target area is accessible
-    bool IsAreaReachable(Vector3 checkPosition, Vector3 boxSize)
+    private bool IsAreaReachable(Vector3 checkPosition, Vector3 boxSize)
     {
         bool isInReachableArea = false;
 
@@ -74,10 +77,8 @@ public class AIFishController : MonoBehaviour
     }
 
     // Determines whether to generate random target or follow prey
-    private bool FindTarget()
+    public bool FindTarget()
     {
-        
-        // Later need to consider only getting points within a defined space 
         Vector3 locationOffset = new Vector3 (Random.Range(-15,15), Random.Range(-5,5), Random.Range(-15,15));
         targetLocation = transform.position + locationOffset;
         //Debug.Log("targetLocation = " + targetLocation);
