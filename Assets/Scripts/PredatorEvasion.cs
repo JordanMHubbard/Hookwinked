@@ -7,6 +7,7 @@ public class PredatorEvasion : MonoBehaviour
     [SerializeField] private float duration = 3f;
     [SerializeField] private float speedUpCooldown = 3f;
     private bool isSpeedUpOnCooldown;
+    private bool isPlayerNearby;
     private AIFishController controller;
 
     // MAYBE ONLY DO PREDATOR EVASION ON REAL PREY??
@@ -17,19 +18,36 @@ public class PredatorEvasion : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        // May have to adjust trigger size
         if (other.CompareTag("Player"))
         {
+            isPlayerNearby = true;
             if (isSpeedUpOnCooldown) return;
             
-            // May have to adjust trigger size
-            // Finds new target location and speeds up temporarily
-            controller.FindTarget(); 
-            StartCoroutine(SpeedUp()); 
+            SwimAway();
         }
     }
 
+    private void OnTriggerStay()
+    {
+        if (isPlayerNearby && !isSpeedUpOnCooldown)
+        {
+            SwimAway();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isPlayerNearby = false;
+        }
+    }
+
+    // Immediately boosts prey and slows down over time
     private IEnumerator SpeedUp()
     {   
+        isSpeedUpOnCooldown = true;
         controller.SetSwimSpeed(fasterSwimSpeed);
         
         float elapsedTime = 0f;
@@ -49,9 +67,15 @@ public class PredatorEvasion : MonoBehaviour
         //yield return new WaitForSeconds(duration);
         
         controller.SetSwimSpeed(targetSpeed);
-        isSpeedUpOnCooldown = true;
         yield return new WaitForSeconds(speedUpCooldown);
 
         isSpeedUpOnCooldown = false;
+    }
+
+    // Finds new target location and speeds up temporarily
+    private void SwimAway()
+    {
+        controller.FindTarget(); 
+        StartCoroutine(SpeedUp()); 
     }
 }
