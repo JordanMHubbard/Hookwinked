@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2314318741320049472}
   m_Layer: 0
   m_Name: PreyNPC
-  m_TagString: Untagged
+  m_TagString: Fish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52,7 +52,7 @@ CharacterController:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 192
   m_LayerOverridePriority: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
@@ -103,8 +103,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ac8f679419fccf41b740113c923696c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swimSpeed: 1
   defaultSwimSpeed: 1
+  fasterSwimSpeed: 4
+  speedUpDuration: 3
+  speedUpCooldown: 3
   interactableLayer:
     serializedVersion: 2
     m_Bits: 1
@@ -378,9 +380,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e45e4d6efeda9547bc5dc7162948c52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fasterSwimSpeed: 4
-  duration: 3
-  speedUpCooldown: 3
 --- !u!1001 &1310717683410724397
 PrefabInstance:
   m_ObjectHideFlags: 0

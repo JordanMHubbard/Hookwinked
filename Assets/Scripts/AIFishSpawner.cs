@@ -59,7 +59,7 @@ public class AIFishSpawner : MonoBehaviour
         Collider[] colliders = Physics.OverlapBox(checkPosition, boxSize * 0.5f, Quaternion.identity, interactableLayer);
         foreach (Collider col in colliders)
         {
-            if (col.CompareTag("Obstacle")) return false;
+            if (col.CompareTag("Obstacle") || col.CompareTag("Fish") ) return false;
 
             if (col.CompareTag("ReachableArea")) isInReachableArea = true;
         }

@@ -4,8 +4,12 @@ using UnityEngine;
 public class AIFishController : MonoBehaviour
 {
     // Variables
-    [SerializeField] private float swimSpeed = 3f;
+    private float swimSpeed;
     [SerializeField] private float defaultSwimSpeed = 3f;
+    [SerializeField] private float fasterSwimSpeed = 5f;
+    [SerializeField] private float speedUpDuration = 3f;
+    [SerializeField] private float speedUpCooldown = 3f;
+    private bool isSpeedUpOnCooldown;
     [SerializeField] private LayerMask interactableLayer;
     private bool hasTarget;
     private bool isRepelling;
@@ -15,13 +19,17 @@ public class AIFishController : MonoBehaviour
     // Getters
     public Vector3 GetTargetLocation() { return targetLocation; }
     public bool GetIsRepelling() { return isRepelling; }
-    public float GetDefaultSwimSpeed() { return defaultSwimSpeed; }
+    public bool GetIsSpeedUpOnCooldown() { return isSpeedUpOnCooldown; }
 
     // Setters
     public void SetTargetPosition(Vector3 position) { targetLocation = position; }
     public void SetIsRepelling(bool shouldRepel ) {isRepelling = shouldRepel; }
     public void SetRepelDirection(Vector3 direction) { repelDirection = direction; }
-    public void SetSwimSpeed(float speed) { swimSpeed = speed; }
+
+    private void Awake()
+    {
+        swimSpeed = defaultSwimSpeed;
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
@@ -139,5 +147,32 @@ public class AIFishController : MonoBehaviour
             //Debug.Log("angle: " + angle);
             isRepelling = false;
         }
+    }
+
+    public IEnumerator SpeedUp()
+    {   
+        isSpeedUpOnCooldown = true;
+        swimSpeed = fasterSwimSpeed;
+        
+        float elapsedTime = 0f;
+        float currentSpeed;
+        float targetSpeed = defaultSwimSpeed;
+
+        while (elapsedTime < speedUpDuration)
+        {
+            float t = elapsedTime / speedUpDuration;
+            currentSpeed = Mathf.Lerp(fasterSwimSpeed, targetSpeed, t);
+            swimSpeed = currentSpeed;
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        
+        //yield return new WaitForSeconds(duration);
+        
+        swimSpeed = defaultSwimSpeed;
+        yield return new WaitForSeconds(speedUpCooldown);
+
+        isSpeedUpOnCooldown = false;
     }
 }

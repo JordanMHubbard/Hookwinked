@@ -16,6 +16,8 @@ public class SoundRandomizer : MonoBehaviour
 
     public void PlayRandomSound()
     {
+        if (source == null) return;
+        
         source.clip = sounds[Random.Range(0, sounds.Length)];
         source.volume = Random.Range(1-volumeChange, 1);
         source.pitch = Random.Range(1-pitchChange, 1);

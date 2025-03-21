@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 1523853430170279575}
   - component: {fileID: 7578252461422030453}
   - component: {fileID: 1572256232547240818}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FishNPC
-  m_TagString: Untagged
+  m_TagString: Fish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -102,8 +102,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 682ffffe3175eef4fb3080d066aa0ec2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swimSpeed: 1.5
   defaultSwimSpeed: 1.5
+  fasterSwimSpeed: 5
+  speedUpDuration: 3
+  speedUpCooldown: 3
   interactableLayer:
     serializedVersion: 2
     m_Bits: 1
@@ -118,7 +120,7 @@ GameObject:
   - component: {fileID: 6337572123760715026}
   - component: {fileID: 3773941887869154048}
   - component: {fileID: 1653539446829022948}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FishMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -187,7 +189,7 @@ GameObject:
   - component: {fileID: 5239852656442564255}
   - component: {fileID: 4097392165377542154}
   - component: {fileID: 6854277470879917521}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EatTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -368,7 +370,7 @@ GameObject:
   - component: {fileID: 1837666721014970829}
   - component: {fileID: 362526355135931622}
   - component: {fileID: 550998454320423428}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ObstacleTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -437,7 +439,7 @@ GameObject:
   - component: {fileID: 1015366562258551686}
   - component: {fileID: 3170972066686523418}
   - component: {fileID: 6129422374985899896}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PreyTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
