@@ -5,10 +5,14 @@ public class PreyManager : MonoBehaviour
 {
     [SerializeField] private float pointValue = 100f;
     [SerializeField] private float energyValue = 10f;
-    private bool isBait = false;
+    private PreyController controller;
+    private FishAnimManager animManager;
 
     private void Start()
     {
+        controller = GetComponentInParent<PreyController>();
+        animManager = transform.parent.GetComponentInChildren<FishAnimManager>();
+       
         DetermineBaitStatus();
     }
     private void DetermineBaitStatus()
@@ -18,12 +22,13 @@ public class PreyManager : MonoBehaviour
         
         if (choice == 0) 
         {
-            isBait = true;
+            controller.SetIsBait(true);
             gameObject.tag = "Bait";
+            animManager.ShouldAnimatorPlay(false);
         }
-        else isBait = false;
+        else controller.SetIsBait(false);
 
-        Debug.Log("is Bait? " + gameObject.tag);
+        //Debug.Log("is Bait? " + gameObject.tag);
         
     }
 
@@ -35,10 +40,5 @@ public class PreyManager : MonoBehaviour
     public float GetEnergyValue()
     {
         return energyValue;
-    }
-
-    public bool GetIsBait()
-    {
-        return isBait;
     }
 }

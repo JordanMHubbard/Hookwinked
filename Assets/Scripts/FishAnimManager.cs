@@ -3,9 +3,10 @@ using UnityEngine;
 public class FishAnimManager : MonoBehaviour
 {
     private Animator animator;
-    private CharacterController controller;
+    private CharacterController characterController;
+    private bool shouldAnimate = true;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Start()
     {
         animator = GetComponent<Animator>();
         if (animator == null)
@@ -14,17 +15,23 @@ public class FishAnimManager : MonoBehaviour
             enabled = false;
         }
 
-        controller = GetComponentInParent<CharacterController>();
-        if (controller == null)
+        characterController = GetComponentInParent<CharacterController>();
+        if (characterController == null)
         {
-            Debug.LogWarning($"{gameObject.name}: controller has not been set!");
+            Debug.LogWarning($"{gameObject.name}: characterController has not been set!");
             enabled = false;
         }
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        animator.SetFloat("Speed", controller.velocity.magnitude/3);
+        if (shouldAnimate) animator.SetFloat("Speed", characterController.velocity.magnitude/3); 
+    }
+
+    public void ShouldAnimatorPlay(bool shouldPlay)
+    {
+        animator.enabled = shouldPlay;
+        shouldAnimate = shouldPlay;
     }
 }

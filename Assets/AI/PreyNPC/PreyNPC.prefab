@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7533438310193574567}
   - component: {fileID: 1523853430170279575}
   - component: {fileID: 7578252461422030453}
-  - component: {fileID: -8703189549044646870}
+  - component: {fileID: 2314318741320049472}
   m_Layer: 0
   m_Name: PreyNPC
   m_TagString: Untagged
@@ -91,7 +91,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-8703189549044646870
+--- !u!114 &2314318741320049472
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
