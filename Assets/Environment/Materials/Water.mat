@@ -41,6 +41,18 @@ Material:
         m_Texture: {fileID: 2800000, guid: 667362752c47ee741a5200b34d9b4ec0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_4d8127e2b84b4f1b81c86ff2483b50e6_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 981fb0bd54eae834daa6cb52c7366a3e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_7a37f8a60d5b4fe6966b2d9c6a142039_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: c637cf55d65dbb8489e3d1be6337ec58, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_d30338db39414add9c9aa44ed110930e_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 2d587b7bbb2a070448c1fa193d5d0fc7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SecondaryNormal:
         m_Texture: {fileID: 2800000, guid: 1b41f7f1f78812d4cb8b06686fdb9fd8, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -63,15 +75,15 @@ Material:
     - _Depth: 0.1
     - _Displacement: 0.6
     - _Metallic: 0.32
-    - _NormalStrength: 0.55
+    - _NormalStrength: 0.24
     - _QueueControl: 0
     - _QueueOffset: 0
     - _RefractionStrength: 1
     - _Smoothness: 0.9
     - _Strength: 2
     m_Colors:
-    - _DeepWaterColor: {r: 0.20287468, g: 0.58817387, b: 0.9150943, a: 0.9372549}
-    - _Scale: {r: 30, g: 30, b: 0, a: 0}
+    - _DeepWaterColor: {r: 0.20392154, g: 0.67428863, b: 0.9137255, a: 0.9372549}
+    - _Scale: {r: 40, g: 40, b: 0, a: 0}
     - _ShallowWaterColor: {r: 0.32133317, g: 0.64761186, b: 0.8207547, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
