@@ -3572,8 +3572,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: FIGHT FOR YOUR LIFE!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 52387268763ab93498d5fc8a83ad9807, type: 2}
-  m_sharedMaterial: {fileID: -7589364615943570464, guid: 52387268763ab93498d5fc8a83ad9807, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 1e295ccd44ffbe24b87aaab4c43caa9d, type: 2}
+  m_sharedMaterial: {fileID: -7589364615943570464, guid: 1e295ccd44ffbe24b87aaab4c43caa9d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
