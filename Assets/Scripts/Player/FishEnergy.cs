@@ -85,7 +85,7 @@ public class FishEnergy : MonoBehaviour
     // Depreciates energy constantly unless energy is being updated
     private IEnumerator DepreciateProgress()
     {
-        shouldDepreciate = false;
+       shouldDepreciate = false;
         
         while (currentProgress > 0f && !shouldUpdate)
         {
@@ -101,6 +101,6 @@ public class FishEnergy : MonoBehaviour
         currentProgress = 0f;
 
         yield return new WaitForSeconds(1f);
-        GameManager.Instance.ShowDeathScreen(DeathScreenManager.DeathType.Exhaustion);
+        //GameManager.Instance.ShowDeathScreen(DeathScreenManager.DeathType.Exhaustion);
     }
 }
