@@ -46,7 +46,7 @@ public class InputManager : MonoBehaviour
 
         swimAction = PlayerInput.actions["Move"];
         lookAction = PlayerInput.actions["Look"];
-        dashAction = PlayerInput.actions["Attack"];
+        dashAction = PlayerInput.actions["Sprint"];
         floatAction = PlayerInput.actions["MoveVertical"];
         menuOpenAction =  PlayerInput.actions["MenuOpen"];
         UIMenuCloseAction =  PlayerInput.actions["MenuClose"];
