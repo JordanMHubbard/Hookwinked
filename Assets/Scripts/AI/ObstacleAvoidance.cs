@@ -65,11 +65,9 @@ public class ObstacleAvoidance : MonoBehaviour
             float dot = Vector3.Dot(directionToObstacle, transform.forward);
             float angle = Mathf.Acos(dot) * Mathf.Rad2Deg;
 
-            //Debug.Log("angle is: " + angle);
-            // If obstacle is in the way and within the given angle threshold
+            // Checks if obstacle is in the way and within the given angle threshold
             if (angle < angleThreshold)
             {
-                // Maybe make it so it can only fire again once avoid obstacle has been called?
                 //Debug.DrawLine(transform.position, transform.position + direction * viewDistance, Color.red, 15f);
                 if (doObstacleAvoidance && !controller.GetIsRepelling())
                 {
@@ -89,21 +87,18 @@ public class ObstacleAvoidance : MonoBehaviour
 
     public void AvoidObstacle()
     {
-        if (controller == null)
-        {
-            return;
-        }
-
-        int i = 1;
-        int numPoints = 50;
+        if (controller == null) return;
+        
+        int i = 0;
+        int totalPoints = 50;
         float turnRatio = 1.618f;
         float radius = viewDistance;
         
-        while (i < numPoints)
+        while (i < totalPoints)
         {
-            //Projects points on a sphere
+            // Projects points on a sphere
             float angle  = 2 * Mathf.PI * turnRatio;
-            float t =  (float) i / numPoints;
+            float t =  (float) i / totalPoints;
             float inclination = Mathf.Acos (1 - 2 * t);
             float azimuth = angle * i;
 
@@ -120,13 +115,13 @@ public class ObstacleAvoidance : MonoBehaviour
             //Debug.DrawLine(transform.position, transform.position + directionToPoint * viewDistance, Color.yellow, 15f);
             
             if (!hitObstacle && !isObstacleAtPoint(point))
-            {
-                // Add a way to reevaluate point if current one too close to an obstacle?   
+            {  
                 controller.SetRepelDirection(directionToPoint);
                 controller.SetIsRepelling(true);
                 isNearObstacle = true;
                 return;
             }
+            
             //Debug.Log("our Location: " + transform.position);
             i++;
         }

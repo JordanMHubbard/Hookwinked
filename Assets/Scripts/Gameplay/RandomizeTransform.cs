@@ -9,12 +9,12 @@ public class RandomizeTransform : MonoBehaviour
     
     private void OnValidate()
     {
-        if (!hasRandomized)
+        /*if (!hasRandomized)
         {
             randomizeScale();
             randomizeRotation();
             hasRandomized = true;
-        }
+        }*/
     }
 
     private void randomizeScale()
