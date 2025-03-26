@@ -79,7 +79,7 @@ public class FishEnergy : MonoBehaviour
         currentProgress = targetProgress;
         
         if (currentProgress > 0f) shouldDepreciate = true;
-        else { GameManager.Instance.ShowDeathScreen(DeathScreenManager.DeathType.Exhaustion); }
+        else { GameManager.Instance.ShowDeathScreen(DeathScreenUI.DeathType.Exhaustion); }
     }
 
     // Depreciates energy constantly unless energy is being updated
@@ -101,6 +101,6 @@ public class FishEnergy : MonoBehaviour
         currentProgress = 0f;
 
         yield return new WaitForSeconds(1f);
-        //GameManager.Instance.ShowDeathScreen(DeathScreenManager.DeathType.Exhaustion);
+        GameManager.Instance.ShowDeathScreen(DeathScreenUI.DeathType.Exhaustion);
     }
 }

@@ -3,7 +3,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
-public class DeathScreenManager : MonoBehaviour
+public class DeathScreenUI : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI textTMP;
     [SerializeField] private CanvasGroup textGroup;

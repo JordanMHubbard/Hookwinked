@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -10,7 +12,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject PlayerHUD;
     [SerializeField] private GameObject HookedMinigame;
     [SerializeField] private GameObject DeathScreen;
-    private DeathScreenManager deathScreenManager;
+    [SerializeField] private GameObject SurviveScreen;
+    [SerializeField] private RectTransform transitionMask;
+    private Vector3 originalMaskScale = new Vector3(7f, 7f, 7f);
+    private DeathScreenUI deathScreenUI;
 
     public void EnableHUD() { PlayerHUD.SetActive(true); }
     public void DisableHUD() { PlayerHUD.SetActive(false); }
@@ -22,7 +27,8 @@ public class GameManager : MonoBehaviour
 
         HookedMinigame.SetActive(false);
         DeathScreen.SetActive(false);
-        deathScreenManager = DeathScreen.GetComponent<DeathScreenManager>();
+        SurviveScreen.SetActive(false);
+        deathScreenUI = DeathScreen.GetComponent<DeathScreenUI>();
     }
 
     // Despawns prey and spawns new one after random amount of time
@@ -62,10 +68,29 @@ public class GameManager : MonoBehaviour
         OnHookedMinigameFinished?.Invoke();
     }
 
-    public void ShowDeathScreen(DeathScreenManager.DeathType deathType)
+    public void ShowDeathScreen(DeathScreenUI.DeathType deathType)
     {
-        deathScreenManager.ChooseRandomMessage(deathType);
+        deathScreenUI.ChooseRandomMessage(deathType);
         DeathScreen.SetActive(true);
+    }
+
+    public void ShowSurviveScreen()
+    {
+        StartCoroutine(TransitionIn(ActivateSurviveScreen));
+    }
+
+    private IEnumerator TransitionIn(Action callback)
+    {
+        transitionMask.DOScale(new Vector3(0f, 0f, 0f), 2f).SetEase(Ease.Linear);
+        yield return new WaitForSeconds(3f);
+
+        transitionMask.DOScale(originalMaskScale, 2f).SetEase(Ease.Linear);
+        callback?.Invoke();
+    }
+
+    private void ActivateSurviveScreen()
+    {
+        SurviveScreen.SetActive(true);
     }
 
 }

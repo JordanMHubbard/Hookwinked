@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class DayNightCycle : MonoBehaviour
@@ -13,28 +14,28 @@ public class DayNightCycle : MonoBehaviour
         sunSpeed = daySpeed * 26f;
         sunlight = GetComponent<Light>();
         currentRotation = sunlight.transform.rotation.eulerAngles;
+
+        StartCoroutine(decreaseIntensity());
+        StartCoroutine(lowerSun());
     }
 
-    private void Update()
+    private IEnumerator decreaseIntensity()
     {
-        decreaseIntensity();
-        lowerSun();
-    }
-
-    private void decreaseIntensity()
-    {
-        if (sunlight.intensity > 0f)
+        while (sunlight.intensity > 0f)
         {
             sunlight.intensity -= Time.deltaTime * daySpeed;
+            yield return null;
         }
+        GameManager.Instance.ShowSurviveScreen();
     }
 
-    private void lowerSun()
+    private IEnumerator lowerSun()
     {
-        if (currentRotation.x > 0f)
+        while (currentRotation.x > 0f)
         {
             currentRotation.x -= Time.deltaTime * sunSpeed;
             sunlight.transform.rotation = Quaternion.Euler(currentRotation);
+            yield return null;
         }
     }
 }
