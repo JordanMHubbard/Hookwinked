@@ -6,7 +6,8 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private float InteractionDistance = 3f;
     [SerializeField] private LayerMask interactableLayer;
     [SerializeField] private Camera mainCamera;
-    private Interactable currentInteractable;
+    private IInteractable currentInteractable;
+    private bool hasTarget;
     
     void Awake()
     {
@@ -44,14 +45,22 @@ public class PlayerInteraction : MonoBehaviour
         {
             if (hit.collider.CompareTag("Interactable"))
             {
-               currentInteractable = hit.collider.GetComponent<Interactable>();
+                
+                if (!hasTarget)
+                {
+                    currentInteractable = hit.collider.GetComponent<IInteractable>();
+                    currentInteractable.ShowOutline();
+                    hasTarget = true;
+                }
             } 
         }
         else
         {
             if (currentInteractable != null)
             {
+                currentInteractable.RemoveOutline();
                 currentInteractable = null;
+                hasTarget = false;
             }
         }
     }
@@ -60,7 +69,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (currentInteractable != null)
         {
-            currentInteractable.Interact();
+            currentInteractable.Interact(gameObject);
         }
     }
 }

@@ -15,7 +15,6 @@ public class DayNightCycle : MonoBehaviour
     void Start()
     {
         daySpeed /= 75f;
-        daySpeed *= 10f;
         sunRotationSpeed = daySpeed * 26f;
         sunlight = GetComponent<Light>();
         baseColor = fog.GetColor("_BaseColor");
