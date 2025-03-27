@@ -101,6 +101,6 @@ public class FishEnergy : MonoBehaviour
         currentProgress = 0f;
 
         yield return new WaitForSeconds(1f);
-        GameManager.Instance.ShowDeathScreen(DeathScreenUI.DeathType.Exhaustion);
+        //GameManager.Instance.ShowDeathScreen(DeathScreenUI.DeathType.Exhaustion);
     }
 }

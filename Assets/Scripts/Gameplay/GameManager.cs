@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject HookedMinigame;
     [SerializeField] private GameObject DeathScreen;
     [SerializeField] private GameObject SurviveScreen;
+    [SerializeField] private GameObject SceneTransition;
     [SerializeField] private RectTransform transitionMask;
     private Vector3 originalMaskScale = new Vector3(7f, 7f, 7f);
     private DeathScreenUI deathScreenUI;
@@ -28,6 +29,7 @@ public class GameManager : MonoBehaviour
         HookedMinigame.SetActive(false);
         DeathScreen.SetActive(false);
         SurviveScreen.SetActive(false);
+        SceneTransition.SetActive(false);
         deathScreenUI = DeathScreen.GetComponent<DeathScreenUI>();
     }
 
@@ -81,11 +83,15 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator TransitionIn(Action callback)
     {
+        SceneTransition.SetActive(true);
         transitionMask.DOScale(new Vector3(0f, 0f, 0f), 2f).SetEase(Ease.Linear);
         yield return new WaitForSeconds(3f);
 
         transitionMask.DOScale(originalMaskScale, 2f).SetEase(Ease.Linear);
         callback?.Invoke();
+        yield return new WaitForSeconds(2f);
+        
+        SceneTransition.SetActive(false);
     }
 
     private void ActivateSurviveScreen()
