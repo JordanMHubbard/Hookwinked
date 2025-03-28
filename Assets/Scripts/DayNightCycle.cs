@@ -15,10 +15,14 @@ public class DayNightCycle : MonoBehaviour
     void Start()
     {
         daySpeed /= 75f;
+        daySpeed *= 10f;
         sunRotationSpeed = daySpeed * 26f;
         sunlight = GetComponent<Light>();
         baseColor = fog.GetColor("_BaseColor");
         currentRotation = sunlight.transform.rotation.eulerAngles;
+
+        GameManager.Instance.SetCurrentDay(GameManager.Instance.GetCurrentDay() + 1);
+        SaveSystem.Save();
 
         StartCoroutine(decreaseIntensity());
         StartCoroutine(lowerSun());

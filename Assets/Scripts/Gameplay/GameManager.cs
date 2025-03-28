@@ -7,8 +7,12 @@ public class GameManager : MonoBehaviour
 {
     // Singleton
     public static GameManager Instance {get; private set;}
+
+    // Event Delegates
     public event System.Action<GameObject> OnPreyConsumed;
     public event System.Action OnHookedMinigameFinished;
+
+    // UI
     [SerializeField] private GameObject PlayerHUD;
     [SerializeField] private GameObject HookedMinigame;
     [SerializeField] private GameObject DeathScreen;
@@ -17,14 +21,20 @@ public class GameManager : MonoBehaviour
     [SerializeField] private RectTransform transitionMask;
     private Vector3 originalMaskScale = new Vector3(7f, 7f, 7f);
     private DeathScreenUI deathScreenUI;
-
     public void EnableHUD() { PlayerHUD.SetActive(true); }
     public void DisableHUD() { PlayerHUD.SetActive(false); }
+
+    // Game Data
+    private int currentDay;
+    public void SetCurrentDay(int day) {currentDay = day;}
+    public int GetCurrentDay() {return currentDay;}
 
     private void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+
+        SaveSystem.Load();
 
         HookedMinigame.SetActive(false);
         DeathScreen.SetActive(false);
@@ -32,6 +42,8 @@ public class GameManager : MonoBehaviour
         SceneTransition.SetActive(false);
         deathScreenUI = DeathScreen.GetComponent<DeathScreenUI>();
     }
+
+    // Minigames 
 
     // Despawns prey and spawns new one after random amount of time
     public void PreyConsumed(GameObject eatenPrey)
@@ -58,7 +70,6 @@ public class GameManager : MonoBehaviour
         InputManager.Instance.SwitchCurrentMap(InputManager.ActionMap.HookedMinigame);
     }
 
-
     public void ExitHookedMinigame()
     {
         if (HookedMinigame == null ||  PlayerHUD == null) return;
@@ -69,6 +80,8 @@ public class GameManager : MonoBehaviour
         //Increase player speed temporarily
         OnHookedMinigameFinished?.Invoke();
     }
+
+    // UI
 
     public void ShowDeathScreen(DeathScreenUI.DeathType deathType)
     {
@@ -99,4 +112,29 @@ public class GameManager : MonoBehaviour
         SurviveScreen.SetActive(true);
     }
 
+    #region Save and Load
+
+    public void Save(ref GameSaveData data)
+    {
+        data.CurrentGameDay = currentDay;
+    }
+
+    public void Load(GameSaveData data)
+    {
+        currentDay = data.CurrentGameDay;
+    }
+
+    #endregion
+
+    private void OnApplicationQuit()
+    {
+        SaveSystem.ResetDays();
+    }
+
+}
+
+[System.Serializable]
+public struct GameSaveData
+{
+    public int CurrentGameDay;
 }

@@ -12,4 +12,9 @@ public class MainMenu : MonoBehaviour
     {
         Application.Quit();
     }
+
+    private void OnApplicationQuit()
+    {
+        SaveSystem.ResetDays();
+    }
 }
