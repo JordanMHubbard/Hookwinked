@@ -16,7 +16,7 @@ public class PlayerInteraction : MonoBehaviour
 
     public void OnEnable()
     {
-        if (InputManager.instance != null)
+        if (InputManager.Instance != null)
         {
             InputManager.PlayerInput.actions["Interact"].performed += OnInteract;
         }
@@ -24,7 +24,7 @@ public class PlayerInteraction : MonoBehaviour
 
     public void OnDisable()
     {
-        if (InputManager.instance != null)
+        if (InputManager.Instance != null)
         {
             InputManager.PlayerInput.actions["Interact"].performed -= OnInteract;
         }

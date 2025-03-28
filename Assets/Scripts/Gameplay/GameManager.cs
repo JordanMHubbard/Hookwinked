@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
 
         PlayerHUD.SetActive(false);
         HookedMinigame.SetActive(true);
-        InputManager.instance.SwitchCurrentMap(InputManager.ActionMap.HookedMinigame);
+        InputManager.Instance.SwitchCurrentMap(InputManager.ActionMap.HookedMinigame);
     }
 
 
@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
 
         HookedMinigame.SetActive(false);
         PlayerHUD.SetActive(true);
-        InputManager.instance.SwitchCurrentMap(InputManager.ActionMap.Player);
+        InputManager.Instance.SwitchCurrentMap(InputManager.ActionMap.Player);
         //Increase player speed temporarily
         OnHookedMinigameFinished?.Invoke();
     }

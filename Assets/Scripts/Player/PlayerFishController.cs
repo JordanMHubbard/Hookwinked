@@ -68,8 +68,6 @@ public class PlayerFishController : MonoBehaviour
         eatSoundComp = GetComponent<SoundRandomizer>();
 
         // Setup
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
         mouseSensitivity /= 10f;
         currentSpeed = swimSpeed;
         startPos = mainCamera.transform.localPosition;
@@ -87,7 +85,7 @@ public class PlayerFishController : MonoBehaviour
         HandleRoation();
         ShouldTilt();
 
-        if (InputManager.instance.DashInput && !isDashing)
+        if (InputManager.Instance.DashInput && !isDashing)
         {
             StartCoroutine(ChargeDash());
         }
@@ -96,13 +94,13 @@ public class PlayerFishController : MonoBehaviour
     /* General Swimming Movement */
     private Vector3 CalculateWorldDirection()
     {
-        if (InputManager.instance == null) {return Vector3.zero;}
+        if (InputManager.Instance == null) {return Vector3.zero;}
 
         // Action inputs mapped to vector2 have either x or y inputs
         // These values correlate the direction the player is moving
-        float xInput = InputManager.instance.SwimInput.x;
-        float zInput = InputManager.instance.SwimInput.y;
-        float yInput = InputManager.instance.FloatInput.y;
+        float xInput = InputManager.Instance.SwimInput.x;
+        float zInput = InputManager.Instance.SwimInput.y;
+        float yInput = InputManager.Instance.FloatInput.y;
         Vector3 inputDirection = new Vector3(xInput, yInput, zInput);
 
         // Interpolates input vector to desired input so that movement is smoothed
@@ -122,7 +120,7 @@ public class PlayerFishController : MonoBehaviour
         currentMovement.y = worldDirection.y * floatSpeed;
         
         // Allow player to move forward based on where camera is looking
-        if (InputManager.instance.SwimInput.y > 0f)
+        if (InputManager.Instance.SwimInput.y > 0f)
         {
             currentMovement.y += mainCamera.transform.forward.y * currentSpeed;
         }
@@ -144,10 +142,10 @@ public class PlayerFishController : MonoBehaviour
 
     private void HandleRoation()
     {
-        if (InputManager.instance == null) {return;}
+        if (InputManager.Instance == null) {return;}
 
-        float mouseXRotation = InputManager.instance.LookInput.x * mouseSensitivity;
-        float mouseYRotation = InputManager.instance.LookInput.y * mouseSensitivity;
+        float mouseXRotation = InputManager.Instance.LookInput.x * mouseSensitivity;
+        float mouseYRotation = InputManager.Instance.LookInput.y * mouseSensitivity;
 
         ApplyHorizontalRotation(mouseXRotation);
         ApplyVerticalRotation(mouseYRotation);
@@ -189,7 +187,7 @@ public class PlayerFishController : MonoBehaviour
         
         energyComp.setIsPaused(true);
         GameManager.Instance.DisableHUD();
-        InputManager.instance.SwitchCurrentMap(InputManager.ActionMap.HookedMinigame);
+        InputManager.Instance.SwitchCurrentMap(InputManager.ActionMap.HookedMinigame);
         cameraAnim.Play("death", 0);
     }
 
@@ -236,7 +234,7 @@ public class PlayerFishController : MonoBehaviour
         isDashing = true; 
         currentSpeed = 2f;
 
-        while (InputManager.instance.DashInput && currentSpeed < 12f)
+        while (InputManager.Instance.DashInput && currentSpeed < 12f)
         {
             currentSpeed += dashChargeRate * Time.deltaTime;
             dashChargeBar.value = currentSpeed * 8.33f / 100f;
@@ -310,7 +308,7 @@ public class PlayerFishController : MonoBehaviour
     {
         if (!isViewBobEnabled) return;
         
-        if (InputManager.instance.SwimIsPressed || InputManager.instance.FloatIsPressed)
+        if (InputManager.Instance.SwimIsPressed || InputManager.Instance.FloatIsPressed)
         {
             StopViewBob();
         }
@@ -338,7 +336,7 @@ public class PlayerFishController : MonoBehaviour
     /* Tilting */
     private void ShouldTilt()
     {
-        float horiztonalInput = InputManager.instance.SwimInput.x;
+        float horiztonalInput = InputManager.Instance.SwimInput.x;
 
         // Checks if player is pressing a or d or is idling and plays the appropriate tilt animation
         if (horiztonalInput < 0f && !Physics.Raycast(transform.position, -transform.right, out hit, 1f, layers))

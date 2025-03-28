@@ -13,6 +13,8 @@ public class RockInteractable : MonoBehaviour, IInteractable
     {
         Debug.Log("rock has been interacted with!");
         gameObject.SetActive(false);
+        ProjectileHandler projectileHandler = interactor.GetComponent<ProjectileHandler>();
+        if (projectileHandler != null) projectileHandler.AddProjectile(gameObject);
     }
 
     public void ShowOutline()

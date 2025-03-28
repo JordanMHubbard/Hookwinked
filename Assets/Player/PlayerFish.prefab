@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8946572098530432142}
   - component: {fileID: 2078965542548107645}
   - component: {fileID: 52106068153816824}
+  - component: {fileID: 6264250226321033240}
   - component: {fileID: 1790552320228501296}
   - component: {fileID: 6287554246163781546}
   m_Layer: 0
@@ -127,6 +128,20 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   mainCamera: {fileID: 133031847395031908}
+--- !u!114 &6264250226321033240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7440325418165233619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cc3fc1baf6c80f4f98ad5be2966c2ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  launchForce: 10
+  mainCamera: {fileID: 0}
 --- !u!114 &1790552320228501296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -389,6 +404,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4494702344355641686}
   - component: {fileID: 8553104433962493930}
+  - component: {fileID: 7009882102383964094}
+  - component: {fileID: 6630269453539186493}
   m_Layer: 0
   m_Name: CameraParent
   m_TagString: Untagged
@@ -434,3 +451,51 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!135 &7009882102383964094
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8735097673828181742}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.25
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &6630269453539186493
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8735097673828181742}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

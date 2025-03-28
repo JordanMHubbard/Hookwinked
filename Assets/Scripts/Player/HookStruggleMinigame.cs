@@ -55,7 +55,7 @@ public class HookStruggleMinigame : MonoBehaviour
 
     private void CalculateStruggle()
     {
-        currentInput = InputManager.instance.ShakeInput;
+        currentInput = InputManager.Instance.ShakeInput;
         float xOffset = Mathf.Clamp(currentInput.x, -boundsOffset, boundsOffset);
         //float yOffset = Mathf.Clamp(currentInput.y, -boundsOffset, boundsOffset);
         FishHookUI.transform.position += new Vector3(xOffset, 0f, 0f) * 0.05f;

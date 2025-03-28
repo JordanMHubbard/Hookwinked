@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 public class InputManager : MonoBehaviour
 {
-    public static InputManager instance;
+    public static InputManager Instance;
     public static PlayerInput PlayerInput;
     
     public enum ActionMap {Player, UI, HookedMinigame}
@@ -40,7 +40,7 @@ public class InputManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null) instance = this;
+        if (Instance == null) Instance = this;
 
         PlayerInput = GetComponent<PlayerInput>();
 
@@ -51,6 +51,9 @@ public class InputManager : MonoBehaviour
         menuOpenAction =  PlayerInput.actions["MenuOpen"];
         UIMenuCloseAction =  PlayerInput.actions["MenuClose"];
         shakeAction = PlayerInput.actions["Shake"];
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     private void Update()
