@@ -61,8 +61,16 @@ public class PlayerFishController : MonoBehaviour
     private int timesHooked = 0;
     private int maxTimesHooked = 2;
 
+    // Ship Fragments
+    private int totalShipFragments;
+    public void IncrementShipFragments() {totalShipFragments++;}
+    public int GetTotalShipFragments() {return totalShipFragments;}
+
     private void Awake()
     {
+        GameManager.Instance.Player = this;
+        totalShipFragments = GameManager.Instance.GetShipFragmentsCount();
+
         // Initialize components
         energyComp = GetComponent<FishEnergy>();
         eatSoundComp = GetComponent<SoundRandomizer>();
@@ -376,5 +384,25 @@ public class PlayerFishController : MonoBehaviour
             isTiltingRight = false;
         }
     }
+
+    #region Save and Load
+
+    public void Save(ref PlayerSaveData data)
+    {
+        
+    }
+
+    public void Load(PlayerSaveData data)
+    {
+        
+    }
+
+    #endregion
  
+}
+
+[System.Serializable]
+public struct PlayerSaveData
+{
+    
 }

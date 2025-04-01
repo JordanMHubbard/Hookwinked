@@ -2912,6 +2912,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1331854658}
+  - component: {fileID: 1331854659}
   m_Layer: 5
   m_Name: PerkSelection
   m_TagString: Untagged
@@ -2945,6 +2946,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 3838.2, y: 2160}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1331854659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1331854657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a8313610460f434c94b3f6dbffe392c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1372760704
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4080,6 +4093,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2045437721}
+  - component: {fileID: 2045437722}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -4102,6 +4116,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2045437722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2045437719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67c4d8c9061c24b4fa28ce6ce3decc9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerHUD: {fileID: 0}
+  HookedMinigame: {fileID: 0}
+  DeathScreen: {fileID: 0}
+  SurviveScreen: {fileID: 0}
+  SceneTransition: {fileID: 2123713510}
+  transitionMask: {fileID: 0}
 --- !u!4 &2057133264 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5d5be312a15e6684a81c52d36bcf4f62, type: 3}
@@ -4144,7 +4176,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2123713511
 RectTransform:
   m_ObjectHideFlags: 0

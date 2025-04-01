@@ -9,6 +9,8 @@ public class SaveSystem
     public struct SaveData
     {
         public GameSaveData GameData;
+        public PerkSaveData PerkData;
+        public PlayerSaveData PlayerData;
     }
 
     public static string SaveFileName()
@@ -25,7 +27,9 @@ public class SaveSystem
 
     private static void HandleSaveData()
     {
-        GameManager.Instance.Save(ref saveData.GameData);
+        if (GameManager.Instance != null) GameManager.Instance.Save(ref saveData.GameData);
+        if (GameManager.Instance.Player != null) GameManager.Instance.Player.Save(ref saveData.PlayerData);
+        if (GameManager.Instance.PerkUpgrades != null) GameManager.Instance.PerkUpgrades.Save(ref saveData.PerkData);
     }
 
     public static void Load()
@@ -39,7 +43,9 @@ public class SaveSystem
 
     private static void HandleLoadData()
     {
-        GameManager.Instance.Load(saveData.GameData);
+        if (GameManager.Instance != null) GameManager.Instance.Load(saveData.GameData);
+        if (GameManager.Instance.Player != null) GameManager.Instance.Player.Load(saveData.PlayerData);
+        if (GameManager.Instance.PerkUpgrades != null) GameManager.Instance.PerkUpgrades.Load(saveData.PerkData);
     }
 
     public static void ResetDays()

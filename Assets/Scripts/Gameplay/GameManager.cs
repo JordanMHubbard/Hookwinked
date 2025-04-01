@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
@@ -26,8 +27,18 @@ public class GameManager : MonoBehaviour
 
     // Game Data
     private int currentDay;
+    private int shipFragmentsCount;
+    public PlayerFishController Player { get; set; }
+    public PerkSelectionUI PerkUpgrades { get; set; }
+    
+    // Setters
     public void SetCurrentDay(int day) {currentDay = day;}
+    public void SetShipFragmentsCount(int amount) {shipFragmentsCount = amount;}
+    
+    // Getters
     public int GetCurrentDay() {return currentDay;}
+    public int GetShipFragmentsCount() {return shipFragmentsCount;}
+    
 
     private void Awake()
     {
@@ -36,11 +47,11 @@ public class GameManager : MonoBehaviour
 
         SaveSystem.Load();
 
-        HookedMinigame.SetActive(false);
-        DeathScreen.SetActive(false);
-        SurviveScreen.SetActive(false);
-        SceneTransition.SetActive(false);
-        deathScreenUI = DeathScreen.GetComponent<DeathScreenUI>();
+        if (HookedMinigame != null) HookedMinigame.SetActive(false);
+        if (DeathScreen != null) DeathScreen.SetActive(false);
+        if (SurviveScreen != null) SurviveScreen.SetActive(false);
+        if (SceneTransition != null) SceneTransition.SetActive(false);
+        if (deathScreenUI != null) deathScreenUI = DeathScreen.GetComponent<DeathScreenUI>();
     }
 
     // Minigames 
@@ -117,11 +128,13 @@ public class GameManager : MonoBehaviour
     public void Save(ref GameSaveData data)
     {
         data.CurrentGameDay = currentDay;
+        data.TotalShipFragments = shipFragmentsCount;
     }
 
     public void Load(GameSaveData data)
     {
         currentDay = data.CurrentGameDay;
+        shipFragmentsCount = data.TotalShipFragments;
     }
 
     #endregion
@@ -137,4 +150,5 @@ public class GameManager : MonoBehaviour
 public struct GameSaveData
 {
     public int CurrentGameDay;
+    public int TotalShipFragments;
 }
