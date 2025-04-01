@@ -34,8 +34,8 @@ public class SaveSystem
 
     public static void Load()
     {
+        if (!File.Exists(SaveFileName())) return;
         string saveContent = File.ReadAllText(SaveFileName());
-        if (saveContent == null) return;
 
         saveData = JsonUtility.FromJson<SaveData>(saveContent);
         HandleLoadData();

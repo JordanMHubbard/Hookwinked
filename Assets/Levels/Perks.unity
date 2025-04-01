@@ -266,6 +266,7 @@ GameObject:
   - component: {fileID: 37299031}
   - component: {fileID: 37299033}
   - component: {fileID: 37299032}
+  - component: {fileID: 37299034}
   m_Layer: 5
   m_Name: Coral-lateralDamage
   m_TagString: Untagged
@@ -305,7 +306,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.49019608}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -330,6 +331,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 37299030}
   m_CullTransparentMesh: 1
+--- !u!225 &37299034
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37299030}
+  m_Enabled: 1
+  m_Alpha: 0.5
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &170182349
 GameObject:
   m_ObjectHideFlags: 0
@@ -730,7 +743,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -748,7 +761,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1579907354}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1331854659}
+        m_TargetAssemblyTypeName: PerkSelectionUI, Assembly-CSharp
+        m_MethodName: BuyPerk
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: OE
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &371062000
 GameObject:
   m_ObjectHideFlags: 0
@@ -1229,7 +1254,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -1247,7 +1272,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 37299032}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1331854659}
+        m_TargetAssemblyTypeName: PerkSelectionUI, Assembly-CSharp
+        m_MethodName: BuyPerk
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: CD
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &737415702 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 424140, guid: 491333d4c0bd88148813a9dde7fe955b, type: 3}
@@ -1900,7 +1937,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -1918,7 +1955,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1132275005}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1331854659}
+        m_TargetAssemblyTypeName: PerkSelectionUI, Assembly-CSharp
+        m_MethodName: BuyPerk
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: SS
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &935485118
 GameObject:
   m_ObjectHideFlags: 0
@@ -2729,6 +2778,7 @@ GameObject:
   - component: {fileID: 1132275004}
   - component: {fileID: 1132275006}
   - component: {fileID: 1132275005}
+  - component: {fileID: 1132275007}
   m_Layer: 5
   m_Name: SilentAssassin
   m_TagString: Untagged
@@ -2768,7 +2818,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.49019608}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2793,6 +2843,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1132275003}
   m_CullTransparentMesh: 1
+--- !u!225 &1132275007
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1132275003}
+  m_Enabled: 1
+  m_Alpha: 0.5
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &1137821701
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2958,6 +3020,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a8313610460f434c94b3f6dbffe392c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  perkImages:
+  - {fileID: 1565932747}
+  - {fileID: 1579907356}
+  - {fileID: 37299034}
+  - {fileID: 1132275007}
+  NFImage: {fileID: 1565932747}
+  OEImage: {fileID: 1579907356}
+  OEUpgradeImage: {fileID: 0}
+  CDImage: {fileID: 37299034}
+  SSImage: {fileID: 1132275007}
 --- !u!1001 &1372760704
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3312,7 +3384,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -3330,7 +3402,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1565932745}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1331854659}
+        m_TargetAssemblyTypeName: PerkSelectionUI, Assembly-CSharp
+        m_MethodName: BuyPerk
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: NF
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1503047652 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5d5be312a15e6684a81c52d36bcf4f62, type: 3}
@@ -3383,6 +3467,7 @@ GameObject:
   - component: {fileID: 1565932744}
   - component: {fileID: 1565932746}
   - component: {fileID: 1565932745}
+  - component: {fileID: 1565932747}
   m_Layer: 5
   m_Name: NitroFish
   m_TagString: Untagged
@@ -3422,7 +3507,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.49019608}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3447,6 +3532,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1565932743}
   m_CullTransparentMesh: 1
+--- !u!225 &1565932747
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565932743}
+  m_Enabled: 1
+  m_Alpha: 0.5
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1579907352
 GameObject:
   m_ObjectHideFlags: 0
@@ -3458,6 +3555,7 @@ GameObject:
   - component: {fileID: 1579907353}
   - component: {fileID: 1579907355}
   - component: {fileID: 1579907354}
+  - component: {fileID: 1579907356}
   m_Layer: 5
   m_Name: OceanEndurance
   m_TagString: Untagged
@@ -3497,7 +3595,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.49019608}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3522,6 +3620,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1579907352}
   m_CullTransparentMesh: 1
+--- !u!225 &1579907356
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1579907352}
+  m_Enabled: 1
+  m_Alpha: 0.5
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1728579596
 GameObject:
   m_ObjectHideFlags: 0
@@ -4132,6 +4242,7 @@ MonoBehaviour:
   HookedMinigame: {fileID: 0}
   DeathScreen: {fileID: 0}
   SurviveScreen: {fileID: 0}
+  PerkSelectionScreen: {fileID: 1331854657}
   SceneTransition: {fileID: 2123713510}
   transitionMask: {fileID: 0}
 --- !u!4 &2057133264 stripped

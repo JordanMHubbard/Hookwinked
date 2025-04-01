@@ -1,120 +1,74 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class PerkSelectionUI : MonoBehaviour
 {
-    private Dictionary<string, bool> perksAcquired = new Dictionary<string, bool>
+    private List<PerkInfo> perkList = new List<PerkInfo>
     {
-        { "NF", false },
-        { "OE", false },
-        { "OE2", false },
-        { "CD", false },
-        { "SS", false }
+        { new PerkInfo("NitroFish", "Longer Speed Boost", 3) },
+        { new PerkInfo("Ocean's Endurance", "Slower energy depletion", 3) },
+        { new PerkInfo("Coral-lateral Damage", "Shoot rocks faster and deal more damage", 3) },
+        { new PerkInfo("Silent Assassin", "Prey's detection range gets smaller", 3) }
     };
-
+    [SerializeField] private List<CanvasGroup> perkImages;
     private int totalShipFragments;
 
     private void Awake()
     {
         GameManager.Instance.PerkUpgrades = this;
         totalShipFragments = GameManager.Instance.GetShipFragmentsCount();
-        //SaveSystem.SaveData.PlayerDa
+        SaveSystem.Load();
+
+        totalShipFragments = 10;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     // Perk Unlocks
-
-    public void UnlockNF()
+    public void BuyPerk(int index)
     {
-        if (totalShipFragments < 3) return;
-
-        perksAcquired["NF"] = true;
-        GameManager.Instance.SetShipFragmentsCount(totalShipFragments);
-        //Enable NitroFish script
-    }
-
-    public void UnlockOE(bool isOE2Unlocked)
-    {
-        if (isOE2Unlocked) 
+        if (perkList[index].fragmentCost < totalShipFragments && !perkList[index].isUnlocked)
         {
-            if (totalShipFragments < 5) return;
-            
-            perksAcquired["OE2"] = true;
+            UnlockPerk(index);
+            totalShipFragments -= perkList[index].fragmentCost;
             GameManager.Instance.SetShipFragmentsCount(totalShipFragments);
-            //Enable OE script
+            SaveSystem.Save();
         }
-        else
-        {
-            if (totalShipFragments < 3) return;
-            
-            perksAcquired["OE"] = true;  
-            GameManager.Instance.SetShipFragmentsCount(totalShipFragments);
-        }
+
     }
-
-    public void UnlockCD()
+    public void UnlockPerk(int index)
     {
-        if (totalShipFragments < 3) return;
-
-        perksAcquired["CD"] = true;
-        GameManager.Instance.SetShipFragmentsCount(totalShipFragments);
-        //Enable CD script
-    }
-
-    public void UnlockSS()
-    {
-        if (totalShipFragments < 3) return;
-
-        perksAcquired["SS"] = true;
-        GameManager.Instance.SetShipFragmentsCount(totalShipFragments);
-        //Enable SS script
+        perkList[index].isUnlocked = true;
+        perkImages[index].DOFade(1f, 0.5f);
     }
 
     #region Save and Load
 
     public void Save(ref PerkSaveData data)
     {
-        data.perksUnlocked = perksAcquired;
+        data.perkInfos = perkList;
     }
 
     public void Load(PerkSaveData data)
     {
-        perksAcquired = data.perksUnlocked;
-
-        if (perksAcquired["NF"])
+        perkList = data.perkInfos;
+        for (int i = 0; i < perkList.Count; i++)
         {
-            UnlockNF();
-        }
-
-        if (perksAcquired["OE"])
-        {
-            UnlockOE(false);
-        }
-        else if (perksAcquired["OE2"])
-        {
-            UnlockOE(true);
-        }
-
-        if (perksAcquired["CD"])
-        {
-            UnlockCD();
-        }
-
-        if (perksAcquired["SS"])
-        {
-            UnlockSS();
+            if (perkList[i].isUnlocked)
+            {
+                UnlockPerk(i);
+            }
         }
     }
 
     #endregion
-
-    private void OnApplicationQuit()
-    {
-        SaveSystem.ResetDays();
-    }
 }
 
 [System.Serializable]
 public struct PerkSaveData
 {
-    public Dictionary<string, bool> perksUnlocked;
+    public List<PerkInfo> perkInfos;
+    
 }

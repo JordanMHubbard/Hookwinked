@@ -62,14 +62,10 @@ public class PlayerFishController : MonoBehaviour
     private int maxTimesHooked = 2;
 
     // Ship Fragments
-    private int totalShipFragments;
-    public void IncrementShipFragments() {totalShipFragments++;}
-    public int GetTotalShipFragments() {return totalShipFragments;}
 
     private void Awake()
     {
         GameManager.Instance.Player = this;
-        totalShipFragments = GameManager.Instance.GetShipFragmentsCount();
 
         // Initialize components
         energyComp = GetComponent<FishEnergy>();

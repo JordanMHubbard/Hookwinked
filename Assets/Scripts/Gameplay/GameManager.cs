@@ -14,32 +14,39 @@ public class GameManager : MonoBehaviour
     public event System.Action OnHookedMinigameFinished;
 
     // UI
+    [Header("Main Levels")]
     [SerializeField] private GameObject PlayerHUD;
     [SerializeField] private GameObject HookedMinigame;
     [SerializeField] private GameObject DeathScreen;
     [SerializeField] private GameObject SurviveScreen;
+    private DeathScreenUI deathScreenUI;
+
+    [Header("Perk Level")]
+    [SerializeField] private GameObject PerkSelectionScreen;
+    
+    [Header("General")]
     [SerializeField] private GameObject SceneTransition;
     [SerializeField] private RectTransform transitionMask;
     private Vector3 originalMaskScale = new Vector3(7f, 7f, 7f);
-    private DeathScreenUI deathScreenUI;
-    public void EnableHUD() { PlayerHUD.SetActive(true); }
-    public void DisableHUD() { PlayerHUD.SetActive(false); }
 
     // Game Data
     private int currentDay;
-    private int shipFragmentsCount;
+    private int shipFragmentsCount = 5;
     public PlayerFishController Player { get; set; }
     public PerkSelectionUI PerkUpgrades { get; set; }
     
     // Setters
     public void SetCurrentDay(int day) {currentDay = day;}
     public void SetShipFragmentsCount(int amount) {shipFragmentsCount = amount;}
+    public void IncrementShipFragments() {shipFragmentsCount++;}
     
     // Getters
     public int GetCurrentDay() {return currentDay;}
     public int GetShipFragmentsCount() {return shipFragmentsCount;}
-    
 
+    public void EnableHUD() { PlayerHUD.SetActive(true); }
+    public void DisableHUD() { PlayerHUD.SetActive(false); }
+    
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -47,14 +54,9 @@ public class GameManager : MonoBehaviour
 
         SaveSystem.Load();
 
-        if (HookedMinigame != null) HookedMinigame.SetActive(false);
-        if (DeathScreen != null) DeathScreen.SetActive(false);
-        if (SurviveScreen != null) SurviveScreen.SetActive(false);
-        if (SceneTransition != null) SceneTransition.SetActive(false);
-        if (deathScreenUI != null) deathScreenUI = DeathScreen.GetComponent<DeathScreenUI>();
+        InitializeUI();
+        StartCoroutine(TestPerks());
     }
-
-    // Minigames 
 
     // Despawns prey and spawns new one after random amount of time
     public void PreyConsumed(GameObject eatenPrey)
@@ -65,6 +67,7 @@ public class GameManager : MonoBehaviour
         OnPreyConsumed?.Invoke(eatenPrey);
     }
 
+    // Minigames
     public void StartHookedMinigame()
     {
         if (HookedMinigame == null ||  PlayerHUD == null) return;
@@ -92,7 +95,29 @@ public class GameManager : MonoBehaviour
         OnHookedMinigameFinished?.Invoke();
     }
 
+    private IEnumerator TestPerks()
+    {
+        yield return new WaitForSeconds(2f);
+        PerkSelectionScreen.SetActive(true);
+    }
     // UI
+    private void InitializeUI()
+    {
+        // Main Level
+        if (HookedMinigame != null) HookedMinigame.SetActive(false);
+        if (SurviveScreen != null) SurviveScreen.SetActive(false);
+        if (DeathScreen != null) 
+        {
+            DeathScreen.SetActive(false);
+            deathScreenUI = DeathScreen.GetComponent<DeathScreenUI>();
+        }
+
+        // Perk Level
+        if (PerkSelectionScreen != null) PerkSelectionScreen.SetActive(false);
+
+        // General
+        if (SceneTransition != null) SceneTransition.SetActive(false);
+    }
 
     public void ShowDeathScreen(DeathScreenUI.DeathType deathType)
     {
