@@ -19,8 +19,14 @@ public class FishEnergy : MonoBehaviour
     [SerializeField] private float depreciateRate = 2f;
     private Coroutine DepreciateCoroutine;
 
+    // Setters
+    public void SetDepreciationRate(float rate) {depreciateRate = rate;}
     public void setIsPaused(bool shouldPause) { isPaused = shouldPause; }
 
+    private void Awake()
+    {
+        GameManager.Instance.PlayerEnergyComp = this;
+    }
     private void Start()
     {
         if (energyBar == null)

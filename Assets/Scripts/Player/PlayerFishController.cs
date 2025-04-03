@@ -39,6 +39,8 @@ public class PlayerFishController : MonoBehaviour
     private float currentVelocity;
     public Slider dashChargeBar;
     public CanvasGroup dashKeybind;
+    private float dashDuration = 0.3f;
+    public void SetDashDuration(float duration) {dashDuration = duration;}
 
     [Header("References")]
     [SerializeField] private CharacterController characterController;
@@ -65,7 +67,7 @@ public class PlayerFishController : MonoBehaviour
 
     private void Awake()
     {
-        GameManager.Instance.Player = this;
+        GameManager.Instance.PlayerController = this;
 
         // Initialize components
         energyComp = GetComponent<FishEnergy>();
@@ -246,7 +248,7 @@ public class PlayerFishController : MonoBehaviour
             yield return null;
         }
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(dashDuration);
 
         StartCoroutine(EndDash());
     }

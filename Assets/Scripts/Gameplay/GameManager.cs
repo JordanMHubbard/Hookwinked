@@ -32,17 +32,27 @@ public class GameManager : MonoBehaviour
     // Game Data
     private int currentDay;
     private int shipFragmentsCount = 5;
-    public PlayerFishController Player { get; set; }
+    public PlayerFishController PlayerController { get; set; }
+    public FishEnergy PlayerEnergyComp { get; set; }
     public PerkSelectionUI PerkUpgrades { get; set; }
+    private List<PerkInfo> perkList = new List<PerkInfo>
+    {
+        { new PerkInfo("NitroFish", "Longer Speed Boost", 3) },
+        { new PerkInfo("Ocean's Endurance", "Slower energy depletion", 3) },
+        { new PerkInfo("Coral-lateral Damage", "Shoot rocks faster and deal more damage", 3) },
+        { new PerkInfo("Silent Assassin", "Prey's detection range gets smaller", 3) }
+    };
     
     // Setters
     public void SetCurrentDay(int day) {currentDay = day;}
     public void SetShipFragmentsCount(int amount) {shipFragmentsCount = amount;}
     public void IncrementShipFragments() {shipFragmentsCount++;}
+    public void SetPerkList(List<PerkInfo> perks) {perkList = perks;}
     
     // Getters
     public int GetCurrentDay() {return currentDay;}
     public int GetShipFragmentsCount() {return shipFragmentsCount;}
+    public List<PerkInfo> GetPerkList() {return perkList;}
 
     public void EnableHUD() { PlayerHUD.SetActive(true); }
     public void DisableHUD() { PlayerHUD.SetActive(false); }
@@ -100,6 +110,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         PerkSelectionScreen.SetActive(true);
     }
+    
     // UI
     private void InitializeUI()
     {
@@ -148,18 +159,57 @@ public class GameManager : MonoBehaviour
         SurviveScreen.SetActive(true);
     }
 
+    public void EnablePerk(int index)
+    {
+        if (PlayerController == null) return;
+        switch (index)
+        {
+            // Nitro Fish - longer speed boost
+            case 0:
+                PlayerController.SetDashDuration(0.75f); 
+                Debug.Log("Dash lasts 0.75f now");
+                break;
+            // Ocean's Endurance - energy depletes slower
+            case 1:
+                if (PlayerEnergyComp != null) PlayerEnergyComp.SetDepreciationRate(1.6f);
+                Debug.Log("Energy Depreciation is now 1.6f");
+                break;
+            // Coral-Lateral Damage
+            case 2:
+                Debug.Log("Add coral lateral functionality");
+                break;
+            // Silent Assassin
+            case 3:
+                Debug.Log("Add Silent Assassin functionality");
+                break;
+        }
+    }
+
     #region Save and Load
 
     public void Save(ref GameSaveData data)
     {
         data.CurrentGameDay = currentDay;
         data.TotalShipFragments = shipFragmentsCount;
+        data.perks = perkList;
     }
 
     public void Load(GameSaveData data)
     {
         currentDay = data.CurrentGameDay;
         shipFragmentsCount = data.TotalShipFragments;
+        
+        if (data.perks != null) 
+        {
+            perkList = data.perks;
+            for (int i = 0; i < perkList.Count; i++)
+            {
+                if (perkList[i].isUnlocked)
+                {
+                    EnablePerk(i);
+                }
+            }
+        }
     }
 
     #endregion
@@ -176,4 +226,5 @@ public struct GameSaveData
 {
     public int CurrentGameDay;
     public int TotalShipFragments;
+    public List<PerkInfo> perks;
 }

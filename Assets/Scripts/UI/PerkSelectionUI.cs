@@ -4,13 +4,7 @@ using UnityEngine;
 
 public class PerkSelectionUI : MonoBehaviour
 {
-    private List<PerkInfo> perkList = new List<PerkInfo>
-    {
-        { new PerkInfo("NitroFish", "Longer Speed Boost", 3) },
-        { new PerkInfo("Ocean's Endurance", "Slower energy depletion", 3) },
-        { new PerkInfo("Coral-lateral Damage", "Shoot rocks faster and deal more damage", 3) },
-        { new PerkInfo("Silent Assassin", "Prey's detection range gets smaller", 3) }
-    };
+    private List<PerkInfo> perkList;
     [SerializeField] private List<CanvasGroup> perkImages;
     private int totalShipFragments;
 
@@ -18,7 +12,8 @@ public class PerkSelectionUI : MonoBehaviour
     {
         GameManager.Instance.PerkUpgrades = this;
         totalShipFragments = GameManager.Instance.GetShipFragmentsCount();
-        SaveSystem.Load();
+        perkList = GameManager.Instance.GetPerkList();
+        InitalizePerks();
 
         totalShipFragments = 10;
 
@@ -41,19 +36,12 @@ public class PerkSelectionUI : MonoBehaviour
     public void UnlockPerk(int index)
     {
         perkList[index].isUnlocked = true;
-        perkImages[index].DOFade(1f, 0.5f);
+        perkImages[index].alpha = 1f;
     }
 
-    #region Save and Load
-
-    public void Save(ref PerkSaveData data)
+    private void InitalizePerks()
     {
-        data.perkInfos = perkList;
-    }
-
-    public void Load(PerkSaveData data)
-    {
-        perkList = data.perkInfos;
+        Debug.Log("Perklist count: " +perkList.Count);
         for (int i = 0; i < perkList.Count; i++)
         {
             if (perkList[i].isUnlocked)
@@ -62,13 +50,4 @@ public class PerkSelectionUI : MonoBehaviour
             }
         }
     }
-
-    #endregion
-}
-
-[System.Serializable]
-public struct PerkSaveData
-{
-    public List<PerkInfo> perkInfos;
-    
 }
