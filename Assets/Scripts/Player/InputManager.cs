@@ -7,7 +7,7 @@ public class InputManager : MonoBehaviour
     public static InputManager Instance;
     public static PlayerInput PlayerInput;
     
-    public enum ActionMap {Player, UI, HookedMinigame}
+    public enum ActionMap {Player, UI, HookedMinigame, Dialogue}
     private ActionMap currentMap = ActionMap.Player;
 
     // Player
@@ -24,6 +24,9 @@ public class InputManager : MonoBehaviour
 
     // Hooked Minigame
     public Vector2 ShakeInput { get; private set;}
+
+    // Dialogue
+    public bool SkipInput { get; private set;}
     
     // Player Input
     private InputAction swimAction;
@@ -38,6 +41,9 @@ public class InputManager : MonoBehaviour
     // Hooked Minigame Input
     private InputAction shakeAction;
 
+    // Dialogue Input
+    private InputAction skipDialogueAction;
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -51,6 +57,7 @@ public class InputManager : MonoBehaviour
         menuOpenAction =  PlayerInput.actions["MenuOpen"];
         UIMenuCloseAction =  PlayerInput.actions["MenuClose"];
         shakeAction = PlayerInput.actions["Shake"];
+        skipDialogueAction = PlayerInput.actions["SkipDialogue"];
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -70,6 +77,10 @@ public class InputManager : MonoBehaviour
             
             case ActionMap.HookedMinigame:
                 HandleHookedMinigameInput();
+                break;
+            
+            case ActionMap.Dialogue:
+                HandleDialogueInput();
                 break;
         }
     }
@@ -93,6 +104,11 @@ public class InputManager : MonoBehaviour
     private void HandleHookedMinigameInput()
     {
         ShakeInput = shakeAction.ReadValue<Vector2>();
+    }
+
+    private void HandleDialogueInput()
+    {
+        SkipInput = skipDialogueAction.WasPressedThisFrame();
     }
 
     public void SwitchCurrentMap(ActionMap map)

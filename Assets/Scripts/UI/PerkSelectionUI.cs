@@ -41,7 +41,6 @@ public class PerkSelectionUI : MonoBehaviour
 
     private void InitalizePerks()
     {
-        Debug.Log("Perklist count: " +perkList.Count);
         for (int i = 0; i < perkList.Count; i++)
         {
             if (perkList[i].isUnlocked)

@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
         SaveSystem.Load();
 
         InitializeUI();
-        StartCoroutine(TestPerks());
+        //StartCoroutine(TestPerks()); 
     }
 
     // Despawns prey and spawns new one after random amount of time
@@ -174,7 +174,7 @@ public class GameManager : MonoBehaviour
                 if (PlayerEnergyComp != null) PlayerEnergyComp.SetDepreciationRate(1.6f);
                 Debug.Log("Energy Depreciation is now 1.6f");
                 break;
-            // Coral-Lateral Damage
+            // Coral-Lateral Damage: 1. gives ability to use rocks, 2.makes rocks stronger or faster
             case 2:
                 Debug.Log("Add coral lateral functionality");
                 break;
