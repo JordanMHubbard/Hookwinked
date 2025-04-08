@@ -6,19 +6,23 @@ using UnityEngine;
 
 public class DialogueManager : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI SpiritText;
-    [SerializeField] private CanvasGroup SpiritSpeechBox;
+    [SerializeField] private TextMeshProUGUI NpcText;
+    [SerializeField] private CanvasGroup NpcSpeechBox;
     [SerializeField] private TextMeshProUGUI PlayerText;
     [SerializeField] private CanvasGroup PlayerSpeechBox;
-    [SerializeField] private List<DialogueEntry> Dialogue;
-    private List<DialogueLine> currentDialogue;
-    private int currentDialogueIndex = 0;
+    [SerializeField] private List<DialogueEntry> AllDialogue;
+    [SerializeField] private CanvasGroup ScreenFade;
+    private List<Dialogue> currentDialogue;
     private int currentLineIndex = 0;
     private bool isInputPaused;
 
     private void Start()
     {
-        StartCoroutine(DayOneDialogue());
+        Debug.Log("Today: " +GameManager.Instance.GetCurrentDay());
+        if (AllDialogue.Count > GameManager.Instance.GetCurrentDay()) 
+        {
+            StartCoroutine(PlayCurrentDayDialogue());
+        }
     }
 
     private void Update()
@@ -35,17 +39,34 @@ public class DialogueManager : MonoBehaviour
         
         if (currentLineIndex >= currentDialogue.Count) return;
 
-        if (currentDialogue[currentLineIndex].speakerName == "SpiritFish")
+        if (currentDialogue[currentLineIndex].shouldPauseAfter) 
         {
-            SpiritText.text = currentDialogue[currentLineIndex].line;
+            StartCoroutine(HandleIntermission(3f));
         }
-        else if (currentDialogue[currentLineIndex].speakerName == "Player")
+        else
         {
-            PlayerText.text = currentDialogue[currentLineIndex].line;
+            if (currentDialogue[currentLineIndex].isNPC)
+            {
+                StartCoroutine(TypeSentence(NpcText, currentDialogue[currentLineIndex].line));
+            }
+            else if (!currentDialogue[currentLineIndex].isNPC)
+            {
+                StartCoroutine(TypeSentence(PlayerText, currentDialogue[currentLineIndex].line));
+            }
         }
-        
-        if (currentDialogue[currentLineIndex].shouldPauseAfter) HandleIntermission();
+    }
 
+    private IEnumerator TypeSentence (TextMeshProUGUI textBox, string sentence)
+    {
+        isInputPaused = true;
+        textBox.text = "";
+        foreach (char letter in sentence.ToCharArray())
+        {
+            textBox.text += letter;
+            yield return new WaitForSeconds(0.02f);
+        }
+
+        isInputPaused = false;
         currentLineIndex++;
     }
 
@@ -53,7 +74,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (currentDialogue[currentLineIndex-1].speakerName == "SpiritFish")
         {
-            SpiritSpeechBox.DOFade(0f, 0.75f);
+            NpcSpeechBox.DOFade(0f, 0.75f);
         }
         else if (currentDialogue[currentLineIndex-1].speakerName == "Player")
         {
@@ -61,60 +82,31 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    private void ClearAllDialogue()
-    {
-        SpiritText.text = "";
-        PlayerText.text = "";
-    }
 
-    private void StartCurrentDayDialogue()
-    {
-        int currentDay = GameManager.Instance.GetCurrentDay();
-        switch (currentDay)
-        {
-            case 1:
-                DayOneDialogue(); 
-                break;
-            
-            case 2:
-                //DayTwoDialogue();
-                break;
-        }
-    }
-
-    private void HandleIntermission()
+    private IEnumerator HandleIntermission(float intermissionTime)
     {   
         isInputPaused = true;
+        currentLineIndex++;
+        ScreenFade.DOFade(1f, 1f);
+        NpcText.text = "";
+        PlayerText.text = "";
+        yield return new WaitForSeconds(intermissionTime);
 
-        int currentDay = GameManager.Instance.GetCurrentDay();
-        switch (currentDay)
-        {
-            case 0:
-                StartCoroutine(DayOnePartTwoDialogue());
-                //Play black screen and effects and return player to dialogue
-                break;
-
-            case 1:
-                StartCoroutine(DayOnePartTwoDialogue());
-                //Play black screen and effects and return player to dialogue
-                break;
-            
-            case 2:
-                //DayTwoDialogue();
-                break;
-        }
+        isInputPaused = false;
+        ScreenFade.DOFade(0f, 1f);
+        Debug.Log("Intermission Over");
     }
 
-    private IEnumerator DayOneDialogue()
+    private IEnumerator PlayCurrentDayDialogue()
     {
-        currentDialogue = Dialogue[0].dialogueLines;
+        currentDialogue = AllDialogue[GameManager.Instance.GetCurrentDay()].dialogueLines; 
         PlayerSpeechBox.DOFade(1f, 0.75f);
         yield return new WaitForSeconds(1f);
         
         ShowNextDiaolgue();
         yield return new WaitForSeconds(2f);
         
-        SpiritSpeechBox.DOFade(1f, 0.75f);
+        NpcSpeechBox.DOFade(1f, 0.75f);
         yield return new WaitForSeconds(1f);
         
         ShowNextDiaolgue();
@@ -122,34 +114,10 @@ public class DialogueManager : MonoBehaviour
 
         Debug.Log("Press space to skip");
         InputManager.Instance.SwitchCurrentMap(InputManager.ActionMap.Dialogue);
-    }
-
-    private IEnumerator DayOnePartTwoDialogue()
-    {
-        yield return new WaitForSeconds(2f);
-        isInputPaused = false;
-        Debug.Log("Woke Up");
-    }
+    }   
 
     
 }
-
-[System.Serializable]
-public class DialogueEntry
-{
-    public string entryName;
-    public List<DialogueLine> dialogueLines;
-}
-
-[System.Serializable]
-public class DialogueLine
-{
-    public string speakerName;
-    public string line;
-    public bool shouldPauseAfter;
-    public bool isLastLine;
-}
-
 
 
 
