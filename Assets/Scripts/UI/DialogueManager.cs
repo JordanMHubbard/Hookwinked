@@ -115,6 +115,8 @@ public class DialogueManager : MonoBehaviour
     {
         isDialogueAutomatic = true;
         currentDialogue = AllDialogue[GameManager.Instance.GetCurrentDay()].dialogueLines; 
+        yield return new WaitForSeconds(2.5f);
+
         PlayerSpeechBox.DOFade(1f, 0.75f);
         yield return new WaitForSeconds(1f);
         
@@ -126,7 +128,7 @@ public class DialogueManager : MonoBehaviour
         
         ShowNextDiaolgue();
         isDialogueAutomatic = false;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
 
         Debug.Log("Press space to skip");
         InputManager.Instance.SwitchCurrentMap(InputManager.ActionMap.Dialogue);

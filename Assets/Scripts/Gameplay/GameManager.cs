@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -29,7 +30,9 @@ public class GameManager : MonoBehaviour
     [Header("General")]
     [SerializeField] private GameObject SceneTransition;
     [SerializeField] private RectTransform transitionMask;
+    [SerializeField] private bool shouldTransitionAtStart;
     private Vector3 originalMaskScale = new Vector3(7f, 7f, 7f);
+
 
     // Game Data
     private int currentDay;
@@ -72,15 +75,13 @@ public class GameManager : MonoBehaviour
         //StartCoroutine(TestPerks()); 
     }
 
-    private void SetPerkIcons()
+    private void Start()
     {
-        for (int i = 0; i < perkList.Count; i++)
+        if (shouldTransitionAtStart) 
         {
-            if (i < perkIcons.Count)
-            {
-                perkList[i].icon = perkIcons[i];
-            }
+            StartCoroutine(TransitionOut());
         }
+        
     }
 
     // Despawns prey and spawns new one after random amount of time
@@ -161,24 +162,43 @@ public class GameManager : MonoBehaviour
         StartCoroutine(TransitionIn(ActivateSurviveScreen));
     }
 
+    private void ActivateSurviveScreen()
+    {
+        SurviveScreen.SetActive(true);
+        StartCoroutine(TransitionOut());
+    }
+
     private IEnumerator TransitionIn(Action callback)
     {
         SceneTransition.SetActive(true);
         transitionMask.DOScale(new Vector3(0f, 0f, 0f), 2f).SetEase(Ease.Linear);
         yield return new WaitForSeconds(3f);
+        callback?.Invoke();
+    }
+
+    private IEnumerator TransitionOut()
+    {
+        SceneTransition.SetActive(true);
+        transitionMask.localScale = new Vector3(0f, 0f, 0f);
+        yield return new WaitForSeconds(0.5f);
 
         transitionMask.DOScale(originalMaskScale, 2f).SetEase(Ease.Linear);
-        callback?.Invoke();
         yield return new WaitForSeconds(2f);
         
         SceneTransition.SetActive(false);
     }
 
-    private void ActivateSurviveScreen()
+    // Perks
+    private void SetPerkIcons()
     {
-        SurviveScreen.SetActive(true);
+        for (int i = 0; i < perkList.Count; i++)
+        {
+            if (i < perkIcons.Count)
+            {
+                perkList[i].icon = perkIcons[i];
+            }
+        }
     }
-
     public void EnablePerk(int index)
     {
         if (PlayerController == null) return;
@@ -212,16 +232,21 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator UnlockPerkAnim(int index)
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         perkList[index].isUnlocked = true;
         Debug.Log("Unlocked perk: " + perkList[index].perkName);
         GainedPerkScreen.SetActive(true);
-        gainedPerkUI.InitializePerk(perkList[index].perkName, perkList[index].icon);
+        gainedPerkUI.InitializePerk(perkList[index].perkName, perkList[index].description, perkList[index].icon);
         SaveSystem.Save();
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(7f);
 
-        GainedPerkScreen.SetActive(false);
+        StartCoroutine(TransitionIn(OpenReefLevel));
+    }
+
+    private void OpenReefLevel()
+    {
+        SceneManager.LoadScene("TheReef");
     }
 
     #region Save and Load
