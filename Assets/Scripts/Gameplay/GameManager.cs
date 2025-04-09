@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
 
     [Header("Perk Level")]
     [SerializeField] private GameObject PerkSelectionScreen;
+    [SerializeField] private GameObject GainedPerkScreen;
+    private GainedPerkUI gainedPerkUI;
     
     [Header("General")]
     [SerializeField] private GameObject SceneTransition;
@@ -42,6 +44,7 @@ public class GameManager : MonoBehaviour
         { new PerkInfo("Coral-lateral Damage", "Shoot rocks faster and deal more damage", 3) },
         { new PerkInfo("Silent Assassin", "Prey's detection range gets smaller", 3) }
     };
+    [SerializeField] private List<Sprite> perkIcons;
     
     // Setters
     public void SetCurrentDay(int day) {currentDay = day;}
@@ -65,7 +68,19 @@ public class GameManager : MonoBehaviour
         SaveSystem.Load();
 
         InitializeUI();
+        SetPerkIcons();
         //StartCoroutine(TestPerks()); 
+    }
+
+    private void SetPerkIcons()
+    {
+        for (int i = 0; i < perkList.Count; i++)
+        {
+            if (i < perkIcons.Count)
+            {
+                perkList[i].icon = perkIcons[i];
+            }
+        }
     }
 
     // Despawns prey and spawns new one after random amount of time
@@ -125,6 +140,11 @@ public class GameManager : MonoBehaviour
 
         // Perk Level
         if (PerkSelectionScreen != null) PerkSelectionScreen.SetActive(false);
+        if (GainedPerkScreen != null) 
+        {
+            GainedPerkScreen.SetActive(false);
+            gainedPerkUI = GainedPerkScreen.GetComponent<GainedPerkUI>();
+        }
 
         // General
         if (SceneTransition != null) SceneTransition.SetActive(false);
@@ -183,6 +203,25 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Add Silent Assassin functionality");
                 break;
         }
+    }
+
+    public void UnlockPerk(int index)
+    {
+        StartCoroutine(UnlockPerkAnim(index));
+    }
+
+    private IEnumerator UnlockPerkAnim(int index)
+    {
+        yield return new WaitForSeconds(2f);
+
+        perkList[index].isUnlocked = true;
+        Debug.Log("Unlocked perk: " + perkList[index].perkName);
+        GainedPerkScreen.SetActive(true);
+        gainedPerkUI.InitializePerk(perkList[index].perkName, perkList[index].icon);
+        SaveSystem.Save();
+        yield return new WaitForSeconds(3f);
+
+        GainedPerkScreen.SetActive(false);
     }
 
     #region Save and Load

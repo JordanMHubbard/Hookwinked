@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9fb37db5da0d9224196c4d559ecfe75c, type: 3}
       propertyPath: m_Name
-      value: SpiritFiish
+      value: SpiritFish
       objectReference: {fileID: 0}
     - target: {fileID: 4211510819238559761, guid: 9fb37db5da0d9224196c4d559ecfe75c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -71,5 +71,50 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9fb37db5da0d9224196c4d559ecfe75c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2781166832922289812}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9fb37db5da0d9224196c4d559ecfe75c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7093843650007087334}
   m_SourcePrefab: {fileID: 100100000, guid: 9fb37db5da0d9224196c4d559ecfe75c, type: 3}
+--- !u!1 &6706664247800070680 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 9fb37db5da0d9224196c4d559ecfe75c, type: 3}
+  m_PrefabInstance: {fileID: 5896252361376186185}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &2781166832922289812
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6706664247800070680}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 5d8ddce35a39f944085709f97abdb317, type: 3}
+  m_Controller: {fileID: 9100000, guid: c8b66ad6518ef6f448083b8e2ce63b6d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7093843650007087334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6706664247800070680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3f368631cedbf644828847fed569c28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

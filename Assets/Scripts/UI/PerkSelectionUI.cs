@@ -45,7 +45,7 @@ public class PerkSelectionUI : MonoBehaviour
         {
             if (perkList[i].isUnlocked)
             {
-                UnlockPerk(i);
+                perkImages[i].alpha = 1f;
             }
         }
     }

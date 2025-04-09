@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine.Events;
 using UnityEngine;
 
 [System.Serializable]
@@ -17,4 +18,9 @@ public class Dialogue
     public bool shouldPauseAfter;
     public bool isLastLine;
     public bool isNPC;
+    public UnityEvent triggerEvent;
+    public void Trigger()
+    {
+        triggerEvent.Invoke();
+    }
 }
