@@ -25,7 +25,11 @@ public class FishEnergy : MonoBehaviour
 
     private void Awake()
     {
-        GameManager.Instance.PlayerEnergyComp = this;
+        if (GameManager.Instance.GetIsPerkUnlocked(1)) 
+        {
+            depreciateRate = 1.6f;
+            Debug.Log("Energy Depreciation is now 1.6f");
+        }
     }
     private void Start()
     {

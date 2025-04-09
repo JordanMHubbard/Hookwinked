@@ -7,10 +7,18 @@ public class ProjectileHandler : MonoBehaviour
     [SerializeField] private float launchForce = 1f;
     [SerializeField] private Camera mainCamera;
     private List<GameObject> projectiles;
+    private bool isUnlocked;
+    public void SetIsUnlocked(bool shouldUnlock) { isUnlocked = shouldUnlock;}
 
     private void Awake()
     {
         projectiles = new List<GameObject>();
+        
+        if (GameManager.Instance.GetIsPerkUnlocked(2)) 
+        {
+            isUnlocked = true;
+            Debug.Log("Added ability to shoot!");
+        }
     }
     private void OnEnable()
     {
@@ -32,6 +40,8 @@ public class ProjectileHandler : MonoBehaviour
     
     public void Shoot(InputAction.CallbackContext context)
     {
+        if (!isUnlocked) return; 
+
         if (projectiles.Count > 0)
         {
             Debug.Log("Shot!");

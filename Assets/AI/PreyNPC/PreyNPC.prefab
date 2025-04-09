@@ -110,6 +110,7 @@ MonoBehaviour:
   interactableLayer:
     serializedVersion: 2
     m_Bits: 1
+  predatorDetectionBox: {fileID: 3170972066686523418}
 --- !u!1 &3569174245825300410
 GameObject:
   m_ObjectHideFlags: 0

@@ -38,7 +38,6 @@ public class GameManager : MonoBehaviour
     private int currentDay;
     private int shipFragmentsCount = 5;
     public PlayerFishController PlayerController { get; set; }
-    public FishEnergy PlayerEnergyComp { get; set; }
     public PerkSelectionUI PerkUpgrades { get; set; }
     private List<PerkInfo> perkList = new List<PerkInfo>
     {
@@ -48,6 +47,7 @@ public class GameManager : MonoBehaviour
         { new PerkInfo("Silent Assassin", "Prey's detection range gets smaller", 3) }
     };
     [SerializeField] private List<Sprite> perkIcons;
+    public bool GetIsPerkUnlocked(int index) {return perkList[index].isUnlocked;}
     
     // Setters
     public void SetCurrentDay(int day) {currentDay = day;}
@@ -199,31 +199,6 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    public void EnablePerk(int index)
-    {
-        if (PlayerController == null) return;
-        switch (index)
-        {
-            // Nitro Fish - longer speed boost
-            case 0:
-                PlayerController.SetDashDuration(0.75f); 
-                Debug.Log("Dash lasts 0.75f now");
-                break;
-            // Ocean's Endurance - energy depletes slower
-            case 1:
-                if (PlayerEnergyComp != null) PlayerEnergyComp.SetDepreciationRate(1.6f);
-                Debug.Log("Energy Depreciation is now 1.6f");
-                break;
-            // Coral-Lateral Damage: 1. gives ability to use rocks, 2.makes rocks stronger or faster
-            case 2:
-                Debug.Log("Add coral lateral functionality");
-                break;
-            // Silent Assassin
-            case 3:
-                Debug.Log("Add Silent Assassin functionality");
-                break;
-        }
-    }
 
     public void UnlockPerk(int index)
     {
@@ -266,13 +241,6 @@ public class GameManager : MonoBehaviour
         if (data.perks != null) 
         {
             perkList = data.perks;
-            for (int i = 0; i < perkList.Count; i++)
-            {
-                if (perkList[i].isUnlocked)
-                {
-                    EnablePerk(i);
-                }
-            }
         }
     }
 

@@ -77,6 +77,11 @@ public class PlayerFishController : MonoBehaviour
         mouseSensitivity /= 10f;
         currentSpeed = swimSpeed;
         startPos = mainCamera.transform.localPosition;
+        if (GameManager.Instance.GetIsPerkUnlocked(0)) 
+        {
+            dashDuration = 0.75f;
+            Debug.Log("Dash lasts 0.75f now");
+        }
     }
 
     private void OnEnable()
