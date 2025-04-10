@@ -12910,8 +12910,12 @@ MonoBehaviour:
   HookedMinigame: {fileID: 1112362738}
   DeathScreen: {fileID: 1983729293}
   SurviveScreen: {fileID: 1236164979}
+  PerkSelectionScreen: {fileID: 0}
+  GainedPerkScreen: {fileID: 0}
   SceneTransition: {fileID: 2123713510}
   transitionMask: {fileID: 293038756}
+  shouldTransitionAtStart: 1
+  perkIcons: []
 --- !u!4 &2045437721
 Transform:
   m_ObjectHideFlags: 0

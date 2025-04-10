@@ -115,6 +115,7 @@ public class DialogueManager : MonoBehaviour
     {
         isDialogueAutomatic = true;
         currentDialogue = AllDialogue[GameManager.Instance.GetCurrentDay()].dialogueLines; 
+        Debug.Log("Playing dialogue for this day: " + (GameManager.Instance.GetCurrentDay()));
         yield return new WaitForSeconds(2.5f);
 
         PlayerSpeechBox.DOFade(1f, 0.75f);
