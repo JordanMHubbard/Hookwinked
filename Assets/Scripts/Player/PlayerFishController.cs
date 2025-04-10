@@ -67,7 +67,15 @@ public class PlayerFishController : MonoBehaviour
 
     private void Awake()
     {
-        GameManager.Instance.PlayerController = this;
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.PlayerController = this;
+            if (GameManager.Instance.GetIsPerkUnlocked(0)) 
+            {
+                dashDuration = 0.75f;
+                Debug.Log("Dash lasts 0.75f now");
+            }
+        }
 
         // Initialize components
         energyComp = GetComponent<FishEnergy>();
@@ -77,11 +85,6 @@ public class PlayerFishController : MonoBehaviour
         mouseSensitivity /= 10f;
         currentSpeed = swimSpeed;
         startPos = mainCamera.transform.localPosition;
-        if (GameManager.Instance.GetIsPerkUnlocked(0)) 
-        {
-            dashDuration = 0.75f;
-            Debug.Log("Dash lasts 0.75f now");
-        }
     }
 
     private void OnEnable()

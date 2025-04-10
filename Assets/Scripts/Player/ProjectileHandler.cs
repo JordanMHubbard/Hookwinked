@@ -14,7 +14,7 @@ public class ProjectileHandler : MonoBehaviour
     {
         projectiles = new List<GameObject>();
         
-        if (GameManager.Instance.GetIsPerkUnlocked(2)) 
+        if (GameManager.Instance != null && GameManager.Instance.GetIsPerkUnlocked(2)) 
         {
             isUnlocked = true;
             Debug.Log("Added ability to shoot!");
