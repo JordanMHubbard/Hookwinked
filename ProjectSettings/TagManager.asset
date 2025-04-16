@@ -11,6 +11,8 @@ TagManager:
   - Bait
   - CamParent
   - Fish
+  - BoatSpawnArea
+  - Boat
   layers:
   - Default
   - TransparentFX
