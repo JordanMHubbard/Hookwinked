@@ -67,7 +67,7 @@ public class AIFishSpawner : MonoBehaviour
         return isInReachableArea;
     }
 
-    void SpawnFish()
+    public void SpawnFish()
     {
         if (fishPrefab == null) 
         {

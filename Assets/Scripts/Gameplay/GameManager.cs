@@ -33,6 +33,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private bool shouldTransitionAtStart;
     private Vector3 originalMaskScale = new Vector3(7f, 7f, 7f);
 
+    [Header("Spawning")]
+    private PreySpawner preySpawner;
+    private PredatorSpawner predatorSpawner;
+    [SerializeField] private GameObject fishSpawnerBox;
 
     // Game Data
     private int currentDay;
@@ -47,7 +51,6 @@ public class GameManager : MonoBehaviour
         { new PerkInfo("Silent Assassin", "Prey's detection range gets smaller", 3) }
     };
     [SerializeField] private List<Sprite> perkIcons;
-    public bool GetIsPerkUnlocked(int index) {return perkList[index].isUnlocked;}
     
     // Setters
     public void SetCurrentDay(int day) {currentDay = day;}
@@ -56,9 +59,12 @@ public class GameManager : MonoBehaviour
     public void SetPerkList(List<PerkInfo> perks) {perkList = perks;}
     
     // Getters
+    public PreySpawner GetPreySpawner() {return preySpawner;}
+    public PredatorSpawner GetPredatorSpawner() {return predatorSpawner;}
     public int GetCurrentDay() {return currentDay;}
     public int GetShipFragmentsCount() {return shipFragmentsCount;}
     public List<PerkInfo> GetPerkList() {return perkList;}
+    public bool GetIsPerkUnlocked(int index) {return perkList[index].isUnlocked;}
 
     public void EnableHUD() { PlayerHUD.SetActive(true); }
     public void DisableHUD() { PlayerHUD.SetActive(false); }
@@ -71,6 +77,7 @@ public class GameManager : MonoBehaviour
         SaveSystem.Load();
 
         InitializeUI();
+        InitializeSpawners();
         SetPerkIcons();
         //StartCoroutine(TestPerks()); 
     }
@@ -186,6 +193,17 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         
         SceneTransition.SetActive(false);
+    }
+
+    // Spawning
+    private void InitializeSpawners()
+    {
+        if (fishSpawnerBox != null)
+        {
+            preySpawner = fishSpawnerBox.GetComponent<PreySpawner>();
+            predatorSpawner = fishSpawnerBox.GetComponent<PredatorSpawner>();
+        }
+        else Debug.LogWarning("fishSpawnerBox has not been set!");
     }
 
     // Perks

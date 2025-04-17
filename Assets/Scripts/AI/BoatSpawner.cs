@@ -12,7 +12,7 @@ public class BoatSpawner : MonoBehaviour
     [SerializeField] private LayerMask interactableLayer;
     private BoxCollider box;
     
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    // ALSO need to make it so amount of boats spawned affects amount of fish spawned
     private void Start()
     {
         if (!isEnabled) return;
@@ -45,7 +45,7 @@ public class BoatSpawner : MonoBehaviour
             float z = Random.Range(min.z + paddingXZ, max.z - paddingXZ);
 
             point = new Vector3(x,y,z);
-            isReachable = IsAreaReachable(point, new Vector3(4, 4, 4));
+            isReachable = IsAreaReachable(point, new Vector3(15, 5, 15));
             attempts++;
         }
 

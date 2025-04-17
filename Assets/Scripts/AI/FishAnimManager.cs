@@ -5,7 +5,7 @@ public class FishAnimManager : MonoBehaviour
     private Animator animator;
     private CharacterController characterController;
     private bool shouldAnimate = true;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
     private void Start()
     {
         animator = GetComponent<Animator>();

@@ -26,6 +26,5 @@ public class RockInteractable : MonoBehaviour, IInteractable
     {
         outlineComp.OutlineWidth = 0f;
     }
-
     
 }
