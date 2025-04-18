@@ -13298,7 +13298,7 @@ PrefabInstance:
       objectReference: {fileID: 1912724975}
     - target: {fileID: 6264250226321033240, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
       propertyPath: launchForce
-      value: 400
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 6264250226321033240, guid: 04bcfdf89658cd841b1443856b1bde00, type: 3}
       propertyPath: cameraHandler

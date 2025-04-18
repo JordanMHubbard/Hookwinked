@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class BoatManager : MonoBehaviour
 {
+    [SerializeField] private GameObject damageDecal;
     private int timesDamaged;
     private bool canSpawnFish;
 
@@ -16,16 +17,22 @@ public class BoatManager : MonoBehaviour
             }
     }
 
-    public void ApplyRockDamage()
+    public void ApplyRockDamage(Vector3 point, Vector3 normal)
     {
+        // Show damage decal 
+        GameObject decalInstance = Instantiate(damageDecal, point + normal * 0.5f, Quaternion.identity);
+
+        // Apply damage
         Debug.Log("We've been hit, it's goin down, im yelling timber!");
         if (timesDamaged++ >= 3)
         {
             Debug.Log("We need to get outta here cap'n!");
         }
-            
+
+        // Spawn two new prey
         if (canSpawnFish)
         {
+            Debug.Log("We spawning fish boiiii");
             GameManager.Instance.GetPreySpawner().SpawnFish();
             GameManager.Instance.GetPreySpawner().SpawnFish();
         }
@@ -43,8 +50,10 @@ public class BoatManager : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if ( collision.gameObject.CompareTag("Interactable"))
-        {
-            ApplyRockDamage();
+        { 
+            Vector3 contactPoint = collision.GetContact(0).point;
+            Vector3 contactNormal = collision.GetContact(0).normal;
+            ApplyRockDamage(contactPoint, contactNormal);
         }
     }
 }

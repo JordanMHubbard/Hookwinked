@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class ProjectileHandler : MonoBehaviour
 {
-    [SerializeField] private float launchForce = 1f;
+    [SerializeField] private float launchForce = 400f;
     [SerializeField] private Camera mainCamera;
     private List<GameObject> projectiles;
     private bool isUnlocked;
