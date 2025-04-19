@@ -39,9 +39,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject fishSpawnerBox;
 
     // Game Data
-    private int currentDay;
-    private int shipFragmentsCount = 5;
     public PlayerFishController PlayerController { get; set; }
+    private int currentDay;
+    private int boatFragmentsCount = 5;
+    [SerializeField] private List<GameObject> boatWaypoints;
     public PerkSelectionUI PerkUpgrades { get; set; }
     private List<PerkInfo> perkList = new List<PerkInfo>
     {
@@ -54,15 +55,15 @@ public class GameManager : MonoBehaviour
     
     // Setters
     public void SetCurrentDay(int day) {currentDay = day;}
-    public void SetShipFragmentsCount(int amount) {shipFragmentsCount = amount;}
-    public void IncrementShipFragments() {shipFragmentsCount++;}
+    public void SetBoatFragmentsCount(int amount) {boatFragmentsCount = amount;}
+    public void IncrementShipFragments() {boatFragmentsCount++;}
     public void SetPerkList(List<PerkInfo> perks) {perkList = perks;}
     
     // Getters
     public PreySpawner GetPreySpawner() {return preySpawner;}
     public PredatorSpawner GetPredatorSpawner() {return predatorSpawner;}
     public int GetCurrentDay() {return currentDay;}
-    public int GetShipFragmentsCount() {return shipFragmentsCount;}
+    public int GetBoatFragmentsCount() {return boatFragmentsCount;}
     public List<PerkInfo> GetPerkList() {return perkList;}
     public bool GetIsPerkUnlocked(int index) {return perkList[index].isUnlocked;}
 
@@ -79,7 +80,7 @@ public class GameManager : MonoBehaviour
         InitializeUI();
         InitializeSpawners();
         SetPerkIcons();
-        //StartCoroutine(TestPerks()); 
+        
     }
 
     private void Start()
@@ -126,12 +127,6 @@ public class GameManager : MonoBehaviour
         InputManager.Instance.SwitchCurrentMap(InputManager.ActionMap.Player);
         //Increase player speed temporarily
         OnHookedMinigameFinished?.Invoke();
-    }
-
-    private IEnumerator TestPerks()
-    {
-        yield return new WaitForSeconds(2f);
-        PerkSelectionScreen.SetActive(true);
     }
     
     // UI
@@ -247,14 +242,14 @@ public class GameManager : MonoBehaviour
     public void Save(ref GameSaveData data)
     {
         data.CurrentGameDay = currentDay;
-        data.TotalShipFragments = shipFragmentsCount;
+        data.TotalShipFragments = boatFragmentsCount;
         data.perks = perkList;
     }
 
     public void Load(GameSaveData data)
     {
         currentDay = data.CurrentGameDay;
-        shipFragmentsCount = data.TotalShipFragments;
+        boatFragmentsCount = data.TotalShipFragments;
         
         if (data.perks != null) 
         {

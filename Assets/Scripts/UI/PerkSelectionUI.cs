@@ -11,7 +11,7 @@ public class PerkSelectionUI : MonoBehaviour
     private void Awake()
     {
         GameManager.Instance.PerkUpgrades = this;
-        totalShipFragments = GameManager.Instance.GetShipFragmentsCount();
+        totalShipFragments = GameManager.Instance.GetBoatFragmentsCount();
         perkList = GameManager.Instance.GetPerkList();
         InitalizePerks();
 
@@ -28,7 +28,7 @@ public class PerkSelectionUI : MonoBehaviour
         {
             UnlockPerk(index);
             totalShipFragments -= perkList[index].fragmentCost;
-            GameManager.Instance.SetShipFragmentsCount(totalShipFragments);
+            GameManager.Instance.SetBoatFragmentsCount(totalShipFragments);
             SaveSystem.Save();
         }
 
