@@ -25,7 +25,7 @@ public class AIFishSpawner : MonoBehaviour
             return;
         }
 
-        SpawnFish();
+        SpawnFish(0);
     }
 
     protected Vector3 GetRandomPoint()
@@ -67,7 +67,7 @@ public class AIFishSpawner : MonoBehaviour
         return isInReachableArea;
     }
 
-    public void SpawnFish()
+    public void SpawnFish(int fishCount)
     {
         if (fishPrefab == null) 
         {
@@ -75,7 +75,9 @@ public class AIFishSpawner : MonoBehaviour
             return;
         }
 
-        while (numFish > 0)
+        if (fishCount <= 0) fishCount = numFish;
+
+        while (fishCount > 0)
         {
             Vector3 spawnPosition = GetRandomPoint();
             GameObject fishInstance = Instantiate(fishPrefab, spawnPosition, Quaternion.identity); 
@@ -96,7 +98,7 @@ public class AIFishSpawner : MonoBehaviour
             meshInstance.transform.localPosition = Vector3.zero;
             meshInstance.transform.localRotation = Quaternion.identity;
 
-            numFish--;
+            fishCount--;
         }
     }
 

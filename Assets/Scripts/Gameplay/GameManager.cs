@@ -64,6 +64,8 @@ public class GameManager : MonoBehaviour
     public PredatorSpawner GetPredatorSpawner() {return predatorSpawner;}
     public int GetCurrentDay() {return currentDay;}
     public int GetBoatFragmentsCount() {return boatFragmentsCount;}
+    public Vector3 GetRandomBoatWaypoint() { 
+        return boatWaypoints[UnityEngine.Random.Range(0, boatWaypoints.Count)].transform.position; }
     public List<PerkInfo> GetPerkList() {return perkList;}
     public bool GetIsPerkUnlocked(int index) {return perkList[index].isUnlocked;}
 

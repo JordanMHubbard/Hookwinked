@@ -9,8 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7533438310193574567}
-  - component: {fileID: 5133153871392244147}
-  - component: {fileID: -7462098464710201613}
   m_Layer: 0
   m_Name: FishingBoat
   m_TagString: Boat
@@ -34,41 +32,6 @@ Transform:
   - {fileID: 6337572123760715026}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &5133153871392244147
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2802294388433091577}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 7802312270333419287, guid: f3660f9d58efeb04cb0b880be61bbbc2, type: 3}
---- !u!114 &-7462098464710201613
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2802294388433091577}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2157648b5b5ea654e9150d050d97040f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageDecal: {fileID: 7290156255301585453, guid: a3716abf885648748b013d7b2525980d, type: 3}
 --- !u!1 &3569174245825300410
 GameObject:
   m_ObjectHideFlags: 0
@@ -78,6 +41,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6337572123760715026}
+  - component: {fileID: 4259835812721482164}
+  - component: {fileID: 4889548127003290185}
   m_Layer: 0
   m_Name: BoatMesh
   m_TagString: Boat
@@ -93,10 +58,46 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3569174245825300410}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7533438310193574567}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!64 &4259835812721482164
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3569174245825300410}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7802312270333419287, guid: f3660f9d58efeb04cb0b880be61bbbc2, type: 3}
+--- !u!114 &4889548127003290185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3569174245825300410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2157648b5b5ea654e9150d050d97040f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boatParent: {fileID: 2802294388433091577}
+  damageDecal: {fileID: 7290156255301585453, guid: a3716abf885648748b013d7b2525980d, type: 3}
