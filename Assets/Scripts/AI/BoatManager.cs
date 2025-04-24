@@ -90,6 +90,7 @@ public class BoatManager : MonoBehaviour
                    {
                         controller.SetIsBait(false);
                         controller.SetBaitStatus();
+                        GameManager.Instance.PreyConsumed(controller.gameObject);
                    }
                 }
             }
