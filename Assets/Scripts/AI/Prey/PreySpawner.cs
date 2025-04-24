@@ -19,9 +19,7 @@ public class PreySpawner : AIFishSpawner
         Vector3 spawnPosition = GetRandomPoint();
         prey.transform.position = spawnPosition;
         prey.SetActive(true);
-        
     }
-
 
     IEnumerator SpawnPreyDelayed(GameObject prey)
     {

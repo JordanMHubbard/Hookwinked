@@ -1,5 +1,7 @@
 using System.Collections;
+using System.Collections.Generic;
 using Unity.VisualScripting;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 public class BoatManager : MonoBehaviour
@@ -10,12 +12,17 @@ public class BoatManager : MonoBehaviour
     private bool canSpawnFish;
     private Vector3 currentTarget;
     private Vector3 directionToTarget;
+
+    // Movement
     [SerializeField] private float maxSpeed = 4f;
+    [SerializeField] private float turnSpeed = 1f;
     private float currentSpeed = 0.1f;
     float accelerationRate = 0.5f;
     private bool hasTarget;
     private bool shouldRotate;
-    [SerializeField] private float turnSpeed = 1f;
+
+    // Baited Fish 
+    private List<GameObject> BaitedPrey = new List<GameObject>();
 
     private void Awake()
     {
@@ -32,6 +39,12 @@ public class BoatManager : MonoBehaviour
             Debug.LogWarning("boatparent has not been set!");
         }
 
+        // Spawn random number of bait
+        BaitedPrey = GameManager.Instance.GetPreySpawner().SpawnFish(Random.Range(1,3), true);
+        foreach (GameObject fish in BaitedPrey)
+        {
+           Debug.Log("Just spawned some bait yay!");
+        }
     }
 
     private void Update()
@@ -69,8 +82,16 @@ public class BoatManager : MonoBehaviour
             // Spawn two new prey
             if (canSpawnFish)
             {
-                Debug.Log("We spawning fish boiiii");
-                GameManager.Instance.GetPreySpawner().SpawnFish(2);
+                Debug.Log("We changing bait to prey yeupppp"); 
+                foreach (GameObject fish in BaitedPrey)
+                {
+                   PreyController controller = fish.GetComponent<PreyController>();
+                   if (controller != null) 
+                   {
+                        controller.SetIsBait(false);
+                        controller.SetBaitStatus();
+                   }
+                }
             }
         } 
 

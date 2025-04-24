@@ -25,7 +25,7 @@ public class AIFishSpawner : MonoBehaviour
             return;
         }
 
-        SpawnFish(0);
+        SpawnFish(0, false);
     }
 
     protected Vector3 GetRandomPoint()
@@ -67,12 +67,14 @@ public class AIFishSpawner : MonoBehaviour
         return isInReachableArea;
     }
 
-    public void SpawnFish(int fishCount)
+    public List<GameObject> SpawnFish(int fishCount, bool isBait)
     {
+        List<GameObject> fish = new List<GameObject>();
+
         if (fishPrefab == null) 
         {
             Debug.LogError("fishPrefab has not been set!");
-            return;
+            return null;
         }
 
         if (fishCount <= 0) fishCount = numFish;
@@ -86,7 +88,7 @@ public class AIFishSpawner : MonoBehaviour
             if (meshHolder == null)
             {
                 Debug.LogError("FishMesh child not found on FishNPC prefab!");
-                return;
+                return null;
             }
             
             GameObject meshInstance = Instantiate(GetRandomMesh(), meshHolder);
@@ -98,8 +100,17 @@ public class AIFishSpawner : MonoBehaviour
             meshInstance.transform.localPosition = Vector3.zero;
             meshInstance.transform.localRotation = Quaternion.identity;
 
+            if (isBait)
+            {
+                PreyController controller = fishInstance.GetComponent<PreyController>();
+                if (controller != null) controller.SetIsBait(true);
+            }
+
+            fish.Add(fishInstance);
             fishCount--;
         }
+
+        return fish;
     }
 
     private GameObject GetRandomMesh()

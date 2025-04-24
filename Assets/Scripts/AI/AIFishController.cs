@@ -26,13 +26,13 @@ public class AIFishController : MonoBehaviour
     public void SetIsRepelling(bool shouldRepel ) {isRepelling = shouldRepel; }
     public void SetRepelDirection(Vector3 direction) { repelDirection = direction; }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         swimSpeed = defaultSwimSpeed;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    private void Start()
+    protected virtual void Start()
     {
         characterController = GetComponent<CharacterController>();
         
@@ -45,7 +45,7 @@ public class AIFishController : MonoBehaviour
 
 
     // Update is called once per frame
-    private void Update()
+    protected virtual void Update()
     {
         
         Debug.DrawLine(transform.position, transform.position + transform.forward * 2f, Color.blue);
