@@ -59,7 +59,7 @@
             {
                 "type": "UnityEngine.Polybrush.MirrorCoordinateSpace, Unity.Polybrush, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                 "key": "Brush.MirrorSpace",
-                "value": "{\"m_Value\":0}"
+                "value": "{\"m_Value\":1}"
             },
             {
                 "type": "UnityEngine.Polybrush.PolyDirection, Unity.Polybrush, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
@@ -99,7 +99,7 @@
             {
                 "type": "UnityEditor.Polybrush.PrefabLoadout, Unity.Polybrush.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                 "key": "ScatteringEditor.userLoadout",
-                "value": "{\"m_Value\":{\"infos\":[{\"palette\":{\"fileID\":11400000,\"guid\":\"8a62f0073ce8d1748aacb9deb011b96c\",\"type\":2},\"prefab\":{\"fileID\":145462034875323919,\"guid\":\"f50c842e9de138545b004df2e342f8a4\",\"type\":3}}]}}"
+                "value": "{\"m_Value\":{\"infos\":[{\"palette\":{\"fileID\":11400000,\"guid\":\"8a62f0073ce8d1748aacb9deb011b96c\",\"type\":2},\"prefab\":{\"fileID\":919132149155446097,\"guid\":\"8c317443e7bc94b46906a1bd509e89d7\",\"type\":3}}]}}"
             }
         ]
     }
