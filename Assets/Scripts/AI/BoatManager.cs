@@ -8,6 +8,7 @@ public class BoatManager : MonoBehaviour
 {
     [SerializeField] private GameObject boatParent;
     [SerializeField] private GameObject damageDecal;
+    [SerializeField] private GameObject boatFragment;
     private int timesDamaged;
     private bool canSpawnFish;
     private Vector3 currentTarget;
@@ -71,7 +72,9 @@ public class BoatManager : MonoBehaviour
         
         // Destroy rock
         //rock.SetActive(false);
-
+        
+        // Drop fragment
+        DropFragment(decalInstance.transform.position);
 
         // Apply damage
         Debug.Log("We've been hit");
@@ -101,11 +104,20 @@ public class BoatManager : MonoBehaviour
             2. Show damaged decal on boat ✔
             3. Check if has been damaged 3 times ✔
                 - if true, make boat drive off ✔
-                - remove add 2 more prey to prey pool ✔
+                - remove bait from pool ✔
+                - Play boat driving sound
             4. Destroy rock on impact 
-            5. Show slight rock explosion effect
-            6. Play boat driving sound
+            5.
+            6. Show slight rock explosion effect
         */
+    }
+
+    private void DropFragment(Vector3 position)
+    {
+        if (boatFragment != null)
+        {
+            GameObject fragment = Instantiate(boatFragment, position, Quaternion.identity);
+        }
     }
 
     private void Flee()
