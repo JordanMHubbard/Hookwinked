@@ -13,9 +13,11 @@ GameObject:
   - component: {fileID: 7222412897080884211}
   - component: {fileID: 6177147902257984465}
   - component: {fileID: 8700609293318263930}
+  - component: {fileID: 7071766584785386625}
+  - component: {fileID: -2992379895402885350}
   m_Layer: 0
   m_Name: BoatFragment
-  m_TagString: Obstacle
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,8 +31,8 @@ Transform:
   m_GameObject: {fileID: 7222412897078653909}
   serializedVersion: 2
   m_LocalRotation: {x: 0.0000000218557, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 18.049, y: 1.0585, z: -20.241}
-  m_LocalScale: {x: 0.23797382, y: 0.12496, z: 0.30502737}
+  m_LocalPosition: {x: 18.046, y: 1.0646, z: -20.239}
+  m_LocalScale: {x: 0.17697398, y: 0.092929, z: 0.22683969}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -119,7 +121,7 @@ Rigidbody:
   m_GameObject: {fileID: 7222412897078653909}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 2
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -137,3 +139,33 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &7071766584785386625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7222412897078653909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0.28734675, g: 1, b: 0.24056602, a: 1}
+  outlineWidth: 0
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!114 &-2992379895402885350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7222412897078653909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de91306ce7a6da7429f5800d25fa1778, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

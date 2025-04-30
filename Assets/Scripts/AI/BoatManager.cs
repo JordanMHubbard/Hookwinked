@@ -1,7 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 public class BoatManager : MonoBehaviour
@@ -9,6 +6,8 @@ public class BoatManager : MonoBehaviour
     [SerializeField] private GameObject boatParent;
     [SerializeField] private GameObject damageDecal;
     [SerializeField] private GameObject boatFragment;
+    [SerializeField] private GameObject damageEffect;
+    public Color32 boatColor {get; set;}
     private int timesDamaged;
     private bool canSpawnFish;
     private Vector3 currentTarget;
@@ -48,6 +47,11 @@ public class BoatManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        SetDamageColor();
+    }
+
     private void Update()
     {
         if (shouldRotate) Rotate();
@@ -56,7 +60,7 @@ public class BoatManager : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if ( collision.gameObject.CompareTag("Interactable"))
+        if (collision.gameObject.GetComponent<RockInteractable>() != null)
         { 
             Vector3 contactPoint = collision.GetContact(0).point;
             Vector3 contactNormal = collision.GetContact(0).normal;
@@ -66,15 +70,14 @@ public class BoatManager : MonoBehaviour
 
     public void ApplyRockDamage(Vector3 point, Vector3 normal, GameObject rock)
     {
-        // Show damage decal 
+        // Show damage decal and effect
+        Vector3 position = point + normal * -0.1f;
         Quaternion rotation = Quaternion.LookRotation(normal);
-        GameObject decalInstance = Instantiate(damageDecal, point + normal * -0.1f, rotation, boatParent.transform);
-        
-        // Destroy rock
-        //rock.SetActive(false);
+        Quaternion effectRotation = Quaternion.LookRotation(-normal);
+        ShowDamageEffects(position, rotation, effectRotation);
         
         // Drop fragment
-        DropFragment(decalInstance.transform.position);
+        DropFragment(position);
 
         // Apply damage
         Debug.Log("We've been hit");
@@ -107,15 +110,25 @@ public class BoatManager : MonoBehaviour
                 - remove bait from pool ✔
                 - Play boat driving sound
             4. Destroy rock on impact 
-            5.
-            6. Show slight rock explosion effect
+            5. Show slight rock explosion effect ✔
+            6. Make fragment and damage particles same color as boat ✔
         */
+    }
+
+    private void ShowDamageEffects(Vector3 position, Quaternion rotation, Quaternion effectRotation)
+    {
+        Instantiate(damageDecal, position, rotation, boatParent.transform);
+        GameObject effect = Instantiate(damageEffect, position, effectRotation);
+        ParticleSystemRenderer ps = effect.GetComponent<ParticleSystemRenderer>();
+        ps.material.color = boatColor;
     }
 
     private void DropFragment(Vector3 position)
     {
         if (boatFragment != null)
         {
+            MeshRenderer renderer = boatFragment.GetComponent<MeshRenderer>();
+            renderer.sharedMaterial.color = boatColor;
             GameObject fragment = Instantiate(boatFragment, position, Quaternion.identity);
         }
     }
@@ -155,5 +168,31 @@ public class BoatManager : MonoBehaviour
 
         float dist = Vector3.Distance(boatParent.transform.position, currentTarget);
         if (dist < 1f) hasTarget = false;
+    }
+
+    private void SetDamageColor()
+    {
+        Transform boat = transform.GetChild(0);
+        if (boat == null) return;
+
+        string boatName = boat.name;
+        switch (boatName)
+        {
+            case "RedBoat(Clone)":
+                boatColor = new Color32(201, 12, 56, 255);
+                break;
+
+            case "YellowBoat(Clone)":
+                boatColor = new Color32(222, 208, 80, 255);
+                break;
+
+            case "GreenBoat(Clone)":
+                boatColor = new Color32(74, 148, 61, 255);
+                break;
+
+            case "BlueBoat(Clone)":
+                boatColor = new Color32(113, 194, 235, 255);
+                break;
+        }
     }
 }

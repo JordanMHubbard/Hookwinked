@@ -40,15 +40,16 @@ public class PlayerInteraction : MonoBehaviour
     void CheckForInteraction()
     {
         Ray ray = new Ray(mainCamera.transform.position, mainCamera.transform.forward);
-
         if (Physics.Raycast(ray, out RaycastHit hit, InteractionDistance, interactableLayer))
         {
             if (hit.collider.CompareTag("Interactable"))
             {
-                
-                if (!hasTarget)
-                {
-                    currentInteractable = hit.collider.GetComponent<IInteractable>();
+                var newTarget = hit.collider.GetComponent<IInteractable>();
+
+                if (!hasTarget || currentInteractable != newTarget)
+                {   
+                    if (hasTarget) currentInteractable.RemoveOutline();
+                    currentInteractable = newTarget;
                     currentInteractable.ShowOutline();
                     hasTarget = true;
                 }
@@ -56,7 +57,7 @@ public class PlayerInteraction : MonoBehaviour
         }
         else
         {
-            if (currentInteractable != null)
+            if (hasTarget)
             {
                 currentInteractable.RemoveOutline();
                 currentInteractable = null;

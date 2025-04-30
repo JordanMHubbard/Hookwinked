@@ -107,7 +107,8 @@ public class BoatSpawner : MonoBehaviour
     {
         int total = boatMeshes.Count;
         int index = Random.Range(0, total);
-
+    
         return boatMeshes[index];
     }
+
 }

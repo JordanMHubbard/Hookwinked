@@ -102,5 +102,6 @@ MonoBehaviour:
   boatParent: {fileID: 2802294388433091577}
   damageDecal: {fileID: 7290156255301585453, guid: a3716abf885648748b013d7b2525980d, type: 3}
   boatFragment: {fileID: 7222412897078653909, guid: 11f6ee31aa301b347a1c64982ff377be, type: 3}
+  damageEffect: {fileID: 2686636185225401814, guid: 039a3e59f2644144b87b674262dd1d6a, type: 3}
   maxSpeed: 4
   turnSpeed: 1

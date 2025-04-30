@@ -3,7 +3,27 @@ guid: 232b14e8928355442a596055b08a5c2f
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TreasureChest
+    second: {fileID: 2100000, guid: e859400635011b74581daccccba0e90a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TreasureChest2
+    second: {fileID: 2100000, guid: b3a2671b7dcda794094ace316d6f5a40, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TreasureChest3
+    second: {fileID: 2100000, guid: f0681fead2d8da74f8d0327534dfb6c6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TreasureChest4
+    second: {fileID: 2100000, guid: dd00e3067b7258c46a46cd34cd39b7d4, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
