@@ -36,7 +36,11 @@ public class ProjectileHandler : MonoBehaviour
         }
     }
     
-    public void AddProjectile(GameObject projectile) { projectiles.Add(projectile); }
+    public void AddProjectile(GameObject projectile) 
+    { 
+        projectiles.Add(projectile);
+        GameManager.Instance.SetRockCount(projectiles.Count); 
+    }
     
     public void Shoot(InputAction.CallbackContext context)
     {
@@ -58,8 +62,9 @@ public class ProjectileHandler : MonoBehaviour
                 rb.isKinematic = false;
                 rb.AddForce(mainCamera.transform.forward * launchForce);
             }
+
+            GameManager.Instance.SetRockCount(projectiles.Count);
         }
-        
     }
 
 }

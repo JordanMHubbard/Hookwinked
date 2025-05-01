@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
 using UnityEngine;
@@ -20,6 +21,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject HookedMinigame;
     [SerializeField] private GameObject DeathScreen;
     [SerializeField] private GameObject SurviveScreen;
+    [SerializeField] TextMeshProUGUI RockCountText;
+    [SerializeField] TextMeshProUGUI FragmentsCountText;
+    
     private DeathScreenUI deathScreenUI;
 
     [Header("Perk Level")]
@@ -41,7 +45,7 @@ public class GameManager : MonoBehaviour
     // Game Data
     public PlayerFishController PlayerController { get; set; }
     private int currentDay;
-    private int boatFragmentsCount = 5;
+    private int boatFragmentsCount = 0;
     [SerializeField] private List<GameObject> boatWaypoints;
     public PerkSelectionUI PerkUpgrades { get; set; }
     private List<PerkInfo> perkList = new List<PerkInfo>
@@ -55,8 +59,12 @@ public class GameManager : MonoBehaviour
     
     // Setters
     public void SetCurrentDay(int day) {currentDay = day;}
-    public void SetBoatFragmentsCount(int amount) {boatFragmentsCount = amount;}
-    public void IncrementShipFragments() {boatFragmentsCount++;}
+    public void SetBoatFragmentsCount(int amount) 
+    {
+        boatFragmentsCount = amount;
+        FragmentsCountText.text = boatFragmentsCount.ToString();
+    }
+    public void SetRockCount(int amount) { RockCountText.text = amount.ToString(); }
     public void SetPerkList(List<PerkInfo> perks) {perkList = perks;}
     
     // Getters
@@ -251,7 +259,7 @@ public class GameManager : MonoBehaviour
     public void Load(GameSaveData data)
     {
         currentDay = data.CurrentGameDay;
-        boatFragmentsCount = data.TotalShipFragments;
+        SetBoatFragmentsCount(data.TotalShipFragments);
         
         if (data.perks != null) 
         {

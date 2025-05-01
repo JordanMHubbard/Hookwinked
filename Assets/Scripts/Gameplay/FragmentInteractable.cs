@@ -18,8 +18,8 @@ public class FragmentInteractable : MonoBehaviour, IInteractable
     public void Interact(GameObject interactor)
     {
         Debug.Log("fragment has been collected!");
+        GameManager.Instance.SetBoatFragmentsCount(GameManager.Instance.GetBoatFragmentsCount() + 1);
         gameObject.SetActive(false);
-        GameManager.Instance.IncrementShipFragments();
     }
 
     public void ShowOutline()
