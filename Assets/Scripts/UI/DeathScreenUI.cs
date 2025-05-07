@@ -1,21 +1,24 @@
 using System.Collections;
 using DG.Tweening;
 using TMPro;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class DeathScreenUI : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI textTMP;
     [SerializeField] private CanvasGroup textGroup;
+    [SerializeField] private CanvasGroup restartGroup;
+    [SerializeField] private CanvasGroup exitGroup;
     public enum DeathType {Hooked, Exhaustion}
     public DeathType causeOfDeath {get; private set;}
     private static readonly string[] hookedMessages = new string[] {
-        "YOU WERE PACKAGED AND SOLD TO THE LOCAL SUPERMARKET",
-        "YOU WERE MADE INTO SOME DELICIOUS FISH AND CHIPS",
-        "YOU JOINED SOME OLD FRIENDS AT MY AUNT'S FISH FRY",
-        "HEY, AT LEAST THE FISHERMAN THINKS YOU'RE A CATCH",
-        "IF THIS WERE A PIXAR MOVIE, YOU'D HAVE PLOT ARMOR. UNFORTUNATELY, IT'S NOT",
-        "YOU ENDED UP AS AN UNDERCOOKED DISASTER ON A GORDON RAMSAY REALITY SHOW"
+        "You were packaged and sold to the local supermarket",
+        "You were made into some delicious fish and chips",
+        "You joined some old friends at my aunt's fish fry",
+        "Hey, at least the fisherman thinks you're a catch",
+        "You thought you were just gonna survive just because you're the main character?",
+        "Look on the bright side — you made it to Gordon Ramsay's kitchen! Sure, you were just a mediocre dish on one of his shows, but hey, it's something"
     };
 
     private static readonly string[] exhaustionMessages = new string[] {
@@ -50,5 +53,27 @@ public class DeathScreenUI : MonoBehaviour
     {
         yield return new WaitForSeconds(1.5f);
         textGroup.DOFade(1f, 2f);
+
+        yield return new WaitForSeconds(1f);
+        StartCoroutine(ButtonsAnim());
+    }
+
+    private IEnumerator ButtonsAnim()
+    {
+        if (restartGroup != null) restartGroup.DOFade(1f, 1f);
+        if (exitGroup != null) exitGroup.DOFade(1f, 1f);
+        yield return new WaitForSeconds(1f);
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    public void RestartDay()
+    {
+        SceneManager.LoadScene("TheReef");
+    }
+    public void ExitToMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }
