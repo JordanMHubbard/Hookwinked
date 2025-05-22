@@ -101,44 +101,6 @@ public class GameManager : MonoBehaviour
         }
         
     }
-
-    // Despawns prey and spawns new one after random amount of time
-    public void PreyConsumed(GameObject eatenPrey)
-    {
-        eatenPrey.SetActive(false);
-        
-        // Notifies listeners
-        OnPreyConsumed?.Invoke(eatenPrey);
-    }
-
-    // Minigames
-    public void StartHookedMinigame()
-    {
-        if (HookedMinigame == null ||  PlayerHUD == null) return;
-        
-        StartCoroutine(ActivateHookedMinigame());
-    }
-
-    private IEnumerator ActivateHookedMinigame()
-    {
-        yield return new WaitForSeconds(1f);
-
-        PlayerHUD.SetActive(false);
-        HookedMinigame.SetActive(true);
-        InputManager.Instance.SwitchCurrentMap(InputManager.ActionMap.HookedMinigame);
-    }
-
-    public void ExitHookedMinigame()
-    {
-        if (HookedMinigame == null ||  PlayerHUD == null) return;
-
-        HookedMinigame.SetActive(false);
-        PlayerHUD.SetActive(true);
-        InputManager.Instance.SwitchCurrentMap(InputManager.ActionMap.Player);
-        //Increase player speed temporarily
-        OnHookedMinigameFinished?.Invoke();
-    }
-    
     // UI
     private void InitializeUI()
     {
@@ -200,6 +162,34 @@ public class GameManager : MonoBehaviour
         SceneTransition.SetActive(false);
     }
 
+    // Minigames
+    public void StartHookedMinigame()
+    {
+        if (HookedMinigame == null ||  PlayerHUD == null) return;
+        
+        StartCoroutine(ActivateHookedMinigame());
+    }
+
+    private IEnumerator ActivateHookedMinigame()
+    {
+        yield return new WaitForSeconds(1f);
+
+        PlayerHUD.SetActive(false);
+        HookedMinigame.SetActive(true);
+        InputManager.Instance.SwitchCurrentMap(InputManager.ActionMap.HookedMinigame);
+    }
+
+    public void ExitHookedMinigame()
+    {
+        if (HookedMinigame == null ||  PlayerHUD == null) return;
+
+        HookedMinigame.SetActive(false);
+        PlayerHUD.SetActive(true);
+        InputManager.Instance.SwitchCurrentMap(InputManager.ActionMap.Player);
+        //Increase player speed temporarily
+        OnHookedMinigameFinished?.Invoke();
+    }
+
     // Spawning
     private void InitializeSpawners()
     {
@@ -209,6 +199,15 @@ public class GameManager : MonoBehaviour
             predatorSpawner = fishSpawnerBox.GetComponent<PredatorSpawner>();
         }
         else Debug.LogWarning("fishSpawnerBox has not been set!");
+    }
+
+    // Despawns prey and spawns new one after random amount of time
+    public void PreyConsumed(GameObject eatenPrey)
+    {
+        eatenPrey.SetActive(false);
+
+        // Notifies listeners
+        OnPreyConsumed?.Invoke(eatenPrey);
     }
 
     // Perks
