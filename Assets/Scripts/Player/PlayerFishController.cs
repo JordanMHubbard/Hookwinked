@@ -12,7 +12,6 @@ public class PlayerFishController : MonoBehaviour
     private float currentSpeed;
 
     [Header("Look Parameters")]
-    [SerializeField] private float mouseSensitivity = 0.7f;
     [SerializeField] private float upDownLookRange = 80f;
 
     [Header("View Bobbing")]
@@ -82,7 +81,6 @@ public class PlayerFishController : MonoBehaviour
         eatSoundComp = GetComponent<SoundRandomizer>();
 
         // Setup
-        mouseSensitivity /= 10f;
         currentSpeed = swimSpeed;
         startPos = mainCamera.transform.localPosition;
     }
@@ -158,8 +156,8 @@ public class PlayerFishController : MonoBehaviour
     {
         if (InputManager.Instance == null) {return;}
 
-        float mouseXRotation = InputManager.Instance.LookInput.x * mouseSensitivity;
-        float mouseYRotation = InputManager.Instance.LookInput.y * mouseSensitivity;
+        float mouseXRotation = InputManager.Instance.LookInput.x * InputManager.Instance.mouseSensitivity;
+        float mouseYRotation = InputManager.Instance.LookInput.y * InputManager.Instance.mouseSensitivity;
 
         ApplyHorizontalRotation(mouseXRotation);
         ApplyVerticalRotation(mouseYRotation);

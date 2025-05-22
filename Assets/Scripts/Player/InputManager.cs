@@ -1,17 +1,17 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
-using System.Diagnostics;
 
 public class InputManager : MonoBehaviour
 {
     public static InputManager Instance;
     public static PlayerInput PlayerInput;
     
-    public enum ActionMap {Player, UI, HookedMinigame, Dialogue}
+    public enum ActionMap { Player, UI, HookedMinigame, Dialogue }
     private ActionMap currentMap = ActionMap.Player;
 
     // Player
-    public Vector2 SwimInput { get; private set;}
+    public float mouseSensitivity = 0.07f;
+    public Vector2 SwimInput { get; private set; }
     public bool SwimIsPressed { get; private set;}
     public bool DashInput { get; private set;}
     public Vector2 LookInput { get; private set;}
@@ -54,8 +54,8 @@ public class InputManager : MonoBehaviour
         lookAction = PlayerInput.actions["Look"];
         dashAction = PlayerInput.actions["Sprint"];
         floatAction = PlayerInput.actions["MoveVertical"];
-        menuOpenAction =  PlayerInput.actions["MenuOpen"];
-        UIMenuCloseAction =  PlayerInput.actions["MenuClose"];
+        menuOpenAction = PlayerInput.actions["MenuOpen"];
+        UIMenuCloseAction = PlayerInput.actions["MenuClose"];
         shakeAction = PlayerInput.actions["Shake"];
         skipDialogueAction = PlayerInput.actions["SkipDialogue"];
 
@@ -70,15 +70,15 @@ public class InputManager : MonoBehaviour
             case ActionMap.Player:
                 HandlePlayerInput();
                 break;
-            
+
             case ActionMap.UI:
                 HandleUIInput();
                 break;
-            
+
             case ActionMap.HookedMinigame:
                 HandleHookedMinigameInput();
                 break;
-            
+
             case ActionMap.Dialogue:
                 HandleDialogueInput();
                 break;
