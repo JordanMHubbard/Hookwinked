@@ -5,7 +5,7 @@ public class PausedScreenUI : MonoBehaviour
 {
     public void ResumeGame()
     {
-        
+        PauseManager.Instance.UnpauseGame();
     }
     public void OpenOptions()
     {

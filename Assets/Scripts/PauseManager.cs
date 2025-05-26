@@ -4,6 +4,7 @@ public class PauseManager : MonoBehaviour
 {
     public static PauseManager Instance;
     public bool IsPaused { get; private set; }
+    public bool IsOnPauseMenu { get; private set; }
 
     [Header("Menus")]
     [SerializeField] private GameObject PausedScreen;
@@ -28,7 +29,7 @@ public class PauseManager : MonoBehaviour
         }
         else
         {
-            if (InputManager.Instance.UIMenuCloseInput)
+            if (InputManager.Instance.UIMenuCloseInput && IsOnPauseMenu)
             {
                 UnpauseGame();
             }
@@ -71,6 +72,7 @@ public class PauseManager : MonoBehaviour
     public void ShowPausedScreen()
     {
         PausedScreen.SetActive(true);
+        IsOnPauseMenu = true;
     }
     public void HidePausedScreen()
     {
@@ -79,9 +81,11 @@ public class PauseManager : MonoBehaviour
     public void ShowOptionsScreen()
     {
         OptionsScreen.SetActive(true);
+        IsOnPauseMenu = false;
     }
     public void ShowControlsScreen()
     {
         ControlsScreen.SetActive(true);
+        IsOnPauseMenu = false;
     }
 }
