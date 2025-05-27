@@ -5,11 +5,12 @@ public class SaveSystem
 {
     private static SaveData saveData = new SaveData();
 
-    [System.Serializable]    
+    [System.Serializable]
     public struct SaveData
     {
         public GameSaveData GameData;
         public PlayerSaveData PlayerData;
+        public OptionsSaveData OptionsData;
     }
 
     public static string SaveFileName()
@@ -21,6 +22,12 @@ public class SaveSystem
     public static void Save()
     {
         HandleSaveData();
+        File.WriteAllText(SaveFileName(), JsonUtility.ToJson(saveData, true));
+    }
+
+    public static void SaveOptions()
+    {
+        if (OptionsManager.Instance != null) OptionsManager.Instance.Save(ref saveData.OptionsData);
         File.WriteAllText(SaveFileName(), JsonUtility.ToJson(saveData, true));
     }
 
@@ -37,6 +44,15 @@ public class SaveSystem
 
         saveData = JsonUtility.FromJson<SaveData>(saveContent);
         HandleLoadData();
+    }
+
+    public static void LoadOptions()
+    {
+        if (!File.Exists(SaveFileName())) return;
+        string saveContent = File.ReadAllText(SaveFileName());
+
+        saveData = JsonUtility.FromJson<SaveData>(saveContent);
+        if (OptionsManager.Instance != null) OptionsManager.Instance.Load(saveData.OptionsData);
     }
 
     private static void HandleLoadData()

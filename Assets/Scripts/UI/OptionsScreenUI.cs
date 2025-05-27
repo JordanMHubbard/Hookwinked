@@ -8,13 +8,14 @@ public class OptionsScreenUI : MonoBehaviour
     [SerializeField] private AudioMixer mixer;
     [SerializeField] private Slider masterAudioSlider;
     [SerializeField] private Slider mouseSensSlider;
+    [SerializeField] private TMPro.TMP_Dropdown windowDropdown;
     [SerializeField] private TMPro.TMP_Dropdown resolutionDropdown;
+    [SerializeField] private TMPro.TMP_Dropdown qualityDropdown;
     private Resolution[] resolutions;
 
     private void Start()
     {
         InitializeSettings();
-        SetAvailableResolutions();
     }
     private void InitializeSettings()
     {
@@ -22,6 +23,9 @@ public class OptionsScreenUI : MonoBehaviour
         masterAudioSlider.value = vol;
 
         mouseSensSlider.value = InputManager.Instance.mouseSensitivity * 10f;
+        windowDropdown.value = Screen.fullScreen ? 1 : 0;
+        SetAvailableResolutions();
+        qualityDropdown.value = QualitySettings.GetQualityLevel();
     }
     private void SetAvailableResolutions()
     {
@@ -82,7 +86,12 @@ public class OptionsScreenUI : MonoBehaviour
     }
     public void Back()
     {
+        SaveSystem.SaveOptions();
         PauseManager.Instance.ShowPausedScreen();
         gameObject.SetActive(false);
     }
+
 }
+
+
+

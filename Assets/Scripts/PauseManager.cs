@@ -17,24 +17,24 @@ public class PauseManager : MonoBehaviour
 
         InitializeUI();
     }
-
+    
     private void Update()
+{
+    if (!IsPaused)
     {
-        if (!IsPaused)
+        if (InputManager.Instance.MenuOpenInput)
         {
-            if (InputManager.Instance.MenuOpenInput)
-            {
-                PauseGame();
-            }
-        }
-        else
-        {
-            if (InputManager.Instance.UIMenuCloseInput && IsOnPauseMenu)
-            {
-                UnpauseGame();
-            }
+            PauseGame();
         }
     }
+    else
+    {
+        if (InputManager.Instance.UIMenuCloseInput && IsOnPauseMenu)
+        {
+            UnpauseGame();
+        }
+    }
+}
 
     public void PauseGame()
     {
@@ -65,7 +65,11 @@ public class PauseManager : MonoBehaviour
     {
         // Menus
         if (PausedScreen != null) PausedScreen.SetActive(false);
-        if (OptionsScreen != null) OptionsScreen.SetActive(false);
+        if (OptionsScreen != null)
+        {
+            //optionsScreenUI = OptionsScreen.GetComponent<OptionsScreenUI>();
+            OptionsScreen.SetActive(false);
+        }
         if (ControlsScreen != null) ControlsScreen.SetActive(false);
     }
 
