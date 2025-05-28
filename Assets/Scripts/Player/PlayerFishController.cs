@@ -179,7 +179,7 @@ public class PlayerFishController : MonoBehaviour
             }
             else 
             {
-                StartCoroutine(Death());
+                StartCoroutine(Death(other));
             }
         }
     }
@@ -193,11 +193,13 @@ public class PlayerFishController : MonoBehaviour
         GameManager.Instance.PreyConsumed(other.transform.parent.gameObject);
     }
 
-    private IEnumerator Death()
+    private IEnumerator Death(Collider other)
     {
         yield return new WaitForSeconds(1f);
         
         energyComp.setIsPaused(true);
+        eatSoundComp.PlayRandomSound();
+        GameManager.Instance.PreyConsumed(other.transform.parent.gameObject);
         GameManager.Instance.DisableHUD();
         InputManager.Instance.SwitchCurrentMap(InputManager.ActionMap.HookedMinigame);
         cameraAnim.Play("death", 0);

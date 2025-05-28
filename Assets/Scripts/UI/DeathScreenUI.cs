@@ -17,8 +17,8 @@ public class DeathScreenUI : MonoBehaviour
         "You were made into some delicious fish and chips",
         "You joined some old friends at my aunt's fish fry",
         "Hey, at least the fisherman thinks you're a catch",
-        "You thought you were just gonna survive just because you're the main character?",
-        "Look on the bright side — you made it to Gordon Ramsay's kitchen! Sure, you were just a mediocre dish on one of his shows, but hey, it's something"
+        "Being the main character won't protect you from yourself. Maybe try eating real prey next time!",
+        "Look on the bright side — you made it to Gordon Ramsay's kitchen! Sure, you were just a mediocre dish on one of his shows, but hey, it's something!"
     };
 
     private static readonly string[] exhaustionMessages = new string[] {

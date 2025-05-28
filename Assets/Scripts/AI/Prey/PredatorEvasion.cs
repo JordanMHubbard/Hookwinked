@@ -46,7 +46,7 @@ public class PredatorEvasion : MonoBehaviour
     // Finds new target location and speeds up temporarily
     private void SwimAway()
     {
-        controller.FindTarget(); 
+        //controller.FindTarget(); 
         StartCoroutine(controller.SpeedUp()); 
     }
 }
