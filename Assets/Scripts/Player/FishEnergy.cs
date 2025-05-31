@@ -19,8 +19,10 @@ public class FishEnergy : MonoBehaviour
     [SerializeField] private float depreciateRate = 2f;
     private Coroutine DepreciateCoroutine;
 
+    // Getters
+    public float GetDepreciationRate() { return depreciateRate; }
     // Setters
-    public void SetDepreciationRate(float rate) {depreciateRate = rate;}
+    public void SetDepreciationRate(float rate) { depreciateRate = rate; }
     public void setIsPaused(bool shouldPause) { isPaused = shouldPause; }
 
     private void Awake()

@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 682ffffe3175eef4fb3080d066aa0ec2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultSwimSpeed: 1.5
+  defaultSwimSpeed: 2.5
   fasterSwimSpeed: 5
   speedUpDuration: 3
   speedUpCooldown: 3

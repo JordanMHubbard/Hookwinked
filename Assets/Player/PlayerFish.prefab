@@ -76,10 +76,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb0ee214c832f55449a4f20c705b726e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swimSpeed: 4
+  swimSpeed: 3
   floatSpeed: 2
   smoothInputTime: 0.1
-  mouseSensitivity: 0.7
   upDownLookRange: 80
   isViewBobEnabled: 1
   bobAmplitude: 0.004

@@ -228,7 +228,7 @@ public class PlayerFishController : MonoBehaviour
         float elapsedTime = 0f;
         float taperOffRate = (currentSpeed - swimSpeed) / 1.5f; // subtract desired end speed
 
-        while (elapsedTime < 1.5f)
+        while (elapsedTime < 1.25f)
         {
             transform.position += transform.forward * currentSpeed  * Time.deltaTime;
             if (currentSpeed > swimSpeed) currentSpeed -= taperOffRate * Time.deltaTime;
@@ -244,20 +244,25 @@ public class PlayerFishController : MonoBehaviour
     private IEnumerator ChargeDash()
     {
         dashKeybind.alpha = 0.5f;
-        
+
+        float ogDepRate = energyComp.GetDepreciationRate();
+        energyComp.SetDepreciationRate(6f);
+
         isDashing = true; 
         currentSpeed = 2f;
-
-        while (InputManager.Instance.DashInput && currentSpeed < 12f)
+        while (InputManager.Instance.DashInput)
         {
-            currentSpeed += dashChargeRate * Time.deltaTime;
-            dashChargeBar.value = currentSpeed * 8.33f / 100f;
-            //Debug.Log("Dash speed: " + dashSpeed);
+            if (currentSpeed < 8f)
+            {
+                currentSpeed += dashChargeRate * Time.deltaTime;
+                dashChargeBar.value = currentSpeed * 12.5f / 100f;
+                //Debug.Log("Dash speed: " + dashSpeed);
+            }
+
             yield return null;
         }
-
-        yield return new WaitForSeconds(dashDuration);
-
+        //yield return new WaitForSeconds(dashDuration);
+        energyComp.SetDepreciationRate(ogDepRate);
         StartCoroutine(EndDash());
     }
 
