@@ -1,8 +1,7 @@
 using DG.Tweening;
 using System.Collections;
-using System.Threading;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class HookStruggleMinigame : MonoBehaviour
 {
@@ -15,6 +14,7 @@ public class HookStruggleMinigame : MonoBehaviour
     [SerializeField] private GameObject textPrompt;
     [SerializeField] private CanvasGroup leftToolTip;
     [SerializeField] private CanvasGroup rightToolTip;
+    [SerializeField] private Slider struggleMeter;
 
     private Vector3 fishPosition;
     private Vector3 hookRotation;
@@ -23,7 +23,6 @@ public class HookStruggleMinigame : MonoBehaviour
     private Vector3 textRotation;
 
     private bool isGameActive;
-    private bool isGrowing;
     private Vector3 originalPos;
     private RectTransform rectTransform;
     private Vector2 currentInput;
@@ -62,38 +61,54 @@ public class HookStruggleMinigame : MonoBehaviour
 
         currentSpeed = (currentInput - previousInput).magnitude;
         float struggleRate = Mathf.Clamp(currentSpeed * 0.2f, 0f, 5f) / 20f;
+
         //Debug.Log("currentSpeed: " + currentSpeed);
-        //Debug.Log("struggleRate: " + struggleRate);
-        
-        if (struggleRate > 0.1f && !isGrowing) StartCoroutine(Grow(struggleRate));
+        Debug.Log("struggleRate: " + struggleRate);
+        ApplyStruggle(struggleRate);
     }
 
-    private IEnumerator Grow(float rate)
+    private void ApplyStruggle(float rate)
     {
-        isGrowing = true;
-        while (rectTransform.localScale.x < 1.3f && isGrowing)
+        if (rate > 0.1f)
         {
-            rectTransform.localScale +=  Time.deltaTime * new Vector3(rate, rate, 0f);
-            yield return null;
+            if (struggleMeter.value > 0)
+            {
+                struggleMeter.value -= rate * Time.deltaTime;
+                rate *= 0.2f;
+                if (rectTransform.localScale.x < 1.3f) rectTransform.localScale +=
+                    Time.deltaTime * new Vector3(rate, rate, 0f);
+            }
+            else
+            {
+                StartCoroutine(EndMinigame());
+            }
         }
-        
-        StartCoroutine(EndMinigame()); // End game
+        else
+        {
+            if (struggleMeter.value < 1) struggleMeter.value += 0.15f * Time.deltaTime;
+            
+            if (struggleMeter.value >= 1)
+            {
+                StartCoroutine(GameManager.Instance.PlayerController.DeathSimple());
+                GameManager.Instance.ExitHookedMinigame(false);
+            }
+        }
     }
 
     private IEnumerator EndMinigame()
     {
+        //GameManager.Instance.PlayerController.EndShake();
         rectTransform.localScale = new Vector3(1f, 1f, 1f);
-        BreakFreeHookAnim();
-        isGrowing = false;
         isGameActive = false;
         isAcceptingInput = false;
+        BreakFreeHookAnim();
         yield return new WaitForSeconds(0.75f);
-        
+
         FishSwimAwayAnim();
         yield return new WaitForSeconds(0.75f);
-        
+
         Reset();
-        GameManager.Instance.ExitHookedMinigame();
+        GameManager.Instance.ExitHookedMinigame(true);
     }
 
     private void BreakFreeHookAnim()
@@ -120,9 +135,9 @@ public class HookStruggleMinigame : MonoBehaviour
         while (count < 6)
         {
             textPrompt.transform.DORotate(textRotation + new Vector3(0f, 0f, -5f), 0.08f);
-            yield return new WaitForSeconds(0.08f); 
+            yield return new WaitForSeconds(0.08f);
             textPrompt.transform.DORotate(textRotation + new Vector3(0f, 0f, 5f), 0.08f);
-            yield return new WaitForSeconds(0.08f); 
+            yield return new WaitForSeconds(0.08f);
             count++;
         }
 
@@ -132,6 +147,7 @@ public class HookStruggleMinigame : MonoBehaviour
 
         StartCoroutine(toolTipAnim());
         isAcceptingInput = true;
+        //GameManager.Instance.PlayerController.StartShake();
 
     }
 
@@ -157,6 +173,7 @@ public class HookStruggleMinigame : MonoBehaviour
         hook2Image.transform.rotation = Quaternion.Euler(hookRotation);
         fishImage.transform.position = fishPosition;
         textPrompt.transform.rotation = Quaternion.Euler(textRotation);
+        struggleMeter.value = 0.7f;
         hookImage.SetActive(true);
         hook2Image.SetActive(false);
     }

@@ -44,6 +44,9 @@ public class PlayerFishController : MonoBehaviour
     [Header("References")]
     [SerializeField] private CharacterController characterController;
     [SerializeField] private Camera mainCamera;
+    private ScreenShake shake;
+    public void StartShake() { if (shake) shake.start = true; }
+    public void EndShake() { if (shake) shake.inProgress = false; }
 
     // Movement and Rotation
     private bool isFrozen;
@@ -79,6 +82,7 @@ public class PlayerFishController : MonoBehaviour
         // Initialize components
         energyComp = GetComponent<FishEnergy>();
         eatSoundComp = GetComponent<SoundRandomizer>();
+        shake = mainCamera.GetComponent<ScreenShake>();
 
         // Setup
         currentSpeed = swimSpeed;
@@ -196,13 +200,22 @@ public class PlayerFishController : MonoBehaviour
     private IEnumerator Death(Collider other)
     {
         yield return new WaitForSeconds(1f);
-        
+
         energyComp.setIsPaused(true);
         eatSoundComp.PlayRandomSound();
         GameManager.Instance.PreyConsumed(other.transform.parent.gameObject);
         GameManager.Instance.DisableHUD();
         InputManager.Instance.SwitchCurrentMap(InputManager.ActionMap.HookedMinigame);
         cameraAnim.Play("death", 0);
+    }
+
+    public IEnumerator DeathSimple()
+    {
+        energyComp.setIsPaused(true);
+        GameManager.Instance.DisableHUD();
+        InputManager.Instance.SwitchCurrentMap(InputManager.ActionMap.HookedMinigame);
+        cameraAnim.Play("death", 0);
+        yield break; 
     }
 
     private void BeginHookedMinigame(Collider other)

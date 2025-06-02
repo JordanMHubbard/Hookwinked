@@ -179,11 +179,13 @@ public class GameManager : MonoBehaviour
         InputManager.Instance.SwitchCurrentMap(InputManager.ActionMap.HookedMinigame);
     }
 
-    public void ExitHookedMinigame()
+    public void ExitHookedMinigame(bool hasEscaped)
     {
         if (HookedMinigame == null ||  PlayerHUD == null) return;
 
         HookedMinigame.SetActive(false);
+        if (!hasEscaped) return;
+        
         PlayerHUD.SetActive(true);
         InputManager.Instance.SwitchCurrentMap(InputManager.ActionMap.Player);
         //Increase player speed temporarily
