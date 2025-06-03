@@ -16,6 +16,12 @@ public class HookStruggleMinigame : MonoBehaviour
     [SerializeField] private CanvasGroup rightToolTip;
     [SerializeField] private Slider struggleMeter;
 
+    [SerializeField] private AudioClip reelingSound;
+    [SerializeField] private AudioClip stretchSound;
+    [SerializeField] private AudioClip releaseSound;
+    [SerializeField] private AudioSource reelingSource;
+    [SerializeField] private AudioSource stretchSource;
+
     private Vector3 fishPosition;
     private Vector3 hookRotation;
     private Vector3 hookPosition;
@@ -39,6 +45,7 @@ public class HookStruggleMinigame : MonoBehaviour
         hookRotation = hookImage.transform.rotation.eulerAngles;
         hook2Position = hook2Image.transform.position;
         textRotation = textPrompt.transform.rotation.eulerAngles;
+        SetupAudio();
     }
 
     private void OnEnable()
@@ -52,8 +59,24 @@ public class HookStruggleMinigame : MonoBehaviour
         if (isAcceptingInput) CalculateStruggle();
     }
 
+    private void SetupAudio()
+    {
+        if (reelingSource)
+        {
+            reelingSource.loop = true;
+            reelingSource.clip = reelingSound;
+        }
+        if (stretchSource)
+        {
+            stretchSource.loop = true;
+            stretchSource.clip = stretchSound;
+        }
+    }
+
     private void CalculateStruggle()
     {
+        if (!reelingSource.isPlaying) reelingSource.Play();
+
         currentInput = InputManager.Instance.ShakeInput;
         float xOffset = Mathf.Clamp(currentInput.x, -boundsOffset, boundsOffset);
         //float yOffset = Mathf.Clamp(currentInput.y, -boundsOffset, boundsOffset);
@@ -71,6 +94,8 @@ public class HookStruggleMinigame : MonoBehaviour
     {
         if (rate > 0.1f)
         {
+            if (!stretchSource.isPlaying) stretchSource.Play();
+
             if (struggleMeter.value > 0)
             {
                 struggleMeter.value -= rate * Time.deltaTime;
@@ -85,10 +110,18 @@ public class HookStruggleMinigame : MonoBehaviour
         }
         else
         {
-            if (struggleMeter.value < 1) struggleMeter.value += 0.15f * Time.deltaTime;
+            if (stretchSource.isPlaying) stretchSource.Pause();
+
+            if (struggleMeter.value < 1)
+            {
+                struggleMeter.value += 0.2f * Time.deltaTime;
+                if (rectTransform.localScale.x > 1f) rectTransform.localScale -=
+                    Time.deltaTime * new Vector3(0.04f, 0.04f, 0f);
+            }
             
             if (struggleMeter.value >= 1)
             {
+                reelingSource.Stop();
                 StartCoroutine(GameManager.Instance.PlayerController.DeathSimple());
                 GameManager.Instance.ExitHookedMinigame(false);
             }
@@ -97,6 +130,8 @@ public class HookStruggleMinigame : MonoBehaviour
 
     private IEnumerator EndMinigame()
     {
+        reelingSource.Stop();
+        stretchSource.Stop();
         //GameManager.Instance.PlayerController.EndShake();
         rectTransform.localScale = new Vector3(1f, 1f, 1f);
         isGameActive = false;
@@ -115,6 +150,9 @@ public class HookStruggleMinigame : MonoBehaviour
     {
         hookImage.SetActive(false);
         hook2Image.SetActive(true);
+        reelingSource.loop = false;
+        reelingSource.clip = releaseSound;
+        reelingSource.Play();
         fishImage.transform.DOMove(fishPosition + new Vector3(-150f, -20f, 0f), 0.75f).SetEase(Ease.OutCubic);
         hook2Image.transform.DORotate(hookRotation + new Vector3(0f, 0f, 50f), 0.5f);
         hook2Image.transform.DOMove(hook2Position + new Vector3(90f, 125f, 0f), 0.5f).SetEase(Ease.OutCubic);
