@@ -244,6 +244,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19c9ad4e1676ed841979af963e3b2e95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eatSounds:
+  - {fileID: 8300000, guid: 2bd99dafb3293454bace5c88f281ca28, type: 3}
+  - {fileID: 8300000, guid: 3754c36924d222d419df9bff345cb5dc, type: 3}
+  - {fileID: 8300000, guid: addad4ccee92a914eb0aa3819a0122a7, type: 3}
 --- !u!114 &4097392165377542154
 MonoBehaviour:
   m_ObjectHideFlags: 0

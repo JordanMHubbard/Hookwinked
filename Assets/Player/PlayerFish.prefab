@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 2078965542548107645}
   - component: {fileID: 52106068153816824}
   - component: {fileID: 6264250226321033240}
-  - component: {fileID: 1790552320228501296}
   - component: {fileID: 6287554246163781546}
   m_Layer: 0
   m_Name: PlayerFish
@@ -94,6 +93,10 @@ MonoBehaviour:
   dashKeybind: {fileID: 0}
   characterController: {fileID: 1392424294487994085}
   mainCamera: {fileID: 133031847395031908}
+  eatSounds:
+  - {fileID: 8300000, guid: 2bd99dafb3293454bace5c88f281ca28, type: 3}
+  - {fileID: 8300000, guid: 3754c36924d222d419df9bff345cb5dc, type: 3}
+  - {fileID: 8300000, guid: addad4ccee92a914eb0aa3819a0122a7, type: 3}
 --- !u!114 &2078965542548107645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,24 +144,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   launchForce: 10
   mainCamera: {fileID: 0}
---- !u!114 &1790552320228501296
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7440325418165233619}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c55f53586356bcf4780c390a5c4ff9ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sounds:
-  - {fileID: 8300000, guid: 2bd99dafb3293454bace5c88f281ca28, type: 3}
-  - {fileID: 8300000, guid: 3754c36924d222d419df9bff345cb5dc, type: 3}
-  - {fileID: 8300000, guid: addad4ccee92a914eb0aa3819a0122a7, type: 3}
-  volumeChange: 0.2
-  pitchChange: 0.1
 --- !u!82 &6287554246163781546
 AudioSource:
   m_ObjectHideFlags: 0

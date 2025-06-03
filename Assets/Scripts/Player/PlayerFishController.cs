@@ -38,8 +38,6 @@ public class PlayerFishController : MonoBehaviour
     private float currentVelocity;
     public Slider dashChargeBar;
     public CanvasGroup dashKeybind;
-    private float dashDuration = 0.3f;
-    public void SetDashDuration(float duration) {dashDuration = duration;}
 
     [Header("References")]
     [SerializeField] private CharacterController characterController;
@@ -59,7 +57,7 @@ public class PlayerFishController : MonoBehaviour
 
     // Energy
     private FishEnergy energyComp;
-    private SoundRandomizer eatSoundComp;
+    [SerializeField] private AudioClip[] eatSounds;
 
     // Hooked Minigame
     private int timesHooked = 0;
@@ -74,14 +72,12 @@ public class PlayerFishController : MonoBehaviour
             GameManager.Instance.PlayerController = this;
             if (GameManager.Instance.GetIsPerkUnlocked(0)) 
             {
-                dashDuration = 0.75f;
-                Debug.Log("Dash lasts 0.75f now");
+                Debug.Log("Dash depletes energy slower, need to set this up still!");
             }
         }
 
         // Initialize components
         energyComp = GetComponent<FishEnergy>();
-        eatSoundComp = GetComponent<SoundRandomizer>();
         shake = mainCamera.GetComponent<ScreenShake>();
 
         // Setup
@@ -192,7 +188,7 @@ public class PlayerFishController : MonoBehaviour
     {
         Debug.Log("We eating prey 2nite");
         float energyProg = other.GetComponent<PreyManager>().GetEnergyValue();
-        eatSoundComp.PlayRandomSound();
+        SoundFXManager.Instance.PlayRandomSoundFXClip(eatSounds, transform, 1f, 0.2f, 0.1f);
         energyComp.AddProgress(energyProg);
         GameManager.Instance.PreyConsumed(other.transform.parent.gameObject);
     }
@@ -202,7 +198,7 @@ public class PlayerFishController : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         energyComp.setIsPaused(true);
-        eatSoundComp.PlayRandomSound();
+        SoundFXManager.Instance.PlayRandomSoundFXClip(eatSounds, transform, 1f, 0.2f, 0.1f);
         GameManager.Instance.PreyConsumed(other.transform.parent.gameObject);
         GameManager.Instance.DisableHUD();
         InputManager.Instance.SwitchCurrentMap(InputManager.ActionMap.HookedMinigame);
@@ -220,7 +216,7 @@ public class PlayerFishController : MonoBehaviour
 
     private void BeginHookedMinigame(Collider other)
     {
-        eatSoundComp.PlayRandomSound();
+        SoundFXManager.Instance.PlayRandomSoundFXClip(eatSounds, transform, 1f, 0.2f, 0.1f);
         energyComp.setIsPaused(true);
         GameManager.Instance.PreyConsumed(other.transform.parent.gameObject);
         Debug.Log("Fight for your life!");
