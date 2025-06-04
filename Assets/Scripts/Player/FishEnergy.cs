@@ -18,6 +18,7 @@ public class FishEnergy : MonoBehaviour
     [SerializeField] private float updateRate = 50f;
     [Tooltip("The rate at which currentProgress depreciates to 0")]
     [SerializeField] private float depreciateRate = 2f;
+    [SerializeField] private float DashDepreciateRate = 6f;
     private Coroutine DepreciateCoroutine;
     [SerializeField] private Image energyBarFill;
     [SerializeField] private Image energyBarCover;
@@ -28,14 +29,15 @@ public class FishEnergy : MonoBehaviour
     public float GetDepreciationRate() { return depreciateRate; }
     // Setters
     public void SetDepreciationRate(float rate) { depreciateRate = rate; }
-    public void setIsPaused(bool shouldPause) { isPaused = shouldPause; }
+    public void SetIsPaused(bool shouldPause) { isPaused = shouldPause; }
 
     private void Awake()
     {
         if (GameManager.Instance != null && GameManager.Instance.GetIsPerkUnlocked(1))
         {
-            depreciateRate = 1.6f;
-            Debug.Log("Energy Depreciation is now 1.6f");
+            depreciateRate = 1.5f;
+            DashDepreciateRate = 4.5f;
+            Debug.Log("Energy Depreciation is now 1.5 and 4.5 for dashing!");
         }
     }
     private void Start()
@@ -122,6 +124,11 @@ public class FishEnergy : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
         //GameManager.Instance.ShowDeathScreen(DeathScreenUI.DeathType.Exhaustion);
+    }
+
+    public void OnDash()
+    {
+        depreciateRate = DashDepreciateRate;
     }
 
     private void CheckIfNearDeath(float progress)

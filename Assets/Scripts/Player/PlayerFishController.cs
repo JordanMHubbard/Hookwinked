@@ -35,6 +35,7 @@ public class PlayerFishController : MonoBehaviour
     [SerializeField] private float dashCooldown = 1f;
     [SerializeField] private float dashChargeRate = 50f;
     [SerializeField] private float dashDuration = 0.3f;
+    [SerializeField] private float dashSpeed = 9f;
     private bool isDashing;
     private float currentVelocity;
     public Slider dashChargeBar;
@@ -69,7 +70,8 @@ public class PlayerFishController : MonoBehaviour
             GameManager.Instance.PlayerController = this;
             if (GameManager.Instance.GetIsPerkUnlocked(0)) 
             {
-                Debug.Log("Dash depletes energy slower, need to set this up still!");
+                dashSpeed = 12f;
+                Debug.Log("Dash is faster, need to set this up still!");
             }
         }
 
@@ -188,7 +190,7 @@ public class PlayerFishController : MonoBehaviour
         SoundFXManager.Instance.PlayRandomSoundFXClip(eatSounds, transform, 1f, 1f, 0.2f, 0.1f);
         yield return new WaitForSeconds(1f);
 
-        energyComp.setIsPaused(true);
+        energyComp.SetIsPaused(true);
         GameManager.Instance.PreyConsumed(other.transform.parent.gameObject);
         GameManager.Instance.DisableHUD();
         InputManager.Instance.SwitchCurrentMap(InputManager.ActionMap.HookedMinigame);
@@ -197,7 +199,7 @@ public class PlayerFishController : MonoBehaviour
 
     public IEnumerator DeathSimple()
     {
-        energyComp.setIsPaused(true);
+        energyComp.SetIsPaused(true);
         GameManager.Instance.DisableHUD();
         InputManager.Instance.SwitchCurrentMap(InputManager.ActionMap.HookedMinigame);
         cameraAnim.Play("death", 0);
@@ -207,7 +209,7 @@ public class PlayerFishController : MonoBehaviour
     private void BeginHookedMinigame(Collider other)
     {
         SoundFXManager.Instance.PlayRandomSoundFXClip(eatSounds, transform, 1f, 1f, 0.2f, 0.1f);
-        energyComp.setIsPaused(true);
+        energyComp.SetIsPaused(true);
         GameManager.Instance.PreyConsumed(other.transform.parent.gameObject);
         Debug.Log("Fight for your life!");
         GameManager.Instance.StartHookedMinigame();
@@ -218,7 +220,7 @@ public class PlayerFishController : MonoBehaviour
         currentSpeed = 12f;
         isFrozen = true;
         energyComp.AddProgress(-10f);
-        energyComp.setIsPaused(false);
+        energyComp.SetIsPaused(false);
         StartCoroutine(PostHookedDash());
     }
 
@@ -245,15 +247,15 @@ public class PlayerFishController : MonoBehaviour
         dashKeybind.alpha = 0.5f;
 
         float ogDepRate = energyComp.GetDepreciationRate();
-        energyComp.SetDepreciationRate(6f);
+        energyComp.OnDash();
 
         isDashing = true; 
         currentSpeed = 2f;
         
-        while (currentSpeed < 12f)
+        while (currentSpeed < dashSpeed)
         {
             currentSpeed += dashChargeRate * Time.deltaTime;
-            dashChargeBar.value = currentSpeed * 8.33f / 100f;
+            dashChargeBar.value = currentSpeed * (1/dashSpeed) / 100f;
             yield return null;
         }
         yield return new WaitForSeconds(dashDuration);

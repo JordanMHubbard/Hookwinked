@@ -89,6 +89,7 @@ MonoBehaviour:
   dashCooldown: 1
   dashChargeRate: 50
   dashDuration: 0.3
+  dashSpeed: 12
   dashChargeBar: {fileID: 0}
   dashKeybind: {fileID: 0}
   characterController: {fileID: 1392424294487994085}
@@ -113,6 +114,7 @@ MonoBehaviour:
   energyBar: {fileID: 0}
   updateRate: 50
   depreciateRate: 2
+  DashDepreciateRate: 6
   energyBarFill: {fileID: 0}
   energyBarCover: {fileID: 0}
   nearDeathSound: {fileID: 8300000, guid: 54869d8dcec014f4a92a28a857d8e6b2, type: 3}

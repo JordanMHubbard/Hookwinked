@@ -246,7 +246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointValue: 100
-  energyValue: 15
+  energyValue: 25
 --- !u!1 &7031167869332694732
 GameObject:
   m_ObjectHideFlags: 0
