@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class FishEnergy : MonoBehaviour
 {
@@ -18,6 +19,10 @@ public class FishEnergy : MonoBehaviour
     [Tooltip("The rate at which currentProgress depreciates to 0")]
     [SerializeField] private float depreciateRate = 2f;
     private Coroutine DepreciateCoroutine;
+    [SerializeField] private Image energyBarFill;
+    [SerializeField] private Image energyBarCover;
+    [SerializeField] private AudioClip nearDeathSound;
+    private bool isNearDeath;
 
     // Getters
     public float GetDepreciationRate() { return depreciateRate; }
@@ -27,7 +32,7 @@ public class FishEnergy : MonoBehaviour
 
     private void Awake()
     {
-        if (GameManager.Instance != null && GameManager.Instance.GetIsPerkUnlocked(1)) 
+        if (GameManager.Instance != null && GameManager.Instance.GetIsPerkUnlocked(1))
         {
             depreciateRate = 1.6f;
             Debug.Log("Energy Depreciation is now 1.6f");
@@ -51,7 +56,7 @@ public class FishEnergy : MonoBehaviour
             StopCoroutine(DepreciateCoroutine);
             StartCoroutine(UpdateProgress());
         }
-        else if (shouldDepreciate) 
+        else if (shouldDepreciate)
         {
             DepreciateCoroutine = StartCoroutine(DepreciateProgress());
         }
@@ -69,18 +74,18 @@ public class FishEnergy : MonoBehaviour
     {
         shouldUpdate = false;
         shouldDepreciate = false;
-        
+
         float rateOfChange = currentProgress < targetProgress ? updateRate : -updateRate;
         while (Math.Abs(currentProgress - targetProgress) > 0.1)
         {
             currentProgress += rateOfChange * Time.deltaTime;
             energyBar.value = currentProgress / 100f;
-            
+
             if (rateOfChange > 0)
             {
                 if (currentProgress > targetProgress) break;
             }
-            else 
+            else
             {
                 if (currentProgress < targetProgress) break;
             }
@@ -89,7 +94,7 @@ public class FishEnergy : MonoBehaviour
         }
 
         currentProgress = targetProgress;
-        
+
         if (currentProgress > 0f) shouldDepreciate = true;
         else { GameManager.Instance.ShowDeathScreen(DeathScreenUI.DeathType.Exhaustion); }
     }
@@ -97,8 +102,8 @@ public class FishEnergy : MonoBehaviour
     // Depreciates energy constantly unless energy is being updated
     private IEnumerator DepreciateProgress()
     {
-       shouldDepreciate = false;
-        
+        shouldDepreciate = false;
+
         while (currentProgress > 0f && !shouldUpdate)
         {
             if (isPaused) yield break;
@@ -107,12 +112,45 @@ public class FishEnergy : MonoBehaviour
             //Debug.Log("CurrentProgress: "+ currentProgress);
             energyBar.value = currentProgress / 100f;
 
+            CheckIfNearDeath(currentProgress);
+
             yield return null;
         }
 
         currentProgress = 0f;
+        isNearDeath = false;
 
         yield return new WaitForSeconds(1f);
         //GameManager.Instance.ShowDeathScreen(DeathScreenUI.DeathType.Exhaustion);
+    }
+
+    private void CheckIfNearDeath(float progress)
+    {
+        Debug.Log("progress:" + progress);
+        if (progress < 30 && !isNearDeath)
+        {
+            StartCoroutine(NearDeath());
+        }
+        else if (progress > 30 && isNearDeath)
+        {
+            isNearDeath = false;
+        }
+    }
+
+    private IEnumerator NearDeath()
+    {
+        isNearDeath = true;
+
+        while (isNearDeath)
+        {
+            energyBarFill.DOColor(Color.red, 1f);
+            energyBarCover.DOColor(Color.red, 1f);
+            SoundFXManager.Instance.PlaySoundFXClip(nearDeathSound, transform, 1f, 1f, 0.1f, 0.05f);
+            yield return new WaitForSeconds(1f);
+
+            energyBarFill.DOColor(Color.white, 1f);
+            energyBarCover.DOColor(Color.white, 1f);
+            yield return new WaitForSeconds(1f);
+        }
     }
 }
