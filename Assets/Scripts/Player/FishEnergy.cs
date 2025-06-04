@@ -126,7 +126,7 @@ public class FishEnergy : MonoBehaviour
 
     private void CheckIfNearDeath(float progress)
     {
-        Debug.Log("progress:" + progress);
+        //Debug.Log("progress:" + progress);
         if (progress < 30 && !isNearDeath)
         {
             StartCoroutine(NearDeath());

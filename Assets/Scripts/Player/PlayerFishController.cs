@@ -33,7 +33,8 @@ public class PlayerFishController : MonoBehaviour
 
     [Header("Dash")]
     [SerializeField] private float dashCooldown = 1f;
-    [SerializeField] private float dashChargeRate = 24f;
+    [SerializeField] private float dashChargeRate = 50f;
+    [SerializeField] private float dashDuration = 0.3f;
     private bool isDashing;
     private float currentVelocity;
     public Slider dashChargeBar;
@@ -95,7 +96,7 @@ public class PlayerFishController : MonoBehaviour
 
         if (InputManager.Instance.DashInput && !isDashing)
         {
-            StartCoroutine(ChargeDash());
+            StartCoroutine(Dash());
         }
     }
 
@@ -223,23 +224,23 @@ public class PlayerFishController : MonoBehaviour
 
     private IEnumerator PostHookedDash()
     {
-        float elapsedTime = 0f;
-        float taperOffRate = (currentSpeed - swimSpeed) / 1.5f; // subtract desired end speed
+        float duration = 1.25f;
+        float taperOffRate = (currentSpeed - swimSpeed) / duration; // subtract desired end speed
 
-        while (elapsedTime < 1.25f)
+        while (currentSpeed > swimSpeed)
         {
-            transform.position += transform.forward * currentSpeed  * Time.deltaTime;
-            if (currentSpeed > swimSpeed) currentSpeed -= taperOffRate * Time.deltaTime;
-            elapsedTime += Time.deltaTime;
+            transform.position += transform.forward * currentSpeed * Time.deltaTime;
+            currentSpeed -= taperOffRate * Time.deltaTime;
+
             yield return null;
         }
-        
+
         isFrozen = false;
         currentSpeed = swimSpeed;
     }
 
     /* Dashing */
-    private IEnumerator ChargeDash()
+    private IEnumerator Dash()
     {
         dashKeybind.alpha = 0.5f;
 
@@ -248,18 +249,15 @@ public class PlayerFishController : MonoBehaviour
 
         isDashing = true; 
         currentSpeed = 2f;
-        while (InputManager.Instance.DashInput)
+        
+        while (currentSpeed < 12f)
         {
-            if (currentSpeed < 8f)
-            {
-                currentSpeed += dashChargeRate * Time.deltaTime;
-                dashChargeBar.value = currentSpeed * 12.5f / 100f;
-                //Debug.Log("Dash speed: " + dashSpeed);
-            }
-
+            currentSpeed += dashChargeRate * Time.deltaTime;
+            dashChargeBar.value = currentSpeed * 8.33f / 100f;
             yield return null;
         }
-        //yield return new WaitForSeconds(dashDuration);
+        yield return new WaitForSeconds(dashDuration);
+
         energyComp.SetDepreciationRate(ogDepRate);
         StartCoroutine(EndDash());
     }

@@ -86,7 +86,7 @@ public class HookStruggleMinigame : MonoBehaviour
         float struggleRate = Mathf.Clamp(currentSpeed * 0.2f, 0f, 5f) / 20f;
 
         //Debug.Log("currentSpeed: " + currentSpeed);
-        Debug.Log("struggleRate: " + struggleRate);
+        //Debug.Log("struggleRate: " + struggleRate);
         ApplyStruggle(struggleRate);
     }
 
