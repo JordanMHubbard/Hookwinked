@@ -21,35 +21,46 @@ public class DialogueManager : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("Today: " +GameManager.Instance.GetCurrentDay());
-        if (AllDialogue.Count > GameManager.Instance.GetCurrentDay()) 
+        Debug.Log("Today: " + GameManager.Instance.GetCurrentDay());
+
+        if (GameManager.Instance.GetCurrentDay() < 2)
         {
-            StartCoroutine(PlayCurrentDayDialogue());
+            if (AllDialogue.Count > GameManager.Instance.GetCurrentDay())
+            {
+                GameManager.Instance.GetScreenFade().SetActive(true);
+                StartCoroutine(PlayCurrentDayDialogue());
+            }
         }
+        else
+        {
+            HideSelf();
+            GameManager.Instance.ShowPerkScreen();
+        }
+
     }
 
     private void Update()
     {
         if (InputManager.Instance.SkipInput && !isInputPaused)
         {
-           ShowNextDiaolgue(); 
-        } 
+            ShowNextDiaolgue();
+        }
     }
 
     private void ShowNextDiaolgue()
-    {   
+    {
         if (!isDialogueAutomatic) Continue.DOFade(0f, 0.5f);
 
-        if (currentLineIndex > 0 && currentDialogue[currentLineIndex-1].isLastLine) HandleLastLine();
-        
-        if (currentLineIndex >= currentDialogue.Count) 
+        if (currentLineIndex > 0 && currentDialogue[currentLineIndex - 1].isLastLine) HandleLastLine();
+
+        if (currentLineIndex >= currentDialogue.Count)
         {
             OnDialogueEnd();
             isInputPaused = true;
             return;
         }
 
-        if (currentDialogue[currentLineIndex].shouldPauseAfter) 
+        if (currentDialogue[currentLineIndex].shouldPauseAfter)
         {
             StartCoroutine(HandleIntermission(3f));
         }
@@ -66,7 +77,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    private IEnumerator TypeSentence (TextMeshProUGUI textBox, string sentence)
+    private IEnumerator TypeSentence(TextMeshProUGUI textBox, string sentence)
     {
         isInputPaused = true;
         textBox.text = "";
@@ -77,19 +88,19 @@ public class DialogueManager : MonoBehaviour
         }
 
         if (currentDialogue[currentLineIndex].triggerEvent != null) currentDialogue[currentLineIndex].Trigger();
-        if (!isDialogueAutomatic && currentLineIndex+1 < currentDialogue.Count) Continue.DOFade(0.75f, 0.5f);
+        if (!isDialogueAutomatic && currentLineIndex + 1 < currentDialogue.Count) Continue.DOFade(0.75f, 0.5f);
         isInputPaused = false;
         currentLineIndex++;
     }
 
     private void HandleLastLine()
     {
-        if (currentDialogue[currentLineIndex-1].isNPC)
+        if (currentDialogue[currentLineIndex - 1].isNPC)
         {
             NpcName.DOFade(0f, 0.75f);
             NpcSpeechBox.DOFade(0f, 0.75f);
         }
-        else if (!currentDialogue[currentLineIndex-1].isNPC)
+        else if (!currentDialogue[currentLineIndex - 1].isNPC)
         {
             PlayerSpeechBox.DOFade(0f, 0.75f);
         }
@@ -97,14 +108,14 @@ public class DialogueManager : MonoBehaviour
 
 
     private IEnumerator HandleIntermission(float intermissionTime)
-    {   
+    {
         isInputPaused = true;
         currentLineIndex++;
         ScreenFade.DOFade(1f, 1f);
         NpcText.text = "";
         PlayerText.text = "";
         yield return new WaitForSeconds(intermissionTime);
-        
+
         ShowNextDiaolgue();
         isInputPaused = false;
         ScreenFade.DOFade(0f, 1f);
@@ -114,32 +125,36 @@ public class DialogueManager : MonoBehaviour
     private IEnumerator PlayCurrentDayDialogue()
     {
         isDialogueAutomatic = true;
-        currentDialogue = AllDialogue[GameManager.Instance.GetCurrentDay()].dialogueLines; 
+        currentDialogue = AllDialogue[GameManager.Instance.GetCurrentDay()].dialogueLines;
         Debug.Log("Playing dialogue for this day: " + (GameManager.Instance.GetCurrentDay()));
         yield return new WaitForSeconds(2.5f);
 
         PlayerSpeechBox.DOFade(1f, 0.75f);
         yield return new WaitForSeconds(1f);
-        
+
         ShowNextDiaolgue();
         yield return new WaitForSeconds(2f);
-        
+
         NpcSpeechBox.DOFade(1f, 0.75f);
         yield return new WaitForSeconds(1f);
-        
+
         ShowNextDiaolgue();
         isDialogueAutomatic = false;
         yield return new WaitForSeconds(0.5f);
 
         Debug.Log("Press space to skip");
         InputManager.Instance.SwitchCurrentMap(InputManager.ActionMap.Dialogue);
-    }   
+    }
 
     private void OnDialogueEnd()
     {
         Debug.Log("testing testing 1 2 3");
     }
 
+    public void HideSelf()
+    {
+        GameManager.Instance.HideDialogueScreen();
+    }
     
 }
 

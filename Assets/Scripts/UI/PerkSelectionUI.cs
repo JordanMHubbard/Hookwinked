@@ -15,8 +15,6 @@ public class PerkSelectionUI : MonoBehaviour
         perkList = GameManager.Instance.GetPerkList();
         InitalizePerks();
 
-        totalShipFragments = 10;
-
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }

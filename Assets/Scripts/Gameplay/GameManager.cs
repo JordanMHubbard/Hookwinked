@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
     [Header("Perk Level")]
     [SerializeField] private GameObject PerkSelectionScreen;
     [SerializeField] private GameObject GainedPerkScreen;
+    [SerializeField] private GameObject ScreenFade;
+    [SerializeField] private GameObject DialogueScreen;
     private GainedPerkUI gainedPerkUI;
     
     [Header("General")]
@@ -52,7 +54,7 @@ public class GameManager : MonoBehaviour
     {
         { new PerkInfo("NitroFish", "Longer Speed Boost", 3) },
         { new PerkInfo("Ocean's Endurance", "Slower energy depletion", 3) },
-        { new PerkInfo("Coral-lateral Damage", "Shoot rocks faster and deal more damage", 3) },
+        { new PerkInfo("Coral-lateral Damage", "Shoot rocks that deal damage to their targets", 3) },
         { new PerkInfo("Silent Assassin", "Prey's detection range gets smaller", 3) }
     };
     [SerializeField] private List<Sprite> perkIcons;
@@ -62,7 +64,7 @@ public class GameManager : MonoBehaviour
     public void SetBoatFragmentsCount(int amount) 
     {
         boatFragmentsCount = amount;
-        FragmentsCountText.text = boatFragmentsCount.ToString();
+        if (FragmentsCountText) FragmentsCountText.text = boatFragmentsCount.ToString();
     }
     public void SetRockCount(int amount) { RockCountText.text = amount.ToString(); }
     public void SetPerkList(List<PerkInfo> perks) {perkList = perks;}
@@ -120,6 +122,7 @@ public class GameManager : MonoBehaviour
             GainedPerkScreen.SetActive(false);
             gainedPerkUI = GainedPerkScreen.GetComponent<GainedPerkUI>();
         }
+        if (ScreenFade != null) ScreenFade.SetActive(false);
 
         // General
         if (SceneTransition != null) SceneTransition.SetActive(false);
@@ -142,6 +145,22 @@ public class GameManager : MonoBehaviour
         StartCoroutine(TransitionOut());
     }
 
+    public void ShowPerkScreen()
+    {
+        StartCoroutine(ActivatePerkScreen());
+    }
+
+    private IEnumerator ActivatePerkScreen()
+    {
+        ScreenFade.SetActive(false);
+        yield return new WaitForSeconds(1f);
+
+        PerkSelectionScreen.SetActive(true);
+    }
+
+    public GameObject GetScreenFade() { return ScreenFade; }
+    public void HideDialogueScreen() { DialogueScreen.SetActive(false); }
+    
     private IEnumerator TransitionIn(Action callback)
     {
         SceneTransition.SetActive(true);
@@ -165,8 +184,8 @@ public class GameManager : MonoBehaviour
     // Minigames
     public void StartHookedMinigame()
     {
-        if (HookedMinigame == null ||  PlayerHUD == null) return;
-        
+        if (HookedMinigame == null || PlayerHUD == null) return;
+
         StartCoroutine(ActivateHookedMinigame());
     }
 
