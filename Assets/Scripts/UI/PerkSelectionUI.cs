@@ -1,14 +1,17 @@
 using System.Collections.Generic;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 using UnityEngine;
+using System.Collections;
 
 public class PerkSelectionUI : MonoBehaviour
 {
     private List<PerkInfo> perkList;
+    [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private List<CanvasGroup> perkImages;
     private int totalShipFragments;
 
-    private void Awake()
+    private void OnEnable()
     {
         GameManager.Instance.PerkUpgrades = this;
         totalShipFragments = GameManager.Instance.GetBoatFragmentsCount();
@@ -17,6 +20,8 @@ public class PerkSelectionUI : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
+        StartCoroutine(FadeIn());
     }
 
     // Perk Unlocks
@@ -46,5 +51,17 @@ public class PerkSelectionUI : MonoBehaviour
                 perkImages[i].alpha = 1f;
             }
         }
+    }
+
+    public void Continue()
+    {
+        SceneManager.LoadScene("TheReef");
+    }
+
+    private IEnumerator FadeIn()
+    {
+        yield return new WaitForSeconds(2.5f);
+
+        if (canvasGroup) canvasGroup.DOFade(1f, 1f);
     }
 }
