@@ -3,12 +3,14 @@ using DG.Tweening;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PerkSelectionUI : MonoBehaviour
 {
     private List<PerkInfo> perkList;
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private List<CanvasGroup> perkImages;
+    [SerializeField] private List<Slider> unlockSliders;
     private int totalShipFragments;
 
     private void OnEnable()
@@ -22,6 +24,11 @@ public class PerkSelectionUI : MonoBehaviour
         Cursor.visible = true;
 
         StartCoroutine(FadeIn());
+    }
+
+    private void Start()
+    {
+        InputManager.Instance.SwitchCurrentMap(InputManager.ActionMap.UI);
     }
 
     // Perk Unlocks
@@ -49,6 +56,7 @@ public class PerkSelectionUI : MonoBehaviour
             if (perkList[i].isUnlocked)
             {
                 perkImages[i].alpha = 1f;
+                unlockSliders[i].value = 1f;
             }
         }
     }

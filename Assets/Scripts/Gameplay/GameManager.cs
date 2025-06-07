@@ -52,10 +52,10 @@ public class GameManager : MonoBehaviour
     public PerkSelectionUI PerkUpgrades { get; set; }
     private List<PerkInfo> perkList = new List<PerkInfo>
     {
-        { new PerkInfo("NitroFish", "Longer Speed Boost", 3) },
-        { new PerkInfo("Ocean's Endurance", "Slower energy depletion", 3) },
-        { new PerkInfo("Coral-lateral Damage", "Shoot rocks that deal damage to their targets", 3) },
-        { new PerkInfo("Silent Assassin", "Prey's detection range gets smaller", 3) }
+        { new PerkInfo("NitroFish", "An ethereal spirit hastens your stride. Gain faster top speed when using the swim burst ability", 3) },
+        { new PerkInfo("Ocean's Endurance", "A quiet force steadies your soul, causing energy to drain more slowly", 3) },
+        { new PerkInfo("Coral-lateral Damage", "Imbued with great strength against your will, you're now able to hurl stones that deal damage to anything they strike", 3) },
+        { new PerkInfo("Silent Assassin", "Your aura grows faint in the wild — prey senses you from a shorter distance", 3) }
     };
     [SerializeField] private List<Sprite> perkIcons;
     

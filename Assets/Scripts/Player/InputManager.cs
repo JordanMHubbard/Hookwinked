@@ -21,9 +21,10 @@ public class InputManager : MonoBehaviour
 
     // UI
     public bool UIMenuCloseInput { get; private set;}
+    public bool UIClickInput { get; private set;}
 
     // Hooked Minigame
-    public Vector2 ShakeInput { get; private set;}
+    public Vector2 ShakeInput { get; private set; }
 
     // Dialogue
     public bool SkipInput { get; private set;}
@@ -37,6 +38,7 @@ public class InputManager : MonoBehaviour
 
     // UI Input
     private InputAction UIMenuCloseAction;
+    private InputAction UIClickAction;
 
     // Hooked Minigame Input
     private InputAction shakeAction;
@@ -58,6 +60,7 @@ public class InputManager : MonoBehaviour
         UIMenuCloseAction = PlayerInput.actions["MenuClose"];
         shakeAction = PlayerInput.actions["Shake"];
         skipDialogueAction = PlayerInput.actions["SkipDialogue"];
+        UIClickAction = PlayerInput.actions["Click"];
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -98,7 +101,8 @@ public class InputManager : MonoBehaviour
 
     private void HandleUIInput()
     {
-        UIMenuCloseInput =  UIMenuCloseAction.WasPressedThisFrame();
+        UIMenuCloseInput = UIMenuCloseAction.WasPressedThisFrame();
+        UIClickInput = UIClickAction.IsPressed();
     }
 
     private void HandleHookedMinigameInput()
