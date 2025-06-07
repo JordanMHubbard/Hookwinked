@@ -4,7 +4,8 @@ public class ControlsScreenUI : MonoBehaviour
 {
     public void Back()
     {
-        PauseManager.Instance.ShowPausedScreen();
+        if (PauseManager.Instance) PauseManager.Instance.ShowPausedScreen();
+        if (MainMenu.Instance) MainMenu.Instance.gameObject.SetActive(true);
         gameObject.SetActive(false);
     }
 }

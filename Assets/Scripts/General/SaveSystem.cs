@@ -61,10 +61,13 @@ public class SaveSystem
         if (GameManager.Instance.PlayerController != null) GameManager.Instance.PlayerController.Load(saveData.PlayerData);
     }
 
-    public static void ResetDays()
+    public static void ResetSaveData()
     {
-        GameManager.Instance.SetCurrentDay(0);
-        Save();
+        if (File.Exists(SaveFileName()))
+        {
+            File.Delete(SaveFileName());
+            Debug.Log("Save file deleted.");
+        }
     }
 
 }

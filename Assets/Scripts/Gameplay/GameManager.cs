@@ -288,12 +288,6 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
-
-    private void OnApplicationQuit()
-    {
-        SaveSystem.ResetDays();
-    }
-
 }
 
 [System.Serializable]

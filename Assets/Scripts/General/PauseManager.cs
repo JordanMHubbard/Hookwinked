@@ -14,27 +14,28 @@ public class PauseManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null) Instance = this;
+        else Destroy(gameObject);
 
         InitializeUI();
     }
     
     private void Update()
-{
-    if (!IsPaused)
     {
-        if (InputManager.Instance.MenuOpenInput)
+        if (!IsPaused)
         {
-            PauseGame();
+            if (InputManager.Instance.MenuOpenInput)
+            {
+                PauseGame();
+            }
+        }
+        else
+        {
+            if (InputManager.Instance.UIMenuCloseInput && IsOnPauseMenu)
+            {
+                UnpauseGame();
+            }
         }
     }
-    else
-    {
-        if (InputManager.Instance.UIMenuCloseInput && IsOnPauseMenu)
-        {
-            UnpauseGame();
-        }
-    }
-}
 
     public void PauseGame()
     {

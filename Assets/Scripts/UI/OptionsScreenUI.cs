@@ -22,7 +22,7 @@ public class OptionsScreenUI : MonoBehaviour
         mixer.GetFloat("masterVolume", out float vol);
         masterAudioSlider.value = vol;
 
-        mouseSensSlider.value = InputManager.Instance.mouseSensitivity * 10f;
+        if (InputManager.Instance) mouseSensSlider.value = InputManager.Instance.mouseSensitivity * 10f;
         windowDropdown.value = Screen.fullScreen ? 1 : 0;
         SetAvailableResolutions();
         qualityDropdown.value = QualitySettings.GetQualityLevel();
@@ -87,7 +87,8 @@ public class OptionsScreenUI : MonoBehaviour
     public void Back()
     {
         SaveSystem.SaveOptions();
-        PauseManager.Instance.ShowPausedScreen();
+        if (PauseManager.Instance) PauseManager.Instance.ShowPausedScreen();
+        if (MainMenu.Instance) MainMenu.Instance.gameObject.SetActive(true);
         gameObject.SetActive(false);
     }
 
