@@ -3,6 +3,7 @@ using UnityEngine;
 public class OptionsManager : MonoBehaviour
 {
     public static OptionsManager Instance;
+    public float defaultMouseSens = 0.07f;
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -13,7 +14,7 @@ public class OptionsManager : MonoBehaviour
 
     public void Save(ref OptionsSaveData data)
     {
-        data.mouseSens = InputManager.Instance.mouseSensitivity;
+        data.mouseSens = defaultMouseSens;
         data.isFullscreen = Screen.fullScreen;
         data.resWidth = Screen.currentResolution.width;
         data.resHeight = Screen.currentResolution.height;
@@ -22,10 +23,15 @@ public class OptionsManager : MonoBehaviour
 
     public void Load(OptionsSaveData data)
     {
-        InputManager.Instance.mouseSensitivity = data.mouseSens;
+        if (data.mouseSens > 0)
+        { 
+            defaultMouseSens = data.mouseSens;
+            if (InputManager.Instance) InputManager.Instance.mouseSensitivity = data.mouseSens;
+        }
         Screen.fullScreen = data.isFullscreen;
-        Screen.SetResolution(data.resWidth, data.resHeight, Screen.fullScreen);
+        if (data.resWidth > 0 && data.resHeight > 0) Screen.SetResolution(data.resWidth, data.resHeight, Screen.fullScreen);
         QualitySettings.SetQualityLevel(data.qualIndex);
+        
     }
 
     #endregion

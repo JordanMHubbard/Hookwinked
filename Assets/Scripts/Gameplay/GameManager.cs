@@ -21,9 +21,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject HookedMinigame;
     [SerializeField] private GameObject DeathScreen;
     [SerializeField] private GameObject SurviveScreen;
-    [SerializeField] TextMeshProUGUI RockCountText;
-    [SerializeField] TextMeshProUGUI FragmentsCountText;
-    
+    [SerializeField] private GameObject DayTransition;
+    [SerializeField] private TextMeshProUGUI CurrentDayText;
+    [SerializeField] private CanvasGroup DayTransitionGroup;
+    [SerializeField] private CanvasGroup CurrentDayGroup;
+    [SerializeField] private TextMeshProUGUI RockCountText;
+    [SerializeField] private TextMeshProUGUI FragmentsCountText;
     private DeathScreenUI deathScreenUI;
 
     [Header("Perk Level")]
@@ -97,11 +100,13 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        if (shouldTransitionAtStart) 
+        PlayerController.GetEnergyComp().SetIsPaused(true);
+        if (shouldTransitionAtStart)
         {
             StartCoroutine(TransitionOut());
         }
         
+        StartCoroutine(ShowDayTransition());
     }
     // UI
     private void InitializeUI()
@@ -126,6 +131,25 @@ public class GameManager : MonoBehaviour
 
         // General
         if (SceneTransition != null) SceneTransition.SetActive(false);
+    }
+
+    private IEnumerator ShowDayTransition()
+    {
+        if (currentDay == 0) CurrentDayText.text = "Tutorial";
+        else CurrentDayText.text = "Day " + currentDay.ToString();
+        yield return new WaitForSeconds(2.5f);
+
+        CurrentDayGroup.DOFade(1f, 1f);
+        yield return new WaitForSeconds(4f);
+
+        CurrentDayGroup.DOFade(0f, 1f);
+        yield return new WaitForSeconds(2f);
+
+        DayTransitionGroup.DOFade(0f, 3f);
+        yield return new WaitForSeconds(3f);
+
+        DayTransition.SetActive(false);
+        PlayerController.GetEnergyComp().SetIsPaused(false);
     }
 
     public void ShowDeathScreen(DeathScreenUI.DeathType deathType)

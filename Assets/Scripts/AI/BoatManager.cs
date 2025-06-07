@@ -41,10 +41,6 @@ public class BoatManager : MonoBehaviour
 
         // Spawn random number of bait
         BaitedPrey = GameManager.Instance.GetPreySpawner().SpawnFish(Random.Range(1,3), true);
-        foreach (GameObject fish in BaitedPrey)
-        {
-           Debug.Log("Just spawned some bait yay!");
-        }
     }
 
     private void Start()

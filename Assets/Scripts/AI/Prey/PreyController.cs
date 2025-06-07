@@ -35,7 +35,7 @@ public class PreyController : AIFishController
     {
         if (isBait) 
         {
-            Debug.Log("Setting to bait");
+            //Debug.Log("Setting to bait");
             preyManager.tag = "Bait";
             animManager.ShouldAnimatorPlay(false);
         }

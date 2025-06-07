@@ -27,6 +27,7 @@ public class FishEnergy : MonoBehaviour
 
     // Getters
     public float GetDepreciationRate() { return depreciateRate; }
+    public bool GetIsPaused() { return isPaused; }
     // Setters
     public void SetDepreciationRate(float rate) { depreciateRate = rate; }
     public void SetIsPaused(bool shouldPause) { isPaused = shouldPause; }
@@ -53,6 +54,8 @@ public class FishEnergy : MonoBehaviour
 
     private void Update()
     {
+        if (isPaused) return;
+
         if (shouldUpdate)
         {
             StopCoroutine(DepreciateCoroutine);
@@ -108,8 +111,6 @@ public class FishEnergy : MonoBehaviour
 
         while (currentProgress > 0f && !shouldUpdate)
         {
-            if (isPaused) yield break;
-
             currentProgress -= depreciateRate * Time.deltaTime;
             //Debug.Log("CurrentProgress: "+ currentProgress);
             energyBar.value = currentProgress / 100f;

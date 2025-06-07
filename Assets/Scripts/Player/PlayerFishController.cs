@@ -59,6 +59,7 @@ public class PlayerFishController : MonoBehaviour
 
     // Energy
     private FishEnergy energyComp;
+    public FishEnergy GetEnergyComp() { return energyComp; }
     [SerializeField] private AudioClip[] eatSounds;
 
     // Ship Fragments
@@ -91,6 +92,8 @@ public class PlayerFishController : MonoBehaviour
 
     private void Update()
     {
+        if (InputManager.Instance == null) return;
+
         ShouldViewBob();
         HandleMovement();
         HandleRoation();
@@ -105,8 +108,6 @@ public class PlayerFishController : MonoBehaviour
     /* General Swimming Movement */
     private Vector3 CalculateWorldDirection()
     {
-        if (InputManager.Instance == null) {return Vector3.zero;}
-
         // Action inputs mapped to vector2 have either x or y inputs
         // These values correlate the direction the player is moving
         float xInput = InputManager.Instance.SwimInput.x;
@@ -153,8 +154,6 @@ public class PlayerFishController : MonoBehaviour
 
     private void HandleRoation()
     {
-        if (InputManager.Instance == null) {return;}
-
         float mouseXRotation = InputManager.Instance.LookInput.x * InputManager.Instance.mouseSensitivity;
         float mouseYRotation = InputManager.Instance.LookInput.y * InputManager.Instance.mouseSensitivity;
 
