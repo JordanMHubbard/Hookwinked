@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
     public PlayerFishController PlayerController { get; set; }
     private int currentDay;
     private int boatFragmentsCount = 0;
+    [SerializeField] private List<DaySettings> daySettings;
     [SerializeField] private List<GameObject> boatWaypoints;
     public PerkSelectionUI PerkUpgrades { get; set; }
     private List<PerkInfo> perkList = new List<PerkInfo>
@@ -63,7 +64,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<Sprite> perkIcons;
     
     // Setters
-    public void SetCurrentDay(int day) {currentDay = day;}
+    public void SetCurrentDay(int day) { currentDay = day; }
     public void SetBoatFragmentsCount(int amount) 
     {
         boatFragmentsCount = amount;
@@ -71,9 +72,10 @@ public class GameManager : MonoBehaviour
     }
     public void SetRockCount(int amount) { RockCountText.text = amount.ToString(); }
     public void SetPerkList(List<PerkInfo> perks) {perkList = perks;}
-    
+
     // Getters
-    public PreySpawner GetPreySpawner() {return preySpawner;}
+    public DaySettings GetCurrentDaySettings() { return daySettings[currentDay]; }
+    public PreySpawner GetPreySpawner() { return preySpawner; }
     public PredatorSpawner GetPredatorSpawner() {return predatorSpawner;}
     public int GetCurrentDay() {return currentDay;}
     public int GetBoatFragmentsCount() {return boatFragmentsCount;}

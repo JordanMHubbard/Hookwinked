@@ -3,6 +3,12 @@ using UnityEngine;
 
 public class PreySpawner : AIFishSpawner
 {
+    private void Awake()
+    {
+        int preyCount = GameManager.Instance.GetCurrentDaySettings().preyCount;
+        numFish = preyCount;
+    }
+
     private void OnEnable()
     {
         GameManager.Instance.OnPreyConsumed += SpawnNewPrey;

@@ -11,20 +11,24 @@ public class BoatSpawner : MonoBehaviour
     [SerializeField] private List<GameObject> boatMeshes;
     [SerializeField] private LayerMask interactableLayer;
     private BoxCollider box;
+
+    private void Awake()
+    {
+        numBoats = GameManager.Instance.GetCurrentDaySettings().boatCount;
+    }
     
-    // ALSO need to make it so amount of boats spawned affects amount of fish spawned
     private void Start()
     {
         if (!isEnabled) return;
 
         box = GetComponent<BoxCollider>();
-        
+
         if (box == null)
         {
             Debug.LogWarning($"{gameObject.name}: box has not been set!");
             return;
         }
-
+        
         SpawnBoat();
     }
 

@@ -5,7 +5,7 @@ public class AIFishSpawner : MonoBehaviour
 {
     [SerializeField] protected GameObject fishPrefab;
     [SerializeField] private bool isEnabled = true;
-    [SerializeField] private int numFish = 20;
+    [SerializeField] protected int numFish = 20;
     [SerializeField] private float paddingXZ = 20f;
     [SerializeField] private float paddingY = 5f;
     [SerializeField] private List<GameObject> fishMeshes;
@@ -13,12 +13,12 @@ public class AIFishSpawner : MonoBehaviour
     private BoxCollider box;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Start()
     {
         if (!isEnabled) return;
 
         box = GetComponent<BoxCollider>();
-        
+
         if (box == null)
         {
             Debug.LogWarning($"{gameObject.name}: box has not been set!");
@@ -82,7 +82,7 @@ public class AIFishSpawner : MonoBehaviour
         while (fishCount > 0)
         {
             Vector3 spawnPosition = GetRandomPoint();
-            GameObject fishInstance = Instantiate(fishPrefab, spawnPosition, Quaternion.identity); 
+            GameObject fishInstance = Instantiate(fishPrefab, spawnPosition, Quaternion.identity);
 
             Transform meshHolder = fishInstance.transform.Find("FishMesh");
             if (meshHolder == null)
@@ -90,9 +90,9 @@ public class AIFishSpawner : MonoBehaviour
                 Debug.LogError("FishMesh child not found on FishNPC prefab!");
                 return null;
             }
-            
+
             GameObject meshInstance = Instantiate(GetRandomMesh(), meshHolder);
-            
+
             // Play animation
             Animator animator = meshHolder.GetComponent<Animator>();
             animator.Rebind();

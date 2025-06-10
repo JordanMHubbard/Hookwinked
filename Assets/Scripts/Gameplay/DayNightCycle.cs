@@ -21,9 +21,6 @@ public class DayNightCycle : MonoBehaviour
         baseColor = fog.GetColor("_BaseColor");
         currentRotation = sunlight.transform.rotation.eulerAngles;
 
-        GameManager.Instance.SetCurrentDay(GameManager.Instance.GetCurrentDay() + 1);
-        SaveSystem.Save();
-
         StartCoroutine(decreaseIntensity());
         StartCoroutine(lowerSun());
     }

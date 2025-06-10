@@ -40,7 +40,8 @@ public class BoatManager : MonoBehaviour
         }
 
         // Spawn random number of bait
-        BaitedPrey = GameManager.Instance.GetPreySpawner().SpawnFish(Random.Range(1,3), true);
+        int spawnCount = GameManager.Instance.GetCurrentDaySettings().GetBaitCount();
+        BaitedPrey = GameManager.Instance.GetPreySpawner().SpawnFish(spawnCount, true);
     }
 
     private void Start()

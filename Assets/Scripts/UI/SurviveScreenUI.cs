@@ -30,6 +30,9 @@ public class SurviveScreenUI : MonoBehaviour
     private void OnEnable()
     {
         StartCoroutine(SurivedStatsAnim());
+
+        GameManager.Instance.SetCurrentDay(GameManager.Instance.GetCurrentDay() + 1);
+        SaveSystem.Save();
     }
 
     private IEnumerator SurivedStatsAnim()
