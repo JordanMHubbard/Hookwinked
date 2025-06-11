@@ -154,6 +154,8 @@ public class PlayerFishController : MonoBehaviour
 
     private void HandleRoation()
     {
+        if (isFrozen) return;
+        
         float mouseXRotation = InputManager.Instance.LookInput.x * InputManager.Instance.mouseSensitivity;
         float mouseYRotation = InputManager.Instance.LookInput.y * InputManager.Instance.mouseSensitivity;
 
@@ -161,17 +163,26 @@ public class PlayerFishController : MonoBehaviour
         ApplyVerticalRotation(mouseYRotation);
     }
 
+    public void PausePlayer()
+    {
+        isFrozen = true;
+        energyComp.SetIsPaused(true);
+        energyComp.UnsetNearDeath();
+        GameManager.Instance.DisableHUD();
+        InputManager.Instance.isInputPaused = true;
+    }
+
     /* Attacking Prey */
     private void OnTriggerEnter(Collider other)
     {
         //Debug.Log("Entered: " + other.name);
-        if (other.CompareTag("Prey")) 
+        if (other.CompareTag("Prey"))
         {
             EatPrey(other);
         }
-        else if (other.CompareTag("Bait")) 
+        else if (other.CompareTag("Bait"))
         {
-            BeginHookedMinigame(other);
+            if (!isFrozen) BeginHookedMinigame(other);
         }
     }
 
@@ -189,18 +200,14 @@ public class PlayerFishController : MonoBehaviour
         SoundFXManager.Instance.PlayRandomSoundFXClip(eatSounds, transform, 1f, 1f, 0.2f, 0.1f);
         yield return new WaitForSeconds(1f);
 
-        energyComp.SetIsPaused(true);
+        PausePlayer();
         GameManager.Instance.PreyConsumed(other.transform.parent.gameObject);
-        GameManager.Instance.DisableHUD();
-        InputManager.Instance.SwitchCurrentMap(InputManager.ActionMap.HookedMinigame);
         cameraAnim.Play("death", 0);
     }
 
     public IEnumerator DeathSimple()
     {
-        energyComp.SetIsPaused(true);
-        GameManager.Instance.DisableHUD();
-        InputManager.Instance.SwitchCurrentMap(InputManager.ActionMap.HookedMinigame);
+        PausePlayer();
         cameraAnim.Play("death", 0);
         yield break; 
     }
@@ -209,6 +216,7 @@ public class PlayerFishController : MonoBehaviour
     {
         SoundFXManager.Instance.PlayRandomSoundFXClip(eatSounds, transform, 1f, 1f, 0.2f, 0.1f);
         energyComp.SetIsPaused(true);
+        energyComp.UnsetNearDeath();
         GameManager.Instance.PreyConsumed(other.transform.parent.gameObject);
         Debug.Log("Fight for your life!");
         GameManager.Instance.StartHookedMinigame();

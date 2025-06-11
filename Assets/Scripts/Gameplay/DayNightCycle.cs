@@ -11,8 +11,13 @@ public class DayNightCycle : MonoBehaviour
     [SerializeField] private Material fog;
     [SerializeField] private Color darkColor;
     private Color baseColor;
-    
-    void Start()
+
+    private void Awake()
+    {
+        daySpeed = GameManager.Instance.GetCurrentDaySettings().daySpeed;
+    }
+
+    private void Start()
     {
         daySpeed /= 75f;
         //daySpeed *= 10f;
@@ -30,12 +35,12 @@ public class DayNightCycle : MonoBehaviour
         float sunlightVal = sunlight.intensity;
         float t;
 
-        while (sunlightVal > 0f)
+        while (sunlightVal > 1f)
         {
             sunlightVal -= Time.deltaTime * daySpeed;
             sunlight.intensity = sunlightVal;
 
-            t = 1f - sunlightVal/2.5f;
+            t = 1f - sunlightVal/2.8f;
             fog.SetColor("_BaseColor",  Color.Lerp(baseColor, darkColor, t));
 
             yield return null;

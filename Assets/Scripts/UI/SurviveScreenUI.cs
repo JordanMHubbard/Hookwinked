@@ -25,14 +25,14 @@ public class SurviveScreenUI : MonoBehaviour
         confettiLPosition = confettiLeft.transform.position;
         confettiRPosition = confettiLeft.transform.position;
         partyFishPosition = partyFishImage.transform.position;
+
+        GameManager.Instance.SetCurrentDay(GameManager.Instance.GetCurrentDay() + 1);
+        SaveSystem.Save();
         numDaysText.text = GameManager.Instance.GetCurrentDay().ToString();
     }
     private void OnEnable()
     {
         StartCoroutine(SurivedStatsAnim());
-
-        GameManager.Instance.SetCurrentDay(GameManager.Instance.GetCurrentDay() + 1);
-        SaveSystem.Save();
     }
 
     private IEnumerator SurivedStatsAnim()

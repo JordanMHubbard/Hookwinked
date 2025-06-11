@@ -4,6 +4,7 @@ using UnityEngine;
 public class DaySettings
 {
     public string Day;
+    public float daySpeed = 1f;
     public int preyCount = 20;
     public int predatorCount = 10;
     public int boatCount = 5;

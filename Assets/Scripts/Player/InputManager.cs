@@ -6,8 +6,9 @@ public class InputManager : MonoBehaviour
     public static InputManager Instance;
     public static PlayerInput PlayerInput;
     
-    public enum ActionMap { Player, UI, HookedMinigame, Dialogue }
+    public enum ActionMap { Player, UI, HookedMinigame, Dialogue}
     private ActionMap currentMap = ActionMap.Player;
+    public bool isInputPaused = false;
 
     // Player
     public float mouseSensitivity = 0.07f;
@@ -68,6 +69,8 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
+        if (isInputPaused) return;
+        
         switch (currentMap)
         {
             case ActionMap.Player:

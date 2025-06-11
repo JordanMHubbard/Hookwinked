@@ -102,7 +102,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        InputManager.Instance.isInputPaused = true;
         PlayerController.GetEnergyComp().SetIsPaused(true);
+
         if (shouldTransitionAtStart)
         {
             StartCoroutine(TransitionOut());
@@ -150,18 +152,22 @@ public class GameManager : MonoBehaviour
         DayTransitionGroup.DOFade(0f, 3f);
         yield return new WaitForSeconds(3f);
 
+        InputManager.Instance.isInputPaused = false;
         DayTransition.SetActive(false);
         PlayerController.GetEnergyComp().SetIsPaused(false);
+
     }
 
     public void ShowDeathScreen(DeathScreenUI.DeathType deathType)
     {
+        PlayerController.PausePlayer();
         deathScreenUI.ChooseRandomMessage(deathType);
         DeathScreen.SetActive(true);
     }
 
     public void ShowSurviveScreen()
     {
+        PlayerController.PausePlayer();
         StartCoroutine(TransitionIn(ActivateSurviveScreen));
     }
 

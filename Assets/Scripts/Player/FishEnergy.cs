@@ -31,6 +31,7 @@ public class FishEnergy : MonoBehaviour
     // Setters
     public void SetDepreciationRate(float rate) { depreciateRate = rate; }
     public void SetIsPaused(bool shouldPause) { isPaused = shouldPause; }
+    public void UnsetNearDeath() { currentProgress = 100; }
 
     private void Awake()
     {
