@@ -9,6 +9,7 @@ public class AIFishController : MonoBehaviour
     [SerializeField] private float fasterSwimSpeed = 5f;
     [SerializeField] private float speedUpDuration = 3f;
     [SerializeField] private float speedUpCooldown = 3f;
+    [SerializeField] private float rotationMult = 1f;
     private bool isSpeedUpOnCooldown;
     [SerializeField] private LayerMask interactableLayer;
     private bool hasTarget;
@@ -105,7 +106,7 @@ public class AIFishController : MonoBehaviour
     {   
         //Debug.Log("isRepelling: " + isRepelling + " isNearObstacle: " + isNearObstacle);
 
-        float turnSpeed = swimSpeed * Random.Range(1f, 2f);
+        float turnSpeed = swimSpeed * rotationMult;
         Vector3 targetDirection = targetLocation - transform.position;
         Vector3 lookAt;
 

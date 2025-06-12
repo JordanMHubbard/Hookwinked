@@ -9,17 +9,20 @@ public class PreyDetection : MonoBehaviour
     private bool isPursuingPrey;
     private bool canHunt;
     private PredatorController controller;
+    [SerializeField] private bool isShark;
 
     public void SetIsPursuingPrey(bool isPursuing) { isPursuingPrey = isPursuing; }
     
 
     private void Start()
     {
-        controller = GetComponentInParent<PredatorController>();
-        if (controller == null )
-        {
-            Debug.LogError("ObstacleAvoidance: No AIFishController found on " + gameObject.name);
-        }
+        if (!isShark) { controller = GetComponentInParent<PredatorController>();}
+        else controller = GetComponentInParent<SharkController>();
+        
+        if (controller == null)
+            {
+                Debug.LogError("ObstacleAvoidance: No AIFishController found on " + gameObject.name);
+            }
         
         nearbyPrey = new List<GameObject>();
         StartCoroutine(StartHunt());
