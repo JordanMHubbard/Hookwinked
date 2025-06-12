@@ -1,9 +1,19 @@
+using System.Collections;
 using UnityEngine;
 
 public class SharkSpawner : AIFishSpawner
 {
-    private void Awake()
+    [SerializeField] private float spawnDelay = 15f;
+
+    protected override void Start()
     {
-        Debug.Log("sharks");
+        base.Start();
+        StartCoroutine(SpawnSharks());
+    }
+
+    private IEnumerator SpawnSharks()
+    {
+        yield return new WaitForSeconds(spawnDelay);
+        SpawnFish(numFish, false);
     }
 }

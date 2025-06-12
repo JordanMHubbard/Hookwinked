@@ -25,6 +25,16 @@ public class AIEatPrey : MonoBehaviour
             preyDetect.RemovePrey(other.transform.parent.gameObject);
             GameManager.Instance.PreyConsumed(other.transform.parent.gameObject);
         }
+
+        if (other.CompareTag("Player"))
+        {
+            HandleSharkEating();
+            preyDetect.SetIsPursuingPrey(false);
+            FishEnergy energyComp = other.GetComponent<FishEnergy>();
+            if (energyComp) energyComp.AddProgress(-30f);
+            GameManager.Instance.ShowHurtEffect();
+            Debug.Log("Shark tryna eat player yas");
+        }
     }
 
     private void HandleSharkEating()

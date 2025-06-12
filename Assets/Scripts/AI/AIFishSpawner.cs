@@ -5,34 +5,36 @@ public class AIFishSpawner : MonoBehaviour
 {
     [SerializeField] protected GameObject fishPrefab;
     [SerializeField] private bool isEnabled = true;
+    [SerializeField] private bool spawnOnStart = true;
+    [SerializeField] private bool useSpawnLocations = false;
+    [SerializeField] private List<GameObject> spawnLocations;
     [SerializeField] protected int numFish = 20;
     [SerializeField] private float paddingXZ = 20f;
     [SerializeField] private float paddingY = 5f;
     [SerializeField] private List<GameObject> fishMeshes;
     [SerializeField] private LayerMask interactableLayer;
     private BoxCollider box;
-    
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    private void Start()
+    protected virtual void Start()
     {
         if (!isEnabled) return;
 
         box = GetComponent<BoxCollider>();
-
         if (box == null)
         {
             Debug.LogWarning($"{gameObject.name}: box has not been set!");
             return;
         }
 
-        SpawnFish(0, false);
+        if (spawnOnStart) SpawnFish(0, false);
     }
 
-    protected Vector3 GetRandomPoint()
+    public Vector3 GetRandomPoint()
     {
         bool isReachable = false;
-        Vector3 point = Vector3.zero;
-        int MaxAttempts = 20;
+        Vector3 point = GetRandomSpawnLoc();
+        int MaxAttempts = 10;
         int attempts = 0;
 
         while (!isReachable && attempts < MaxAttempts)
@@ -44,12 +46,21 @@ public class AIFishSpawner : MonoBehaviour
             float y = Random.Range(min.y + paddingY, max.y - paddingY);
             float z = Random.Range(min.z + paddingXZ, max.z - paddingXZ);
 
-            point = new Vector3(x,y,z);
+            point = new Vector3(x, y, z);
             isReachable = IsAreaReachable(point, new Vector3(2, 2, 2));
             attempts++;
         }
 
         return point;
+    }
+
+    private Vector3 GetRandomSpawnLoc()
+    {
+        if (spawnLocations.Count > 0)
+        {
+            return spawnLocations[Random.Range(0, spawnLocations.Count)].transform.position;
+        }
+        return Vector3.zero;
     }
 
     bool IsAreaReachable(Vector3 checkPosition, Vector3 boxSize)
@@ -59,7 +70,7 @@ public class AIFishSpawner : MonoBehaviour
         Collider[] colliders = Physics.OverlapBox(checkPosition, boxSize * 0.5f, Quaternion.identity, interactableLayer);
         foreach (Collider col in colliders)
         {
-            if (col.CompareTag("Obstacle") || col.CompareTag("Fish") ) return false;
+            if (col.CompareTag("Obstacle") || col.CompareTag("Fish")) return false;
 
             if (col.CompareTag("ReachableArea")) isInReachableArea = true;
         }
@@ -71,7 +82,7 @@ public class AIFishSpawner : MonoBehaviour
     {
         List<GameObject> fish = new List<GameObject>();
 
-        if (fishPrefab == null) 
+        if (fishPrefab == null)
         {
             Debug.LogError("fishPrefab has not been set!");
             return null;
@@ -81,7 +92,7 @@ public class AIFishSpawner : MonoBehaviour
 
         while (fishCount > 0)
         {
-            Vector3 spawnPosition = GetRandomPoint();
+            Vector3 spawnPosition = useSpawnLocations ? GetRandomSpawnLoc() : GetRandomPoint();
             GameObject fishInstance = Instantiate(fishPrefab, spawnPosition, Quaternion.identity);
 
             Transform meshHolder = fishInstance.transform.Find("FishMesh");
@@ -100,11 +111,7 @@ public class AIFishSpawner : MonoBehaviour
             meshInstance.transform.localPosition = Vector3.zero;
             meshInstance.transform.localRotation = Quaternion.identity;
 
-            if (isBait)
-            {
-                PreyController controller = fishInstance.GetComponent<PreyController>();
-                if (controller != null) controller.SetIsBait(true);
-            }
+            if (isBait) InitializeBait(fishInstance);
 
             fish.Add(fishInstance);
             fishCount--;
@@ -119,5 +126,11 @@ public class AIFishSpawner : MonoBehaviour
         int index = Random.Range(0, total);
 
         return fishMeshes[index];
+    }
+
+    private void InitializeBait(GameObject obj)
+    {
+        PreyController controller = obj.GetComponent<PreyController>();
+        if (controller != null) controller.SetIsBait(true);
     }
 }

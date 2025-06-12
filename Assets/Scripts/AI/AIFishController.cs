@@ -10,12 +10,13 @@ public class AIFishController : MonoBehaviour
     [SerializeField] private float speedUpDuration = 3f;
     [SerializeField] private float speedUpCooldown = 3f;
     [SerializeField] private float rotationMult = 1f;
+    [SerializeField] private float targetAllowance = 1f;
     private bool isSpeedUpOnCooldown;
     [SerializeField] private LayerMask interactableLayer;
     private bool hasTarget;
     private bool isRepelling;
     private Vector3 repelDirection;
-    private Vector3 targetLocation;
+    protected Vector3 targetLocation;
     private CharacterController characterController;
     // Getters
     public Vector3 GetTargetLocation() { return targetLocation; }
@@ -23,7 +24,11 @@ public class AIFishController : MonoBehaviour
     public bool GetIsSpeedUpOnCooldown() { return isSpeedUpOnCooldown; }
 
     // Setters
-    public void SetTargetPosition(Vector3 position) { targetLocation = position; }
+    public void SetTargetPosition(Vector3 position)
+    {
+        targetLocation = position;
+        hasTarget = true;
+    }
     public void SetIsRepelling(bool shouldRepel ) {isRepelling = shouldRepel; }
     public void SetRepelDirection(Vector3 direction) { repelDirection = direction; }
 
@@ -43,7 +48,6 @@ public class AIFishController : MonoBehaviour
             enabled = false;
         }
     }
-
 
     // Update is called once per frame
     protected virtual void Update()
@@ -132,7 +136,7 @@ public class AIFishController : MonoBehaviour
         
         float dist = Vector3.Distance(transform.position, targetLocation);
         
-        if (dist < 1f)
+        if (dist < targetAllowance)
         {
             hasTarget = false;
         }

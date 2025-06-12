@@ -30,7 +30,7 @@ public class PreyDetection : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Prey"))
+        if (other.CompareTag("Prey") || other.CompareTag("Player"))
         {
             AddPrey(other.gameObject);
             if (closestPrey == null) FindClosestPrey();
@@ -39,7 +39,7 @@ public class PreyDetection : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Prey"))
+        if (other.CompareTag("Prey") || other.CompareTag("Player"))
         {
             RemovePrey(other.gameObject);
         }

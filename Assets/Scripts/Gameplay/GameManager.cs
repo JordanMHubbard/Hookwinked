@@ -5,6 +5,8 @@ using TMPro;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,6 +20,7 @@ public class GameManager : MonoBehaviour
     // UI
     [Header("Main Levels")]
     [SerializeField] private GameObject PlayerHUD;
+    [SerializeField] private Image HurtEffect;
     [SerializeField] private GameObject HookedMinigame;
     [SerializeField] private GameObject DeathScreen;
     [SerializeField] private GameObject SurviveScreen;
@@ -53,6 +56,7 @@ public class GameManager : MonoBehaviour
     private int boatFragmentsCount = 0;
     [SerializeField] private List<DaySettings> daySettings;
     [SerializeField] private List<GameObject> boatWaypoints;
+    [SerializeField] private List<GameObject> fishWaypoints;
     public PerkSelectionUI PerkUpgrades { get; set; }
     private List<PerkInfo> perkList = new List<PerkInfo>
     {
@@ -76,7 +80,9 @@ public class GameManager : MonoBehaviour
     // Getters
     public DaySettings GetCurrentDaySettings() { return daySettings[currentDay]; }
     public PreySpawner GetPreySpawner() { return preySpawner; }
-    public PredatorSpawner GetPredatorSpawner() {return predatorSpawner;}
+    public Vector3 GetRandomFishWaypoint() { 
+        return fishWaypoints[UnityEngine.Random.Range(0, fishWaypoints.Count)].transform.position; }
+    public PredatorSpawner GetPredatorSpawner() { return predatorSpawner; }
     public int GetCurrentDay() {return currentDay;}
     public int GetBoatFragmentsCount() {return boatFragmentsCount;}
     public Vector3 GetRandomBoatWaypoint() { 
@@ -123,6 +129,7 @@ public class GameManager : MonoBehaviour
             DeathScreen.SetActive(false);
             deathScreenUI = DeathScreen.GetComponent<DeathScreenUI>();
         }
+        if (HurtEffect != null) HurtEffect.gameObject.SetActive(false);
 
         // Perk Level
         if (PerkSelectionScreen != null) PerkSelectionScreen.SetActive(false);
@@ -156,6 +163,23 @@ public class GameManager : MonoBehaviour
         DayTransition.SetActive(false);
         PlayerController.GetEnergyComp().SetIsPaused(false);
 
+    }
+
+    public void ShowHurtEffect()
+    {
+        StartCoroutine(ActivateHurtEffect());
+    }
+
+    private IEnumerator ActivateHurtEffect()
+    {
+        HurtEffect.gameObject.SetActive(true);
+        HurtEffect.DOFade(1, 0.5f);
+        yield return new WaitForSeconds(2f);
+
+        HurtEffect.DOFade(0, 0.5f);
+        yield return new WaitForSeconds(0.5f);
+
+        HurtEffect.gameObject.SetActive(false);
     }
 
     public void ShowDeathScreen(DeathScreenUI.DeathType deathType)
