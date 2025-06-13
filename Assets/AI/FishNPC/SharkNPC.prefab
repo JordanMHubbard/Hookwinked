@@ -189,7 +189,7 @@ GameObject:
   m_Component:
   - component: {fileID: 775032120177412522}
   - component: {fileID: 3899371347003832586}
-  - component: {fileID: 5239852656442564255}
+  - component: {fileID: 4041481820572856812}
   m_Layer: 7
   m_Name: EatTrigger
   m_TagString: Untagged
@@ -235,7 +235,7 @@ CapsuleCollider:
   m_Height: 2.14
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5239852656442564255
+--- !u!114 &4041481820572856812
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -244,13 +244,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 4719466760768647980}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19c9ad4e1676ed841979af963e3b2e95, type: 3}
+  m_Script: {fileID: 11500000, guid: 02be71576ce8e654eb5547eb99a7f907, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   eatSounds:
   - {fileID: 8300000, guid: 2bd99dafb3293454bace5c88f281ca28, type: 3}
   - {fileID: 8300000, guid: 3754c36924d222d419df9bff345cb5dc, type: 3}
   - {fileID: 8300000, guid: addad4ccee92a914eb0aa3819a0122a7, type: 3}
+  attackSounds:
+  - {fileID: 8300000, guid: 304ad5e2fd5bd0a4cbbe2b7ed20c5f7d, type: 3}
+  - {fileID: 8300000, guid: 852260340b3898a4a818fdb5aa05124e, type: 3}
 --- !u!1 &7031167869332694732
 GameObject:
   m_ObjectHideFlags: 0
@@ -330,7 +333,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1015366562258551686}
   - component: {fileID: 3170972066686523418}
-  - component: {fileID: 6129422374985899896}
+  - component: {fileID: 8595640106495610821}
   m_Layer: 7
   m_Name: PreyTrigger
   m_TagString: Untagged
@@ -374,7 +377,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 14, y: 7, z: 20}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6129422374985899896
+--- !u!114 &8595640106495610821
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -383,7 +386,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 9200274502226302189}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bc43bfc7ee0498479b6e59827b0754a, type: 3}
+  m_Script: {fileID: 11500000, guid: e00bb0f93360ad04aa68a4b2e3dc0b6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isShark: 0

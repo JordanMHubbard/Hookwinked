@@ -5,50 +5,46 @@ using UnityEngine;
 public class PreyDetection : MonoBehaviour
 {
     private List<GameObject> nearbyPrey;
-    private GameObject closestPrey;
-    private bool isPursuingPrey;
+    protected GameObject closestPrey;
+    protected bool isPursuingPrey;
     private bool canHunt;
     private PredatorController controller;
-    [SerializeField] private bool isShark;
 
     public void SetIsPursuingPrey(bool isPursuing) { isPursuingPrey = isPursuing; }
     
 
     private void Start()
     {
-        if (!isShark) { controller = GetComponentInParent<PredatorController>();}
-        else controller = GetComponentInParent<SharkController>();
-        
+        controller = GetComponentInParent<PredatorController>();
         if (controller == null)
-            {
-                Debug.LogError("ObstacleAvoidance: No AIFishController found on " + gameObject.name);
-            }
+        {
+            Debug.LogError("ObstacleAvoidance: No AIFishController found on " + gameObject.name);
+        }
         
         nearbyPrey = new List<GameObject>();
         StartCoroutine(StartHunt());
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Prey") || other.CompareTag("Player"))
+        if (other.CompareTag("Prey"))
         {
             AddPrey(other.gameObject);
             if (closestPrey == null) FindClosestPrey();
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    protected virtual void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Prey") || other.CompareTag("Player"))
+        if (other.CompareTag("Prey"))
         {
             RemovePrey(other.gameObject);
         }
     }
 
-    private void FindClosestPrey()
+    protected void FindClosestPrey()
     {
         if (isPursuingPrey || !canHunt) return;
-        isPursuingPrey = true;
 
         float closestDistance = 50f;
 
@@ -65,18 +61,24 @@ public class PreyDetection : MonoBehaviour
         if (closestPrey != null) 
         {
             //Debug.Log("set prey target");
-            controller.SetfoundPrey(true);
-            StartCoroutine(ApproachClosestPrey());
-            StartCoroutine(controller.SpeedUp());
+            isPursuingPrey = true;
+            StartPursuit();
         }
     }
-    
+
+    protected void StartPursuit()
+    {
+        controller.SetfoundPrey(true);
+        StartCoroutine(ApproachClosestPrey());
+        StartCoroutine(controller.SpeedUp());
+    }
+
     private IEnumerator ApproachClosestPrey()
     {
         float dist = 50f;
         Vector3 offset;
 
-        while (dist > 0.5f && isPursuingPrey)
+        while (dist > 0.5f && isPursuingPrey && closestPrey)
         {
             offset = (closestPrey.transform.position - transform.position).normalized * 2f;
             controller.SetTargetPosition(closestPrey.transform.position + offset);
