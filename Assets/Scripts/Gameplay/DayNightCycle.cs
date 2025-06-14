@@ -40,13 +40,13 @@ public class DayNightCycle : MonoBehaviour
             sunlightVal -= Time.deltaTime * daySpeed;
             sunlight.intensity = sunlightVal;
 
-            t = 1f - sunlightVal/2.8f;
-            fog.SetColor("_BaseColor",  Color.Lerp(baseColor, darkColor, t));
+            t = 1f - sunlightVal / 2.8f;
+            fog.SetColor("_BaseColor", Color.Lerp(baseColor, darkColor, t));
 
             yield return null;
         }
 
-        GameManager.Instance.ShowSurviveScreen();
+        HomeManager.Instance.StartDayEnd();
     }
 
     private IEnumerator lowerSun()

@@ -7,13 +7,11 @@ public class PreyDetection : MonoBehaviour
     private List<GameObject> nearbyPrey;
     protected GameObject closestPrey;
     protected bool isPursuingPrey;
-    private bool canHunt;
-    private PredatorController controller;
-
+    protected bool canHunt;
+    protected PredatorController controller;
     public void SetIsPursuingPrey(bool isPursuing) { isPursuingPrey = isPursuing; }
     
-
-    private void Start()
+    protected virtual void Start()
     {
         controller = GetComponentInParent<PredatorController>();
         if (controller == null)

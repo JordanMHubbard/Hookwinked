@@ -4,7 +4,7 @@ using UnityEngine;
 public class AIFishSpawner : MonoBehaviour
 {
     [SerializeField] protected GameObject fishPrefab;
-    [SerializeField] private bool isEnabled = true;
+    [SerializeField] protected bool isEnabled = true;
     [SerializeField] private bool spawnOnStart = true;
     [SerializeField] private bool useSpawnLocations = false;
     [SerializeField] private List<GameObject> spawnLocations;
@@ -15,7 +15,6 @@ public class AIFishSpawner : MonoBehaviour
     [SerializeField] private LayerMask interactableLayer;
     private BoxCollider box;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected virtual void Start()
     {
         if (!isEnabled) return;

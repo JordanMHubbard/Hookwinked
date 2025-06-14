@@ -112,6 +112,8 @@ public class FishEnergy : MonoBehaviour
 
         while (currentProgress > 0f && !shouldUpdate)
         {
+            if (isPaused) yield break;
+
             currentProgress -= depreciateRate * Time.deltaTime;
             //Debug.Log("CurrentProgress: "+ currentProgress);
             energyBar.value = currentProgress / 100f;
@@ -123,7 +125,6 @@ public class FishEnergy : MonoBehaviour
 
         currentProgress = 0f;
         isNearDeath = false;
-
         yield return new WaitForSeconds(1f);
         //GameManager.Instance.ShowDeathScreen(DeathScreenUI.DeathType.Exhaustion);
     }

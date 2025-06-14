@@ -6,7 +6,6 @@ using DG.Tweening;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
-using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
@@ -89,7 +88,7 @@ public class GameManager : MonoBehaviour
         return boatWaypoints[UnityEngine.Random.Range(0, boatWaypoints.Count)].transform.position; }
     public List<PerkInfo> GetPerkList() {return perkList;}
     public bool GetIsPerkUnlocked(int index) {return perkList[index].isUnlocked;}
-
+    public void PausePlayerEnergy() { PlayerController.PauseEnergy(); }
     public void EnableHUD() { PlayerHUD.SetActive(true); }
     public void DisableHUD() { PlayerHUD.SetActive(false); }
     
