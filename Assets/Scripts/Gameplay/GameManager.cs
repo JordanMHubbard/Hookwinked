@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     [Header("Main Levels")]
     [SerializeField] private GameObject PlayerHUD;
     [SerializeField] private Image HurtEffect;
+    [SerializeField] private Image PoisonEffect;
     [SerializeField] private GameObject HookedMinigame;
     [SerializeField] private GameObject DeathScreen;
     [SerializeField] private GameObject SurviveScreen;
@@ -129,6 +130,7 @@ public class GameManager : MonoBehaviour
             deathScreenUI = DeathScreen.GetComponent<DeathScreenUI>();
         }
         if (HurtEffect != null) HurtEffect.gameObject.SetActive(false);
+        if (PoisonEffect != null) PoisonEffect.gameObject.SetActive(false);
 
         // Perk Level
         if (PerkSelectionScreen != null) PerkSelectionScreen.SetActive(false);
@@ -179,6 +181,24 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         HurtEffect.gameObject.SetActive(false);
+    }
+
+    public void ShowPoisonEffect()
+    {
+        StartCoroutine(ActivatePoisonEffect());
+    }
+
+    private IEnumerator ActivatePoisonEffect()
+    {
+        PoisonEffect.gameObject.SetActive(true);
+        PoisonEffect.DOFade(1, 0.5f);
+        StartCoroutine(ActivateHurtEffect());
+        yield return new WaitForSeconds(8f);
+
+        PoisonEffect.DOFade(0, 0.5f);
+        yield return new WaitForSeconds(0.5f);
+
+        PoisonEffect.gameObject.SetActive(false);
     }
 
     public void ShowDeathScreen(DeathScreenUI.DeathType deathType)
