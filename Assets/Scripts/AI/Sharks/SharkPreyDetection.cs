@@ -4,6 +4,7 @@ using UnityEngine;
 public class SharkPreyDetection : PreyDetection
 {
     private bool isNearPlayer;
+    private bool isChasingPlayerOnCooldown;
     protected override void Start()
     {
         base.Start();
@@ -14,6 +15,8 @@ public class SharkPreyDetection : PreyDetection
     {
         if (other.CompareTag("Player"))
         {
+            if (isChasingPlayerOnCooldown) return;
+
             closestPrey = other.gameObject;
             isNearPlayer = true;
             isPursuingPrey = true;
@@ -25,6 +28,8 @@ public class SharkPreyDetection : PreyDetection
     {
         if (other.CompareTag("Player"))
         {
+            if (!isChasingPlayerOnCooldown) StartCoroutine(PlayerChaseCooldown());
+
             closestPrey = null;
             isNearPlayer = false;
             FindClosestPrey();
@@ -42,7 +47,16 @@ public class SharkPreyDetection : PreyDetection
             if (isNearPlayer) continue;
 
             controller.SetTargetPosition(GameManager.Instance.PlayerController.transform.position);
-            Debug.Log("heading towards player's current position");
         }
+    }
+
+    private IEnumerator PlayerChaseCooldown()
+    {
+        isChasingPlayerOnCooldown = true;
+        Debug.Log("On cooldown");
+        yield return new WaitForSeconds(2f);
+
+        isChasingPlayerOnCooldown = false;
+        Debug.Log("Cooldown off");
     }
 }
