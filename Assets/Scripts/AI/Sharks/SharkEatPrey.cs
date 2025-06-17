@@ -30,7 +30,7 @@ public class SharkEatPrey : AIEatPrey
             FishEnergy energyComp = other.GetComponent<FishEnergy>();
             if (energyComp) energyComp.AddProgress(-30f);
             GameManager.Instance.ShowHurtEffect();
-            Debug.Log("Shark tryna eat player yas");
+            //Debug.Log("Shark tryna eat player");
         }
     }
 
