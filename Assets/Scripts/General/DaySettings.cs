@@ -12,6 +12,7 @@ public class DaySettings
     public int baitMax = 3;
     public bool enableSharks = false;
     public int sharkCount = 1;
+    public bool enableGrenades = false;
 
     public int GetBaitCount()
     {

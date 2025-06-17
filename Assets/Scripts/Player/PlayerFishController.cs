@@ -44,6 +44,7 @@ public class PlayerFishController : MonoBehaviour
     [Header("References")]
     [SerializeField] private CharacterController characterController;
     [SerializeField] private Camera mainCamera;
+    public Camera GetPlayerCam() { return mainCamera; }
     private ScreenShake shake;
     public void StartShake() { if (shake) shake.start = true; }
     public void EndShake() { if (shake) shake.inProgress = false; }
@@ -61,8 +62,6 @@ public class PlayerFishController : MonoBehaviour
     private FishEnergy energyComp;
     public FishEnergy GetEnergyComp() { return energyComp; }
     [SerializeField] private AudioClip[] eatSounds;
-
-    // Ship Fragments
 
     private void Awake()
     {

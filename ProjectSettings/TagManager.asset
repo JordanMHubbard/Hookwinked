@@ -13,6 +13,7 @@ TagManager:
   - Fish
   - BoatSpawnArea
   - Boat
+  - GrenadeSpawnArea
   layers:
   - Default
   - TransparentFX

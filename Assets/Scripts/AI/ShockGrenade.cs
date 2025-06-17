@@ -48,9 +48,6 @@ public class ShockGrenade : MonoBehaviour
 
     private IEnumerator EnableGrenade()
     {
-        yield return new WaitForSeconds(12f);
-        rb.useGravity = true;
-
         yield return new WaitForSeconds(Random.Range(minDropTime, maxDropTime));
         rb.useGravity = false;
 
@@ -64,6 +61,9 @@ public class ShockGrenade : MonoBehaviour
 
         isOnCooldown = true;
         Destroy(audio);
+
+        yield return new WaitForSeconds(3f);
+        Destroy(gameObject);
     }
 
     private void InitializeGrenadeRotation()
