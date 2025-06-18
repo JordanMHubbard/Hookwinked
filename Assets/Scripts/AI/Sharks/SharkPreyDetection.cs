@@ -5,6 +5,17 @@ public class SharkPreyDetection : PreyDetection
 {
     private bool isNearPlayer;
     private bool isChasingPlayerOnCooldown;
+
+    private void OnEnable()
+    {
+        HomeManager.Instance.OnDayFinished += StopChasingPlayer;
+    }
+
+    private void OnDisable()
+    {
+         HomeManager.Instance.OnDayFinished -= StopChasingPlayer;
+    }
+
     protected override void Start()
     {
         base.Start();
@@ -15,7 +26,7 @@ public class SharkPreyDetection : PreyDetection
     {
         if (other.CompareTag("Player"))
         {
-            if (isChasingPlayerOnCooldown) return;
+            if (isChasingPlayerOnCooldown || !canHunt) return;
 
             closestPrey = other.gameObject;
             isNearPlayer = true;
@@ -58,5 +69,12 @@ public class SharkPreyDetection : PreyDetection
 
         isChasingPlayerOnCooldown = false;
         Debug.Log("Cooldown off");
+    }
+
+    private void StopChasingPlayer()
+    {
+        closestPrey = null;
+        isNearPlayer = false;
+        canHunt = false;
     }
 }

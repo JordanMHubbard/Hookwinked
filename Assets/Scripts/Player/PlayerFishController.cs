@@ -162,10 +162,15 @@ public class PlayerFishController : MonoBehaviour
         ApplyVerticalRotation(mouseYRotation);
     }
 
-    public void PauseEnergy()
+    public void ResetEnergy()
     {
         energyComp.SetIsPaused(true);
         energyComp.UnsetNearDeath();
+    }
+
+    public void PauseEnergy(bool shouldPause)
+    {
+        energyComp.SetIsPaused(shouldPause);
     }
 
     public void PausePlayer()

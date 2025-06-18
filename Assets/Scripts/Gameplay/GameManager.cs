@@ -89,7 +89,8 @@ public class GameManager : MonoBehaviour
         return boatWaypoints[UnityEngine.Random.Range(0, boatWaypoints.Count)].transform.position; }
     public List<PerkInfo> GetPerkList() {return perkList;}
     public bool GetIsPerkUnlocked(int index) {return perkList[index].isUnlocked;}
-    public void PausePlayerEnergy() { PlayerController.PauseEnergy(); }
+    public void PausePlayerEnergy(bool shouldPause) { PlayerController.PauseEnergy(shouldPause); }
+    public void ResetPlayerEnergy() { PlayerController.ResetEnergy(); }
     public void EnableHUD() { PlayerHUD.SetActive(true); }
     public void DisableHUD() { PlayerHUD.SetActive(false); }
     

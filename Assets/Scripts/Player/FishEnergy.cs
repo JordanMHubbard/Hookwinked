@@ -112,8 +112,6 @@ public class FishEnergy : MonoBehaviour
 
         while (currentProgress > 0f && !shouldUpdate)
         {
-            if (isPaused) yield break;
-
             currentProgress -= depreciateRate * Time.deltaTime;
             //Debug.Log("CurrentProgress: "+ currentProgress);
             energyBar.value = currentProgress / 100f;
@@ -137,11 +135,11 @@ public class FishEnergy : MonoBehaviour
     private void CheckIfNearDeath(float progress)
     {
         //Debug.Log("progress:" + progress);
-        if (progress < 30 && !isNearDeath)
+        if (progress < 20 && !isNearDeath)
         {
             StartCoroutine(NearDeath());
         }
-        else if (progress > 30 && isNearDeath)
+        else if (progress > 20 && isNearDeath)
         {
             isNearDeath = false;
         }
@@ -151,7 +149,7 @@ public class FishEnergy : MonoBehaviour
     {
         isNearDeath = true;
 
-        while (isNearDeath)
+        while (isNearDeath && !isPaused)
         {
             energyBarFill.DOColor(Color.red, 1f);
             energyBarCover.DOColor(Color.red, 1f);

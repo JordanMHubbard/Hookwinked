@@ -1,5 +1,4 @@
 using System.Collections;
-using DG.Tweening;
 using UnityEngine;
 
 public class DayNightCycle : MonoBehaviour
@@ -26,11 +25,11 @@ public class DayNightCycle : MonoBehaviour
         baseColor = fog.GetColor("_BaseColor");
         currentRotation = sunlight.transform.rotation.eulerAngles;
 
-        StartCoroutine(decreaseIntensity());
-        StartCoroutine(lowerSun());
+        StartCoroutine(DecreaseIntensity());
+        StartCoroutine(LowerSun());
     }
 
-    private IEnumerator decreaseIntensity()
+    private IEnumerator DecreaseIntensity()
     {
         float sunlightVal = sunlight.intensity;
         float t;
@@ -45,11 +44,9 @@ public class DayNightCycle : MonoBehaviour
 
             yield return null;
         }
-
-        HomeManager.Instance.StartDayEnd();
     }
 
-    private IEnumerator lowerSun()
+    private IEnumerator LowerSun()
     {
         while (currentRotation.x > 0f)
         {
@@ -57,6 +54,8 @@ public class DayNightCycle : MonoBehaviour
             sunlight.transform.rotation = Quaternion.Euler(currentRotation);
             yield return null;
         }
+
+        HomeManager.Instance.StartDayEnd();
     }
 
     private void OnDisable()

@@ -13,10 +13,15 @@ public class PreySpawner : AIFishSpawner
     {
         GameManager.Instance.OnPreyConsumed += SpawnNewPrey;
     }
+    
+    private void OnDisable()
+    {
+        GameManager.Instance.OnPreyConsumed -= SpawnNewPrey;
+    }
 
     private void RespawnPrey(GameObject prey)
     {
-        if (fishPrefab == null) 
+        if (fishPrefab == null)
         {
             Debug.LogError("preyPrefab has not been set!");
             return;
