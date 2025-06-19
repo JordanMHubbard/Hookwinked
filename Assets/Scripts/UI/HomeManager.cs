@@ -24,16 +24,19 @@ public class HomeManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (isDayOver)
+        if (other.CompareTag("Player"))
         {
-            StartCoroutine(EndDay());
+            if (isDayOver)
+            {
+                StartCoroutine(EndDay());
+            }
         }
     }
 
     public void StartDayEnd()
     {
         isDayOver = true;
-        GameManager.Instance.ResetPlayerEnergy();
+        GameManager.Instance.PausePlayerEnergy(true);
         HomeWaypoint.SetActive(true);
         StartCoroutine(ManageMessage());
     }

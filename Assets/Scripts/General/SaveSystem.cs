@@ -9,7 +9,6 @@ public class SaveSystem
     public struct SaveData
     {
         public GameSaveData GameData;
-        public PlayerSaveData PlayerData;
         public OptionsSaveData OptionsData;
     }
 
@@ -34,7 +33,7 @@ public class SaveSystem
     private static void HandleSaveData()
     {
         if (GameManager.Instance != null) GameManager.Instance.Save(ref saveData.GameData);
-        if (GameManager.Instance.PlayerController != null) GameManager.Instance.PlayerController.Save(ref saveData.PlayerData);
+        if (OptionsManager.Instance != null) OptionsManager.Instance.Save(ref saveData.OptionsData);
     }
 
     public static void Load()
@@ -48,7 +47,11 @@ public class SaveSystem
 
     public static void LoadOptions()
     {
-        if (!File.Exists(SaveFileName())) return;
+        if (!File.Exists(SaveFileName()))
+        { 
+            if (OptionsManager.Instance != null) OptionsManager.Instance.Load(OptionsSaveData.GetDefault());
+            return;
+        }
         string saveContent = File.ReadAllText(SaveFileName());
 
         saveData = JsonUtility.FromJson<SaveData>(saveContent);
@@ -58,7 +61,6 @@ public class SaveSystem
     private static void HandleLoadData()
     {
         if (GameManager.Instance != null) GameManager.Instance.Load(saveData.GameData);
-        if (GameManager.Instance.PlayerController != null) GameManager.Instance.PlayerController.Load(saveData.PlayerData);
     }
 
     public static void ResetSaveData()

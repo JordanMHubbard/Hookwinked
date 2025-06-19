@@ -1,3 +1,4 @@
+using System.Data.Common;
 using UnityEngine;
 
 public class OptionsManager : MonoBehaviour
@@ -7,6 +8,8 @@ public class OptionsManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+
         SaveSystem.LoadOptions();
     }
 
@@ -23,15 +26,10 @@ public class OptionsManager : MonoBehaviour
 
     public void Load(OptionsSaveData data)
     {
-        if (data.mouseSens > 0)
-        { 
-            defaultMouseSens = data.mouseSens;
-            if (InputManager.Instance) InputManager.Instance.mouseSensitivity = data.mouseSens;
-        }
+        defaultMouseSens = data.mouseSens;
         Screen.fullScreen = data.isFullscreen;
-        if (data.resWidth > 0 && data.resHeight > 0) Screen.SetResolution(data.resWidth, data.resHeight, Screen.fullScreen);
+        Screen.SetResolution(data.resWidth, data.resHeight, Screen.fullScreen);
         QualitySettings.SetQualityLevel(data.qualIndex);
-        
     }
 
     #endregion
@@ -46,6 +44,22 @@ public struct OptionsSaveData
     public int resWidth;
     public int resHeight;
     public int qualIndex;
+
+    public static OptionsSaveData GetDefault()
+    {
+        Resolution maxRes = Screen.resolutions.Length > 0 ?
+            Screen.resolutions[Screen.resolutions.Length - 1] :
+            Screen.currentResolution;
+
+        return new OptionsSaveData
+        {
+            mouseSens = 0.07f,
+            resWidth = maxRes.width,
+            resHeight = maxRes.height,
+            qualIndex = QualitySettings.names.Length - 1,
+            isFullscreen = true
+        };
+    }
     
 }
 

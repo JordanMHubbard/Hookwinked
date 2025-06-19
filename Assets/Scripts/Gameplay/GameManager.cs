@@ -54,6 +54,7 @@ public class GameManager : MonoBehaviour
     public PlayerFishController PlayerController { get; set; }
     private int currentDay;
     private int boatFragmentsCount = 0;
+    private int numDayRetries;
     [SerializeField] private List<DaySettings> daySettings;
     [SerializeField] private List<GameObject> boatWaypoints;
     [SerializeField] private List<GameObject> fishWaypoints;
@@ -69,7 +70,17 @@ public class GameManager : MonoBehaviour
     
     // Setters
     public void SetCurrentDay(int day) { currentDay = day; }
-    public void SetBoatFragmentsCount(int amount) 
+    public void IncrementNumDayRetries()
+    {
+        numDayRetries++;
+        SaveSystem.Save();
+    }
+    public void ResetNumDayRetries()
+    {
+        numDayRetries = 0;
+        SaveSystem.Save();
+    }
+    public void SetBoatFragmentsCount(int amount)
     {
         boatFragmentsCount = amount;
         if (FragmentsCountText) FragmentsCountText.text = boatFragmentsCount.ToString();
@@ -79,6 +90,7 @@ public class GameManager : MonoBehaviour
 
     // Getters
     public DaySettings GetCurrentDaySettings() { return daySettings[currentDay]; }
+    public int GetNumDayRetries() { return numDayRetries; }
     public PreySpawner GetPreySpawner() { return preySpawner; }
     public Vector3 GetRandomFishWaypoint() { 
         return fishWaypoints[UnityEngine.Random.Range(0, fishWaypoints.Count)].transform.position; }
@@ -90,7 +102,6 @@ public class GameManager : MonoBehaviour
     public List<PerkInfo> GetPerkList() {return perkList;}
     public bool GetIsPerkUnlocked(int index) {return perkList[index].isUnlocked;}
     public void PausePlayerEnergy(bool shouldPause) { PlayerController.PauseEnergy(shouldPause); }
-    public void ResetPlayerEnergy() { PlayerController.ResetEnergy(); }
     public void EnableHUD() { PlayerHUD.SetActive(true); }
     public void DisableHUD() { PlayerHUD.SetActive(false); }
     
@@ -350,17 +361,19 @@ public class GameManager : MonoBehaviour
         data.CurrentGameDay = currentDay;
         data.TotalShipFragments = boatFragmentsCount;
         data.perks = perkList;
+        data.totalDayRetries = numDayRetries;
     }
 
     public void Load(GameSaveData data)
     {
         currentDay = data.CurrentGameDay;
         SetBoatFragmentsCount(data.TotalShipFragments);
-        
-        if (data.perks != null) 
+
+        if (data.perks != null)
         {
             perkList = data.perks;
         }
+        numDayRetries = data.totalDayRetries;
     }
 
     #endregion
@@ -372,4 +385,5 @@ public struct GameSaveData
     public int CurrentGameDay;
     public int TotalShipFragments;
     public List<PerkInfo> perks;
+    public int totalDayRetries;
 }

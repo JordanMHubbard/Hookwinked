@@ -50,6 +50,7 @@ public class InputManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null) Instance = this;
+        else Destroy(gameObject);
 
         PlayerInput = GetComponent<PlayerInput>();
 
@@ -63,6 +64,7 @@ public class InputManager : MonoBehaviour
         skipDialogueAction = PlayerInput.actions["SkipDialogue"];
         UIClickAction = PlayerInput.actions["Click"];
 
+        if (OptionsManager.Instance) mouseSensitivity = OptionsManager.Instance.defaultMouseSens;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }

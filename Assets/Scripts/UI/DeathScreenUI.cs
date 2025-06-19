@@ -22,7 +22,7 @@ public class DeathScreenUI : MonoBehaviour
     };
 
     private static readonly string[] exhaustionMessages = new string[] {
-        "YOU RAN OUT OF ENERGY..."
+        "You died..."
     };
 
     private void OnEnable()
@@ -70,6 +70,7 @@ public class DeathScreenUI : MonoBehaviour
 
     public void RestartDay()
     {
+        GameManager.Instance.IncrementNumDayRetries();
         SceneManager.LoadScene("TheReef");
     }
     public void ExitToMenu()

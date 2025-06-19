@@ -36,6 +36,7 @@ public class PlayerFishController : MonoBehaviour
     [SerializeField] private float dashChargeRate = 50f;
     [SerializeField] private float dashDuration = 0.3f;
     [SerializeField] private float dashSpeed = 9f;
+    [SerializeField] private AudioClip dashSound;
     private bool isDashing;
     private float currentVelocity;
     public Slider dashChargeBar;
@@ -162,12 +163,6 @@ public class PlayerFishController : MonoBehaviour
         ApplyVerticalRotation(mouseYRotation);
     }
 
-    public void ResetEnergy()
-    {
-        energyComp.SetIsPaused(true);
-        energyComp.UnsetNearDeath();
-    }
-
     public void PauseEnergy(bool shouldPause)
     {
         energyComp.SetIsPaused(shouldPause);
@@ -177,7 +172,6 @@ public class PlayerFishController : MonoBehaviour
     {
         isFrozen = true;
         energyComp.SetIsPaused(true);
-        energyComp.UnsetNearDeath();
         GameManager.Instance.DisableHUD();
         InputManager.Instance.isInputPaused = true;
     }
@@ -226,7 +220,6 @@ public class PlayerFishController : MonoBehaviour
     {
         SoundFXManager.Instance.PlayRandomSoundFXClip(eatSounds, transform, 1f, 1f, 0.2f, 0.1f);
         energyComp.SetIsPaused(true);
-        energyComp.UnsetNearDeath();
         GameManager.Instance.PreyConsumed(other.transform.parent.gameObject);
         Debug.Log("Fight for your life!");
         GameManager.Instance.StartHookedMinigame();
@@ -265,6 +258,7 @@ public class PlayerFishController : MonoBehaviour
 
         float ogDepRate = energyComp.GetDepreciationRate();
         energyComp.OnDash();
+        SoundFXManager.Instance.PlaySoundFXClip(dashSound, transform, 1f, 1f, 0.1f, 0.15f);
 
         isDashing = true; 
         currentSpeed = 2f;
@@ -272,7 +266,7 @@ public class PlayerFishController : MonoBehaviour
         while (currentSpeed < dashSpeed)
         {
             currentSpeed += dashChargeRate * Time.deltaTime;
-            dashChargeBar.value = currentSpeed * (1/dashSpeed) / 100f;
+            dashChargeBar.value = currentSpeed / dashSpeed;
             yield return null;
         }
         yield return new WaitForSeconds(dashDuration);
@@ -410,25 +404,6 @@ public class PlayerFishController : MonoBehaviour
             isTiltingRight = false;
         }
     }
-
-    #region Save and Load
-
-    public void Save(ref PlayerSaveData data)
-    {
-        
-    }
-
-    public void Load(PlayerSaveData data)
-    {
-        
-    }
-
-    #endregion
- 
 }
 
-[System.Serializable]
-public struct PlayerSaveData
-{
-    
-}
+

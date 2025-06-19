@@ -80,6 +80,7 @@ public class SurviveScreenUI : MonoBehaviour
 
     public void ContinueGame()
     {
+        GameManager.Instance.ResetNumDayRetries();
         SceneManager.LoadScene("TheReef");
     }
     public void ExitToMenu()

@@ -6,7 +6,17 @@ public class PreySpawner : AIFishSpawner
     private void Awake()
     {
         int preyCount = GameManager.Instance.GetCurrentDaySettings().preyCount;
-        numFish = preyCount;
+        int adjustedPreyCount = preyCount + GameManager.Instance.GetNumDayRetries() * 2;
+        if (adjustedPreyCount > preyCount && adjustedPreyCount < (1.5 * preyCount))
+        {
+            Debug.Log("og prey count: " + preyCount + ", new prey count:" + adjustedPreyCount);
+            numFish = adjustedPreyCount;
+        }
+        else
+        {
+            Debug.Log(" no prey count change");
+            numFish = preyCount;
+        }
     }
 
     private void OnEnable()

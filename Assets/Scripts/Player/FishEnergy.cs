@@ -31,7 +31,6 @@ public class FishEnergy : MonoBehaviour
     // Setters
     public void SetDepreciationRate(float rate) { depreciateRate = rate; }
     public void SetIsPaused(bool shouldPause) { isPaused = shouldPause; }
-    public void UnsetNearDeath() { currentProgress = 100; }
 
     private void Awake()
     {
@@ -124,7 +123,7 @@ public class FishEnergy : MonoBehaviour
         currentProgress = 0f;
         isNearDeath = false;
         yield return new WaitForSeconds(1f);
-        //GameManager.Instance.ShowDeathScreen(DeathScreenUI.DeathType.Exhaustion);
+        GameManager.Instance.ShowDeathScreen(DeathScreenUI.DeathType.Exhaustion);
     }
 
     public void OnDash()
@@ -147,6 +146,7 @@ public class FishEnergy : MonoBehaviour
 
     private IEnumerator NearDeath()
     {
+        yield return new WaitForSeconds(0.25f);
         isNearDeath = true;
 
         while (isNearDeath && !isPaused)
