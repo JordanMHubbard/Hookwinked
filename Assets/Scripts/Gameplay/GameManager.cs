@@ -369,7 +369,7 @@ public class GameManager : MonoBehaviour
         currentDay = data.CurrentGameDay;
         SetBoatFragmentsCount(data.TotalShipFragments);
 
-        if (data.perks != null)
+        if (data.perks.Count > 0)
         {
             perkList = data.perks;
         }

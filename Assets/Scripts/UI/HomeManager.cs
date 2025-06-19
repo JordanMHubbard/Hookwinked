@@ -11,6 +11,7 @@ public class HomeManager : MonoBehaviour
 
     [SerializeField] private GameObject HomeWaypoint;
     [SerializeField] private CanvasGroup HomeMessageGroup;
+    [SerializeField] private AudioClip ambience;
     private bool isDayOver;
 
     private void Awake()
@@ -20,6 +21,11 @@ public class HomeManager : MonoBehaviour
 
         if (HomeWaypoint != null) HomeWaypoint.SetActive(false);
         if (HomeMessageGroup != null) HomeMessageGroup.gameObject.SetActive(false);
+    }
+
+    private void Start()
+    {
+        if (SoundFXManager.Instance) SoundFXManager.Instance.PlaySoundFXClip(ambience, transform, 1f, 0);
     }
 
     private void OnTriggerEnter(Collider other)

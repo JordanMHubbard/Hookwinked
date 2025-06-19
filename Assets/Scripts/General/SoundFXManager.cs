@@ -45,7 +45,7 @@ public class SoundFXManager : MonoBehaviour
         audioSource.clip = audioClips[Random.Range(0, audioClips.Length)];
         audioSource.spatialBlend = spatialBlend;
         audioSource.volume = volume;
-        
+
         if (volumeChange > 0f) audioSource.volume = Random.Range(1 - volumeChange, 1);
         if (pitchChange > 0f) audioSource.pitch = Random.Range(1 - pitchChange, 1);
 
@@ -97,5 +97,4 @@ public class SoundFXManager : MonoBehaviour
         audioSource.Play();
         return audioSource.gameObject;
     }
-
 }

@@ -36,7 +36,7 @@ public class PlayerFishController : MonoBehaviour
     [SerializeField] private float dashChargeRate = 50f;
     [SerializeField] private float dashDuration = 0.3f;
     [SerializeField] private float dashSpeed = 9f;
-    [SerializeField] private AudioClip dashSound;
+    [SerializeField] private AudioClip[] dashSounds;
     private bool isDashing;
     private float currentVelocity;
     public Slider dashChargeBar;
@@ -258,7 +258,7 @@ public class PlayerFishController : MonoBehaviour
 
         float ogDepRate = energyComp.GetDepreciationRate();
         energyComp.OnDash();
-        SoundFXManager.Instance.PlaySoundFXClip(dashSound, transform, 1f, 1f, 0.1f, 0.15f);
+        SoundFXManager.Instance.PlayRandomSoundFXClip(dashSounds, transform, 1f, 1f, 0.06f, 0.06f);
 
         isDashing = true; 
         currentSpeed = 2f;
