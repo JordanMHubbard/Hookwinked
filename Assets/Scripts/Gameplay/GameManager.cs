@@ -67,6 +67,8 @@ public class GameManager : MonoBehaviour
         { new PerkInfo("Silent Assassin", "Your aura grows faint in the wild — prey senses you from a shorter distance", 3) }
     };
     [SerializeField] private List<Sprite> perkIcons;
+    [SerializeField] private AudioClip ambience;
+    [SerializeField] private AudioSource ambienceSource;
     
     // Setters
     public void SetCurrentDay(int day) { currentDay = day; }
@@ -104,7 +106,7 @@ public class GameManager : MonoBehaviour
     public void PausePlayerEnergy(bool shouldPause) { PlayerController.PauseEnergy(shouldPause); }
     public void EnableHUD() { PlayerHUD.SetActive(true); }
     public void DisableHUD() { PlayerHUD.SetActive(false); }
-    
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -115,28 +117,40 @@ public class GameManager : MonoBehaviour
         InitializeUI();
         InitializeSpawners();
         SetPerkIcons();
-        
+        ambienceSource.clip = ambience; 
     }
 
     private void Start()
     {
-        InputManager.Instance.isInputPaused = true;
-        PlayerController.GetEnergyComp().SetIsPaused(true);
+        PlayAmbience();
 
         if (shouldTransitionAtStart)
         {
             StartCoroutine(TransitionOut());
         }
         
-        StartCoroutine(ShowDayTransition());
+        if (PlayerController)
+        {
+            InputManager.Instance.isInputPaused = true;
+            PlayerController.GetEnergyComp().SetIsPaused(true);
+            StartCoroutine(ShowDayTransition());
+        }
     }
+
+    public void PlayAmbience() { ambienceSource.Play(); }
+    public void PauseAmbience(bool shouldPause)
+    {
+        if (shouldPause) { ambienceSource.Pause(); }
+        else { ambienceSource.UnPause(); }
+    }
+    
     // UI
     private void InitializeUI()
     {
         // Main Level
         if (HookedMinigame != null) HookedMinigame.SetActive(false);
         if (SurviveScreen != null) SurviveScreen.SetActive(false);
-        if (DeathScreen != null) 
+        if (DeathScreen != null)
         {
             DeathScreen.SetActive(false);
             deathScreenUI = DeathScreen.GetComponent<DeathScreenUI>();
@@ -146,7 +160,7 @@ public class GameManager : MonoBehaviour
 
         // Perk Level
         if (PerkSelectionScreen != null) PerkSelectionScreen.SetActive(false);
-        if (GainedPerkScreen != null) 
+        if (GainedPerkScreen != null)
         {
             GainedPerkScreen.SetActive(false);
             gainedPerkUI = GainedPerkScreen.GetComponent<GainedPerkUI>();
@@ -174,7 +188,7 @@ public class GameManager : MonoBehaviour
 
         InputManager.Instance.isInputPaused = false;
         DayTransition.SetActive(false);
-        PlayerController.GetEnergyComp().SetIsPaused(false);
+        if (PlayerController) PlayerController.GetEnergyComp().SetIsPaused(false);
 
     }
 
@@ -215,6 +229,7 @@ public class GameManager : MonoBehaviour
 
     public void ShowDeathScreen(DeathScreenUI.DeathType deathType)
     {
+        ambienceSource.Pause();
         PlayerController.PausePlayer();
         deathScreenUI.ChooseRandomMessage(deathType);
         DeathScreen.SetActive(true);
