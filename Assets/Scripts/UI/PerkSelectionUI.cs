@@ -63,6 +63,7 @@ public class PerkSelectionUI : MonoBehaviour
 
     public void Continue()
     {
+        GameManager.Instance.IncrementCurrentDay();
         SceneManager.LoadScene("TheReef");
     }
 

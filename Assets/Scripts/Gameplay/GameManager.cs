@@ -72,6 +72,7 @@ public class GameManager : MonoBehaviour
     
     // Setters
     public void SetCurrentDay(int day) { currentDay = day; }
+    public void IncrementCurrentDay() { currentDay++; }
     public void IncrementNumDayRetries()
     {
         numDayRetries++;
@@ -173,8 +174,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator ShowDayTransition()
     {
-        if (currentDay == 0) CurrentDayText.text = "Tutorial";
-        else CurrentDayText.text = "Day " + currentDay.ToString();
+        CurrentDayText.text = "Day " + currentDay.ToString();
         yield return new WaitForSeconds(2.5f);
 
         CurrentDayGroup.DOFade(1f, 1f);

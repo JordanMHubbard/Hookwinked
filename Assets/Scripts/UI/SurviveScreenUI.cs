@@ -26,9 +26,9 @@ public class SurviveScreenUI : MonoBehaviour
         confettiRPosition = confettiLeft.transform.position;
         partyFishPosition = partyFishImage.transform.position;
 
-        GameManager.Instance.SetCurrentDay(GameManager.Instance.GetCurrentDay() + 1);
         SaveSystem.Save();
-        numDaysText.text = GameManager.Instance.GetCurrentDay().ToString();
+        int dayNum = GameManager.Instance.GetCurrentDay() + 1;
+        numDaysText.text = dayNum.ToString();
     }
     private void OnEnable()
     {
@@ -81,7 +81,7 @@ public class SurviveScreenUI : MonoBehaviour
     public void ContinueGame()
     {
         GameManager.Instance.ResetNumDayRetries();
-        SceneManager.LoadScene("TheReef");
+        SceneManager.LoadScene("Perks");
     }
     public void ExitToMenu()
     {

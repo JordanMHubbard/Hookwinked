@@ -192,7 +192,7 @@ public class PlayerFishController : MonoBehaviour
 
     private void EatPrey(Collider other)
     {
-        Debug.Log("We eating prey 2nite");
+        //Debug.Log("We eating prey 2nite");
         float energyProg = other.GetComponent<PreyManager>().GetEnergyValue();
         SoundFXManager.Instance.PlayRandomSoundFXClip(eatSounds, transform, 1f, 1f, 0.2f, 0.1f);
         energyComp.AddProgress(energyProg);

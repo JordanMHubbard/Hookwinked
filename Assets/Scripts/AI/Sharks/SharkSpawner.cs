@@ -8,10 +8,10 @@ public class SharkSpawner : AIFishSpawner
     protected override void Start()
     {
         isEnabled = GameManager.Instance.GetCurrentDaySettings().enableSharks;
-
         base.Start();
 
-        Debug.Log("Sharks are enbaled");
+        if (!isEnabled) return;
+        Debug.Log("Sharks are enabled");
         numFish = GameManager.Instance.GetCurrentDaySettings().sharkCount;
         StartCoroutine(SpawnSharks());
     }

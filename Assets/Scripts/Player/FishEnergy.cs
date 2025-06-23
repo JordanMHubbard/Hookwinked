@@ -146,7 +146,6 @@ public class FishEnergy : MonoBehaviour
 
     private IEnumerator NearDeath()
     {
-        yield return new WaitForSeconds(0.25f);
         isNearDeath = true;
 
         while (isNearDeath && !isPaused)

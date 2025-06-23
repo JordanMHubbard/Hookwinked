@@ -18,7 +18,7 @@ public class AIFishSpawner : MonoBehaviour
     protected virtual void Start()
     {
         if (!isEnabled) return;
-
+        
         box = GetComponent<BoxCollider>();
         if (box == null)
         {
