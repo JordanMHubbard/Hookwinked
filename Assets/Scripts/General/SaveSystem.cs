@@ -33,7 +33,6 @@ public class SaveSystem
     private static void HandleSaveData()
     {
         if (GameManager.Instance != null) GameManager.Instance.Save(ref saveData.GameData);
-        if (OptionsManager.Instance != null) OptionsManager.Instance.Save(ref saveData.OptionsData);
     }
 
     public static void Load()

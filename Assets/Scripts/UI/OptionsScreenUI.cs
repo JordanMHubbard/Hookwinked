@@ -59,7 +59,7 @@ public class OptionsScreenUI : MonoBehaviour
     {
         Debug.Log("Slider sens: " + sensitivity);
         float sens = sensitivity / 10f;
-        InputManager.Instance.mouseSensitivity = sens;
+        if (InputManager.Instance) InputManager.Instance.mouseSensitivity = sens;
         OptionsManager.Instance.defaultMouseSens = sens;
     }
     public void SetFullscreen(int windowIndex)

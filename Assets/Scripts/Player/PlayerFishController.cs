@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -37,6 +38,7 @@ public class PlayerFishController : MonoBehaviour
     [SerializeField] private float dashDuration = 0.3f;
     [SerializeField] private float dashSpeed = 9f;
     [SerializeField] private AudioClip[] dashSounds;
+    private bool isDashOnCooldown;
     private bool isDashing;
     private float currentVelocity;
     public Slider dashChargeBar;
@@ -62,14 +64,18 @@ public class PlayerFishController : MonoBehaviour
     // Energy
     private FishEnergy energyComp;
     public FishEnergy GetEnergyComp() { return energyComp; }
+
+    // Audio
     [SerializeField] private AudioClip[] eatSounds;
+    [SerializeField] private AudioClip[] swimSounds;
+    private bool isSwimAudioOnCooldown;
 
     private void Awake()
     {
         if (GameManager.Instance != null)
         {
             GameManager.Instance.PlayerController = this;
-            if (GameManager.Instance.GetIsPerkUnlocked(0)) 
+            if (GameManager.Instance.GetIsPerkUnlocked(0))
             {
                 dashSpeed = 12f;
                 Debug.Log("Dash is faster, need to set this up still!");
@@ -99,7 +105,7 @@ public class PlayerFishController : MonoBehaviour
         HandleRoation();
         ShouldTilt();
 
-        if (InputManager.Instance.DashInput && !isDashing)
+        if (InputManager.Instance.DashInput && !isDashOnCooldown)
         {
             StartCoroutine(Dash());
         }
@@ -130,14 +136,20 @@ public class PlayerFishController : MonoBehaviour
         currentMovement.x = worldDirection.x * currentSpeed;
         currentMovement.z = worldDirection.z * currentSpeed;
         currentMovement.y = worldDirection.y * floatSpeed;
-        
+
         // Allow player to move forward based on where camera is looking
         if (InputManager.Instance.SwimInput.y > 0f)
         {
             currentMovement.y += mainCamera.transform.forward.y * currentSpeed;
         }
-        
+
         characterController.Move(currentMovement * Time.deltaTime);
+
+        if (currentMovement.magnitude > 1f && !isSwimAudioOnCooldown && !isDashing)
+        {
+            StartCoroutine(HandleSwimAudioCooldown());
+            SoundFXManager.Instance.PlayRandomSoundFXClip(swimSounds, transform, 0.3f, 1f, 0f, 0.05f);
+        }
     }
 
     /* Rotation */
@@ -174,6 +186,15 @@ public class PlayerFishController : MonoBehaviour
         energyComp.SetIsPaused(true);
         GameManager.Instance.DisableHUD();
         InputManager.Instance.isInputPaused = true;
+    }
+
+
+    private IEnumerator HandleSwimAudioCooldown()
+    {
+        isSwimAudioOnCooldown = true;
+        yield return new WaitForSeconds(1.5f);
+
+        isSwimAudioOnCooldown = false;
     }
 
     /* Attacking Prey */
@@ -260,7 +281,8 @@ public class PlayerFishController : MonoBehaviour
         energyComp.OnDash();
         SoundFXManager.Instance.PlayRandomSoundFXClip(dashSounds, transform, 1f, 1f, 0.06f, 0.06f);
 
-        isDashing = true; 
+        isDashOnCooldown = true;
+        isDashing = true;
         currentSpeed = 2f;
         
         while (currentSpeed < dashSpeed)
@@ -271,29 +293,10 @@ public class PlayerFishController : MonoBehaviour
         }
         yield return new WaitForSeconds(dashDuration);
 
+        isDashing = false;
         energyComp.SetDepreciationRate(ogDepRate);
         StartCoroutine(EndDash());
     }
-
-    // Old code for charged and release dash
-    /*IEnumerator StartDash()
-    {
-        float elapsedTime = 0f;
-        float smoothTime = 0.1f; 
-        
-        // Interpolates speed to dash speed for smoothTime
-        while (elapsedTime < smoothTime) 
-        {
-            currentSpeed = Mathf.SmoothDamp(currentSpeed, dashSpeed, ref currentVelocity, smoothTime);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        currentSpeed = dashSpeed;
-        yield return new WaitForSeconds(0.3f);
-
-        StartCoroutine(EndDash());
-    }*/
 
     private IEnumerator EndDash()
     {
@@ -328,7 +331,7 @@ public class PlayerFishController : MonoBehaviour
         dashKeybind.alpha = 1f;
         
         //Debug.Log("Can Dash Again!");
-        isDashing = false;
+        isDashOnCooldown = false;
     }
 
     /*  View Bobbing */

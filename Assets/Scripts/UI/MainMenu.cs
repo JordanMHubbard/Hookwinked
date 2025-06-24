@@ -18,7 +18,9 @@ public class MainMenu : MonoBehaviour
     private void Start()
     {
         SaveSystem.ResetSaveData();
-        Cursor.visible = true;
+        Time.timeScale = 1f;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true; 
     }
 
     public void StartGame()

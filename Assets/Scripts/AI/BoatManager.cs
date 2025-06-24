@@ -7,7 +7,10 @@ public class BoatManager : MonoBehaviour
     [SerializeField] private GameObject damageDecal;
     [SerializeField] private GameObject boatFragment;
     [SerializeField] private GameObject damageEffect;
-    public Color32 boatColor {get; set;}
+    [SerializeField] private AudioClip damageSound;
+    [SerializeField] private AudioClip motorSound;
+    private GameObject motorSoundRef;
+    public Color32 boatColor { get; set; }
     private int timesDamaged;
     private bool canSpawnFish;
     private Vector3 currentTarget;
@@ -72,12 +75,12 @@ public class BoatManager : MonoBehaviour
         Quaternion rotation = Quaternion.LookRotation(normal);
         Quaternion effectRotation = Quaternion.LookRotation(-normal);
         ShowDamageEffects(position, rotation, effectRotation);
+        SoundFXManager.Instance.PlaySoundFXClip(damageSound, transform, position, 1f, 1f, 0.1f, 0.1f);
         
         // Drop fragment
         DropFragment(position);
 
         // Apply damage
-        Debug.Log("We've been hit");
         if (timesDamaged++ >= 2)
         {
             Flee(); 
@@ -85,7 +88,7 @@ public class BoatManager : MonoBehaviour
             // Spawn two new prey
             if (canSpawnFish)
             {
-                Debug.Log("We changing bait to prey yeupppp"); 
+                Debug.Log("Changing bait to prey"); 
                 foreach (GameObject fish in BaitedPrey)
                 {
                    PreyController controller = fish.GetComponent<PreyController>();
@@ -98,18 +101,6 @@ public class BoatManager : MonoBehaviour
                 }
             }
         } 
-
-        /*Things that need to be done:
-            1. Increase damage counter +1 ✔
-            2. Show damaged decal on boat ✔
-            3. Check if has been damaged 3 times ✔
-                - if true, make boat drive off ✔
-                - remove bait from pool ✔
-                - Play boat driving sound
-            4. Destroy rock on impact 
-            5. Show slight rock explosion effect ✔
-            6. Make fragment and damage particles same color as boat ✔
-        */
     }
 
     private void ShowDamageEffects(Vector3 position, Quaternion rotation, Quaternion effectRotation)
@@ -135,6 +126,7 @@ public class BoatManager : MonoBehaviour
         Debug.Log("We need to get outta here cap'n!");
         currentTarget = GameManager.Instance.GetRandomBoatWaypoint();
         
+        motorSoundRef = SoundFXManager.Instance.LoopSoundFXClip(motorSound, transform, 1f, 1f, 0.1f, 0.1f);
         StartRotate();
         MoveTowardsTarget();
     }
@@ -164,7 +156,11 @@ public class BoatManager : MonoBehaviour
         boatParent.transform.position += directionToTarget * currentSpeed * Time.deltaTime;
 
         float dist = Vector3.Distance(boatParent.transform.position, currentTarget);
-        if (dist < 1f) hasTarget = false;
+        if (dist < 1f)
+        {
+            hasTarget = false;
+            Destroy(motorSoundRef);
+        }
     }
 
     private void SetDamageColor()
