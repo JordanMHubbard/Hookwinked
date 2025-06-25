@@ -38,12 +38,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject ScreenFade;
     [SerializeField] private GameObject DialogueScreen;
     private GainedPerkUI gainedPerkUI;
-    
-    [Header("General")]
-    [SerializeField] private GameObject SceneTransition;
-    [SerializeField] private RectTransform transitionMask;
-    [SerializeField] private bool shouldTransitionAtStart;
-    private Vector3 originalMaskScale = new Vector3(7f, 7f, 7f);
 
     [Header("Spawning")]
     private PreySpawner preySpawner;
@@ -125,11 +119,6 @@ public class GameManager : MonoBehaviour
     {
         PlayAmbience();
 
-        if (shouldTransitionAtStart)
-        {
-            StartCoroutine(TransitionOut());
-        }
-        
         if (PlayerController)
         {
             InputManager.Instance.isInputPaused = true;
@@ -167,9 +156,6 @@ public class GameManager : MonoBehaviour
             gainedPerkUI = GainedPerkScreen.GetComponent<GainedPerkUI>();
         }
         if (ScreenFade != null) ScreenFade.SetActive(false);
-
-        // General
-        if (SceneTransition != null) SceneTransition.SetActive(false);
     }
 
     private IEnumerator ShowDayTransition()
@@ -238,13 +224,19 @@ public class GameManager : MonoBehaviour
     public void ShowSurviveScreen()
     {
         PlayerController.PausePlayer();
-        StartCoroutine(TransitionIn(ActivateSurviveScreen));
+        if (SceneTransitionManager.Instance)
+        {
+            StartCoroutine(SceneTransitionManager.Instance.TransitionIn(ActivateSurviveScreen));
+        }
     }
 
     private void ActivateSurviveScreen()
     {
         SurviveScreen.SetActive(true);
-        StartCoroutine(TransitionOut());
+        if (SceneTransitionManager.Instance)
+        {
+            StartCoroutine(SceneTransitionManager.Instance.TransitionOut());
+        }
     }
 
     public void ShowPerkScreen()
@@ -262,26 +254,6 @@ public class GameManager : MonoBehaviour
 
     public GameObject GetScreenFade() { return ScreenFade; }
     public void HideDialogueScreen() { DialogueScreen.SetActive(false); }
-    
-    private IEnumerator TransitionIn(Action callback)
-    {
-        SceneTransition.SetActive(true);
-        transitionMask.DOScale(new Vector3(0f, 0f, 0f), 2f).SetEase(Ease.Linear);
-        yield return new WaitForSeconds(3f);
-        callback?.Invoke();
-    }
-
-    private IEnumerator TransitionOut()
-    {
-        SceneTransition.SetActive(true);
-        transitionMask.localScale = new Vector3(0f, 0f, 0f);
-        yield return new WaitForSeconds(0.5f);
-
-        transitionMask.DOScale(originalMaskScale, 2f).SetEase(Ease.Linear);
-        yield return new WaitForSeconds(2f);
-        
-        SceneTransition.SetActive(false);
-    }
 
     // Minigames
     public void StartHookedMinigame()
@@ -361,7 +333,10 @@ public class GameManager : MonoBehaviour
         SaveSystem.Save();
         yield return new WaitForSeconds(7f);
 
-        StartCoroutine(TransitionIn(OpenReefLevel));
+        if (SceneTransitionManager.Instance)
+        {
+            StartCoroutine(SceneTransitionManager.Instance.TransitionIn(OpenReefLevel));
+        }
     }
 
     private void OpenReefLevel()

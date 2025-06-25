@@ -60,5 +60,12 @@ public class HomeManager : MonoBehaviour
         GameManager.Instance.ShowSurviveScreen();
         GameManager.Instance.PauseAmbience(true);
     }
+
+    private void ShowWaypoint()
+    {
+        HomeWaypoint.SetActive(true);
+        Vector3 waypointPos = HomeWaypoint.transform.position;
+        HomeWaypoint.transform.DOMove(waypointPos + new Vector3(0f, 20f, 0f), 2f).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
+    }
     
 }
