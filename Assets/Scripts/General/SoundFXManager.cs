@@ -10,7 +10,7 @@ public class SoundFXManager : MonoBehaviour
         if (Instance == null) Instance = this;
     }
 
-    public void PlaySoundFXClip(AudioClip audioClip, Transform parent, Vector3 position, float volume, float spatialBlend = 1f,
+    public void PlaySoundFXClip(AudioClip audioClip, Vector3 position, float volume, float spatialBlend = 1f,
         float volumeChange = 0f, float pitchChange = 0f)
     {
         if (!audioClip)
@@ -19,7 +19,7 @@ public class SoundFXManager : MonoBehaviour
             return;
         }
 
-        AudioSource audioSource = Instantiate(soundFXobject, position, Quaternion.identity, parent);
+        AudioSource audioSource = Instantiate(soundFXobject, position, Quaternion.identity);
         audioSource.spatialBlend = spatialBlend;
         audioSource.clip = audioClip;
         audioSource.volume = volume;

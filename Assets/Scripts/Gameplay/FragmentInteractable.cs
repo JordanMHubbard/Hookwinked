@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class FragmentInteractable : MonoBehaviour, IInteractable
 {
+    [SerializeField] private AudioClip fragmentInteractSound;
+
     private Outline outlineComp;
 
     private void Awake()
@@ -18,6 +20,7 @@ public class FragmentInteractable : MonoBehaviour, IInteractable
     public void Interact(GameObject interactor)
     {
         Debug.Log("fragment has been collected!");
+        SoundFXManager.Instance.PlaySoundFXClip(fragmentInteractSound, transform.position, 1f, 1f, 0f, 0.1f);
         GameManager.Instance.SetBoatFragmentsCount(GameManager.Instance.GetBoatFragmentsCount() + 1);
         gameObject.SetActive(false);
     }

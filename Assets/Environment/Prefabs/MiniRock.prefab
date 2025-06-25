@@ -169,3 +169,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd89257af64d2be4b94bfad6b45077ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rockInteractSound: {fileID: 8300000, guid: 08df4a4d7a689cd49a0f13281eb8b425, type: 3}

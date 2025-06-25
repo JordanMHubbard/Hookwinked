@@ -24,15 +24,18 @@ public class SaveSystem
         File.WriteAllText(SaveFileName(), JsonUtility.ToJson(saveData, true));
     }
 
-    public static void SaveOptions()
-    {
-        if (OptionsManager.Instance != null) OptionsManager.Instance.Save(ref saveData.OptionsData);
-        File.WriteAllText(SaveFileName(), JsonUtility.ToJson(saveData, true));
-    }
-
     private static void HandleSaveData()
     {
         if (GameManager.Instance != null) GameManager.Instance.Save(ref saveData.GameData);
+
+        if (!File.Exists(SaveFileName()))
+        {
+            if (OptionsManager.Instance != null) OptionsManager.Instance.SaveDefault(ref saveData.OptionsData);
+        }
+        else
+        {
+            if (OptionsManager.Instance != null) OptionsManager.Instance.Save(ref saveData.OptionsData);
+        }
     }
 
     public static void Load()

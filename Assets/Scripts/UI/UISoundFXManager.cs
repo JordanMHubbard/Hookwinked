@@ -7,10 +7,10 @@ public class UISoundFXManager : MonoBehaviour
 
     public void PlayHoverSound()
     {
-        SoundFXManager.Instance.PlaySoundFXClip(hoverSound, transform, transform.position, 0.5f, 0f);
+        SoundFXManager.Instance.PlaySoundFXClip(hoverSound, transform.position, 0.5f, 0f);
     }
     public void PlayClickSound()
     {
-        SoundFXManager.Instance.PlaySoundFXClip(clickSound, transform, transform.position, 0.5f, 0f);
+        SoundFXManager.Instance.PlaySoundFXClip(clickSound, transform.position, 0.5f, 0f);
     }
 }

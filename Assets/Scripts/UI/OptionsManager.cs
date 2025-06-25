@@ -1,4 +1,4 @@
-using System.Data.Common;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class OptionsManager : MonoBehaviour
@@ -30,6 +30,15 @@ public class OptionsManager : MonoBehaviour
         Screen.fullScreen = data.isFullscreen;
         Screen.SetResolution(data.resWidth, data.resHeight, Screen.fullScreen);
         QualitySettings.SetQualityLevel(data.qualIndex);
+    }
+
+    public void SaveDefault(ref OptionsSaveData data)
+    {
+        data.mouseSens = OptionsSaveData.GetDefault().mouseSens;
+        data.isFullscreen = OptionsSaveData.GetDefault().isFullscreen;
+        data.resWidth = OptionsSaveData.GetDefault().resWidth;
+        data.resHeight = OptionsSaveData.GetDefault().resHeight;
+        data.qualIndex = OptionsSaveData.GetDefault().qualIndex;
     }
 
     #endregion

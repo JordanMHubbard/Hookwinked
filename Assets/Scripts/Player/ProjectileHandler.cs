@@ -6,6 +6,7 @@ public class ProjectileHandler : MonoBehaviour
 {
     [SerializeField] private float launchForce = 400f;
     [SerializeField] private Camera mainCamera;
+    [SerializeField] private AudioClip rockShootSound;
     private List<GameObject> projectiles;
     private bool isUnlocked;
     public void SetIsUnlocked(bool shouldUnlock) { isUnlocked = shouldUnlock;}
@@ -49,6 +50,7 @@ public class ProjectileHandler : MonoBehaviour
         if (projectiles.Count > 0)
         {
             Debug.Log("Shot!");
+            SoundFXManager.Instance.PlaySoundFXClip(rockShootSound, transform.position, 0.8f, 0f, 0f, 0.1f);
             GameObject lastProjectile = projectiles[projectiles.Count - 1];
             projectiles.RemoveAt(projectiles.Count - 1);
 

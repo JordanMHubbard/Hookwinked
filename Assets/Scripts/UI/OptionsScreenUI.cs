@@ -87,7 +87,7 @@ public class OptionsScreenUI : MonoBehaviour
     }
     public void Back()
     {
-        SaveSystem.SaveOptions();
+        SaveSystem.Save();
         if (PauseManager.Instance) PauseManager.Instance.ShowPausedScreen();
         if (MainMenu.Instance) MainMenu.Instance.gameObject.SetActive(true);
         gameObject.SetActive(false);

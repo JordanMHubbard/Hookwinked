@@ -90,6 +90,7 @@ MonoBehaviour:
   dashChargeRate: 50
   dashDuration: 0.3
   dashSpeed: 12
+  dashSounds: []
   dashChargeBar: {fileID: 0}
   dashKeybind: {fileID: 0}
   characterController: {fileID: 1392424294487994085}
@@ -98,6 +99,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 2bd99dafb3293454bace5c88f281ca28, type: 3}
   - {fileID: 8300000, guid: 3754c36924d222d419df9bff345cb5dc, type: 3}
   - {fileID: 8300000, guid: addad4ccee92a914eb0aa3819a0122a7, type: 3}
+  swimSounds: []
 --- !u!114 &2078965542548107645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,6 +151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   launchForce: 1000
   mainCamera: {fileID: 133031847395031908}
+  rockShootSound: {fileID: 8300000, guid: 328d996373aace24e944cb0e798378f7, type: 3}
 --- !u!1 &8478309598313259356
 GameObject:
   m_ObjectHideFlags: 0

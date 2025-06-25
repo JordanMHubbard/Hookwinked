@@ -75,7 +75,7 @@ public class BoatManager : MonoBehaviour
         Quaternion rotation = Quaternion.LookRotation(normal);
         Quaternion effectRotation = Quaternion.LookRotation(-normal);
         ShowDamageEffects(position, rotation, effectRotation);
-        SoundFXManager.Instance.PlaySoundFXClip(damageSound, transform, position, 1f, 1f, 0.1f, 0.1f);
+        SoundFXManager.Instance.PlaySoundFXClip(damageSound, position, 1.5f, 1f, 0.1f, 0.1f);
         
         // Drop fragment
         DropFragment(position);

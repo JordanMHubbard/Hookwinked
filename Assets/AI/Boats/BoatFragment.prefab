@@ -169,3 +169,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de91306ce7a6da7429f5800d25fa1778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fragmentInteractSound: {fileID: 8300000, guid: 9035e9aea56fc8c44932ab764d111118, type: 3}
