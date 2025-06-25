@@ -15,6 +15,8 @@ public class SurviveScreenUI : MonoBehaviour
     [SerializeField] private GameObject partyFishImage;
     [SerializeField] private CanvasGroup continueGroup;
     [SerializeField] private CanvasGroup exitGroup;
+    [SerializeField] private AudioClip partySound;
+    [SerializeField] private AudioClip daySound;
 
     private Vector3 confettiLPosition;
     private Vector3 confettiRPosition;
@@ -46,12 +48,16 @@ public class SurviveScreenUI : MonoBehaviour
         yield return new WaitForSeconds(0.25f);
 
         StartCoroutine(ConfettiAnim());
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.5f);
+        
+        SoundFXManager.Instance.PlaySoundFXClip(partySound, transform, transform.position, 0.5f, 0f);
+        yield return new WaitForSeconds(1.5f);
 
         daysSurvivedImage.transform.DOScaleX(1f, 0.75f);
         yield return new WaitForSeconds(2f);
 
         numDaysObj.transform.DOScaleX(1f, 0.25f);
+        SoundFXManager.Instance.PlaySoundFXClip(daySound, transform, transform.position, 0.5f, 0f);
         yield return new WaitForSeconds(2f);
 
         StartCoroutine(ButtonsAnim());

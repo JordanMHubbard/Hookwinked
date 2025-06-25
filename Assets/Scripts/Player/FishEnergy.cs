@@ -70,6 +70,8 @@ public class FishEnergy : MonoBehaviour
 
     public void AddProgress(float progressVal)
     {
+        if (isPaused) return;
+        
         targetProgress = Mathf.Clamp(currentProgress + progressVal, 0f, 100f);
         shouldUpdate = true;
     }
