@@ -76,9 +76,9 @@ public class PreyDetection : MonoBehaviour
         float dist = 50f;
         Vector3 offset;
 
-        while (dist > 0.5f && isPursuingPrey && closestPrey)
+        while (dist > 1f && isPursuingPrey && closestPrey)
         {
-            offset = (closestPrey.transform.position - transform.position).normalized * 2f;
+            offset = (closestPrey.transform.position - transform.position).normalized * 3f;
             controller.SetTargetPosition(closestPrey.transform.position + offset);
             yield return null;
         }

@@ -21,7 +21,7 @@ public class SharkSpawner : AIFishSpawner
         RandomizeSpawnDelay();
         yield return new WaitForSeconds(spawnDelay);
 
-        SpawnFish(numFish, false);
+        SpawnFish(numFish);
     }
 
     private void RandomizeSpawnDelay()

@@ -4,9 +4,15 @@ using UnityEngine;
 public class PreyController : AIFishController
 {
     [SerializeField] private bool isBait;
-    public void SetIsBait(bool isFishBait) { isBait = isFishBait; }
+    private bool hasBaitMesh;
+    public void SetIsBait(bool isFishBait, bool hasMesh)
+    {
+        isBait = isFishBait;
+        hasBaitMesh = hasMesh;
+    }
     public bool GetIsBait() { return isBait; }
     [SerializeField] BoxCollider predatorDetectionBox;
+    [SerializeField] GameObject hook;
     private FishAnimManager animManager;
     private PreyManager preyManager;
 
@@ -33,13 +39,23 @@ public class PreyController : AIFishController
 
     public void SetBaitStatus()
     {
-        if (isBait) 
+        if (isBait)
         {
             //Debug.Log("Setting to bait");
             preyManager.tag = "Bait";
-            animManager.ShouldAnimatorPlay(false);
+            if (hasBaitMesh) return;
+
+            int choice = Random.Range(0, 2);
+            if (choice == 0)
+            {
+                animManager.ShouldAnimatorPlay(false);
+            }
+            else
+            {
+                hook.SetActive(true);
+            }
         }
-        else 
+        else
         {
             //Debug.Log("Setting to prey");
             preyManager.tag = "Prey";

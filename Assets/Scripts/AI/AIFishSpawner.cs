@@ -6,12 +6,12 @@ public class AIFishSpawner : MonoBehaviour
     [SerializeField] protected GameObject fishPrefab;
     [SerializeField] protected bool isEnabled = true;
     [SerializeField] private bool spawnOnStart = true;
-    [SerializeField] private bool useSpawnLocations = false;
+    [SerializeField] protected bool useSpawnLocations = false;
     [SerializeField] private List<GameObject> spawnLocations;
     [SerializeField] protected int numFish = 20;
     [SerializeField] private float paddingXZ = 20f;
     [SerializeField] private float paddingY = 5f;
-    [SerializeField] private List<GameObject> fishMeshes;
+    [SerializeField] protected List<GameObject> fishMeshes;
     [SerializeField] private LayerMask interactableLayer;
     private BoxCollider box;
 
@@ -26,7 +26,7 @@ public class AIFishSpawner : MonoBehaviour
             return;
         }
 
-        if (spawnOnStart) SpawnFish(0, false);
+        if (spawnOnStart) SpawnFish(0);
     }
 
     public Vector3 GetRandomPoint()
@@ -53,7 +53,7 @@ public class AIFishSpawner : MonoBehaviour
         return point;
     }
 
-    private Vector3 GetRandomSpawnLoc()
+    protected Vector3 GetRandomSpawnLoc()
     {
         if (spawnLocations.Count > 0)
         {
@@ -77,7 +77,7 @@ public class AIFishSpawner : MonoBehaviour
         return isInReachableArea;
     }
 
-    public List<GameObject> SpawnFish(int fishCount, bool isBait)
+    public virtual List<GameObject> SpawnFish(int fishCount)
     {
         List<GameObject> fish = new List<GameObject>();
 
@@ -101,7 +101,7 @@ public class AIFishSpawner : MonoBehaviour
                 return null;
             }
 
-            GameObject meshInstance = Instantiate(GetRandomMesh(), meshHolder);
+            GameObject meshInstance = Instantiate(GetRandomMesh(fishMeshes), meshHolder);
 
             // Play animation
             Animator animator = meshHolder.GetComponent<Animator>();
@@ -110,8 +110,6 @@ public class AIFishSpawner : MonoBehaviour
             meshInstance.transform.localPosition = Vector3.zero;
             meshInstance.transform.localRotation = Quaternion.identity;
 
-            if (isBait) InitializeBait(fishInstance);
-
             fish.Add(fishInstance);
             fishCount--;
         }
@@ -119,17 +117,11 @@ public class AIFishSpawner : MonoBehaviour
         return fish;
     }
 
-    private GameObject GetRandomMesh()
+    protected virtual GameObject GetRandomMesh(List<GameObject> meshes)
     {
-        int total = fishMeshes.Count;
+        int total = meshes.Count;
         int index = Random.Range(0, total);
 
-        return fishMeshes[index];
-    }
-
-    private void InitializeBait(GameObject obj)
-    {
-        PreyController controller = obj.GetComponent<PreyController>();
-        if (controller != null) controller.SetIsBait(true);
+        return meshes[index];
     }
 }

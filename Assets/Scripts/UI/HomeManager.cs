@@ -37,7 +37,7 @@ public class HomeManager : MonoBehaviour
     {
         isDayOver = true;
         GameManager.Instance.PausePlayerEnergy(true);
-        HomeWaypoint.SetActive(true);
+        ShowWaypoint();
         StartCoroutine(ManageMessage());
     }
 
@@ -65,7 +65,7 @@ public class HomeManager : MonoBehaviour
     {
         HomeWaypoint.SetActive(true);
         Vector3 waypointPos = HomeWaypoint.transform.position;
-        HomeWaypoint.transform.DOMove(waypointPos + new Vector3(0f, 20f, 0f), 2f).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
+        HomeWaypoint.transform.DOMove(waypointPos + new Vector3(0f, 1f, 0f), 2f).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
     }
     
 }
