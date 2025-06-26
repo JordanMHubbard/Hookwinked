@@ -126,7 +126,7 @@ public class BoatManager : MonoBehaviour
         Debug.Log("We need to get outta here cap'n!");
         currentTarget = GameManager.Instance.GetRandomBoatWaypoint();
         
-        motorSoundRef = SoundFXManager.Instance.LoopSoundFXClip(motorSound, transform, 1f, 1f, 0.1f, 0.1f);
+        motorSoundRef = SoundFXManager.Instance.LoopSoundFXClip(motorSound, transform.position, 1f, 1f, 0.1f, 0.1f);
         StartRotate();
         MoveTowardsTarget();
     }

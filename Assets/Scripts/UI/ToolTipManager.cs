@@ -1,11 +1,15 @@
 using UnityEngine;
 using TMPro;
+using DG.Tweening;
+using System.Collections;
+using Unity.VisualScripting;
 
 public class ToolTipManager : MonoBehaviour
 {
-    public static ToolTipManager Instance {get; private set;}
+    public static ToolTipManager Instance { get; private set; }
     [SerializeField] private TextMeshProUGUI toolTipName;
     [SerializeField] private TextMeshProUGUI toolTipDesc;
+    [SerializeField] private CanvasGroup canvasGroup;
 
     private void Awake()
     {
@@ -13,10 +17,6 @@ public class ToolTipManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    private void Start()
-    {
-        gameObject.SetActive(false);
-    }
     private void Update()
     {
         transform.position = Input.mousePosition;
@@ -26,11 +26,17 @@ public class ToolTipManager : MonoBehaviour
     {
         toolTipName.text = name;
         toolTipDesc.text = description;
+        canvasGroup.DOFade(1f, 0.25f);
     }
-
+    
     public void HideToolTip()
     {
-        toolTipName.text = string.Empty;
-        toolTipDesc.text = string.Empty;
+        StartCoroutine(FadeOut());
+    }
+
+    private IEnumerator FadeOut()
+    {
+        canvasGroup.DOFade(0f, 0.5f);
+        yield break;
     }
 }

@@ -54,7 +54,7 @@ public class SoundFXManager : MonoBehaviour
         Destroy(audioSource.gameObject, clipLength);
     }
 
-    public GameObject LoopSoundFXClip(AudioClip audioClip, Transform parent, float volume, float spatialBlend = 1f,
+    public GameObject LoopSoundFXClip(AudioClip audioClip, Vector3 position, float volume, float spatialBlend = 1f,
         float volumeChange = 0f, float pitchChange = 0f)
     {
         if (!audioClip)
@@ -63,7 +63,7 @@ public class SoundFXManager : MonoBehaviour
             return null;
         }
 
-        AudioSource audioSource = Instantiate(soundFXobject, parent.position, Quaternion.identity, parent);
+        AudioSource audioSource = Instantiate(soundFXobject, position, Quaternion.identity);
         audioSource.clip = audioClip;
         audioSource.spatialBlend = spatialBlend;
         audioSource.loop = true;

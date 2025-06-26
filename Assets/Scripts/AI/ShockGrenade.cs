@@ -53,7 +53,7 @@ public class ShockGrenade : MonoBehaviour
         SoundFXManager.Instance.PlaySoundFXClip(beepSound, transform.position, 1f);
         yield return new WaitForSeconds(1.3f);
 
-        GameObject audio = SoundFXManager.Instance.LoopSoundFXClip(buzzSound, transform, 1f);
+        GameObject audio = SoundFXManager.Instance.LoopSoundFXClip(buzzSound, transform.position, 1f);
         electricty.Play();
         isOnCooldown = false;
         yield return new WaitForSeconds(10f);
