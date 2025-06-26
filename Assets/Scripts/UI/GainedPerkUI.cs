@@ -13,10 +13,11 @@ public class GainedPerkUI : MonoBehaviour
     [SerializeField] CanvasGroup imageCanvas;
     [SerializeField] CanvasGroup nameCanvas;
     [SerializeField] CanvasGroup descriptionCanvas;
+    [SerializeField] AudioClip unlockSound;
 
     private void Start()
     {
-        StartCoroutine(RevealPerk()); 
+        StartCoroutine(RevealPerk());
     }
 
     public void InitializePerk(string name, string description, Sprite icon)
@@ -33,6 +34,7 @@ public class GainedPerkUI : MonoBehaviour
 
         imageCanvas.DOFade(1f, 0.5f);
         nameCanvas.DOFade(1f, 0.5f);
+        SoundFXManager.Instance.PlaySoundFXClip(unlockSound, transform.position, 1f, 0f);
         yield return new WaitForSeconds(1f);
 
         descriptionCanvas.DOFade(1f, 0.5f);

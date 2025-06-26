@@ -24,7 +24,7 @@ public class SoundFXManager : MonoBehaviour
         audioSource.clip = audioClip;
         audioSource.volume = volume;
 
-        if (volumeChange > 0f) audioSource.volume = Random.Range(1 - volumeChange, 1);
+        if (volumeChange > 0f) audioSource.volume = Random.Range(volume - volumeChange, volume);
         if (pitchChange > 0f) audioSource.pitch = Random.Range(1 - pitchChange, 1);
 
         audioSource.Play();
@@ -69,7 +69,7 @@ public class SoundFXManager : MonoBehaviour
         audioSource.loop = true;
         audioSource.volume = volume;
 
-        if (volumeChange > 0f) audioSource.volume = Random.Range(1 - volumeChange, 1);
+        if (volumeChange > 0f) audioSource.volume = Random.Range(volume - volumeChange, volume);
         if (pitchChange > 0f) audioSource.pitch = Random.Range(1 - pitchChange, 1);
 
         audioSource.Play();
@@ -91,7 +91,7 @@ public class SoundFXManager : MonoBehaviour
         audioSource.loop = true;
         audioSource.volume = volume;
 
-        if (volumeChange > 0f) audioSource.volume = Random.Range(1 - volumeChange, 1);
+        if (volumeChange > 0f) audioSource.volume = Random.Range(volume - volumeChange, volume);
         if (pitchChange > 0f) audioSource.pitch = Random.Range(1 - pitchChange, 1);
 
         audioSource.Play();

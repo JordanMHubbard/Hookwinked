@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private List<DialogueEntry> AllDialogue;
     [SerializeField] private CanvasGroup Continue;
     [SerializeField] private CanvasGroup ScreenFade;
+    [SerializeField] private AudioClip dialogueSound;
+    [SerializeField] private AudioClip magicSound;
     private List<Dialogue> currentDialogue;
     private int currentLineIndex = 0;
     private bool isInputPaused;
@@ -29,6 +32,14 @@ public class DialogueManager : MonoBehaviour
             {
                 GameManager.Instance.GetScreenFade().SetActive(true);
                 StartCoroutine(PlayCurrentDayDialogue());
+            }
+        }
+        else if (GameManager.Instance.GetCurrentDay() == 4)
+        {
+            if (AllDialogue.Count > GameManager.Instance.GetCurrentDay())
+            {
+                GameManager.Instance.GetScreenFade().SetActive(true);
+                StartCoroutine(PlayLastDayDialogue());
             }
         }
         else
@@ -81,9 +92,12 @@ public class DialogueManager : MonoBehaviour
     {
         isInputPaused = true;
         textBox.text = "";
+        SoundFXManager.Instance.PlaySoundFXClip(dialogueSound, transform.position, 0.6f, 0f, 0.05f, 0.3f);
+
         foreach (char letter in sentence.ToCharArray())
         {
             textBox.text += letter;
+            if (letter == ' ') SoundFXManager.Instance.PlaySoundFXClip(dialogueSound, transform.position, 0.6f, 0f, 0.05f, 0.3f);
             yield return new WaitForSeconds(0.02f);
         }
 
@@ -114,6 +128,7 @@ public class DialogueManager : MonoBehaviour
         ScreenFade.DOFade(1f, 1f);
         NpcText.text = "";
         PlayerText.text = "";
+        SoundFXManager.Instance.PlaySoundFXClip(magicSound, transform.position, 0.6f, 0f);
         yield return new WaitForSeconds(intermissionTime);
 
         ShowNextDiaolgue();
@@ -146,6 +161,30 @@ public class DialogueManager : MonoBehaviour
         InputManager.Instance.SwitchCurrentMap(InputManager.ActionMap.Dialogue);
     }
 
+    private IEnumerator PlayLastDayDialogue()
+    {
+        isDialogueAutomatic = true;
+        currentDialogue = AllDialogue[GameManager.Instance.GetCurrentDay()].dialogueLines;
+        Debug.Log("Playing dialogue for this day: " + (GameManager.Instance.GetCurrentDay()));
+        yield return new WaitForSeconds(2.5f);
+
+        NpcSpeechBox.DOFade(1f, 0.75f);
+        yield return new WaitForSeconds(1f);
+
+        ShowNextDiaolgue();
+        yield return new WaitForSeconds(2f);
+
+        PlayerSpeechBox.DOFade(1f, 0.75f);
+        yield return new WaitForSeconds(1f);
+
+        ShowNextDiaolgue();
+        isDialogueAutomatic = false;
+        yield return new WaitForSeconds(0.5f);
+
+        Debug.Log("Press space to skip");
+        InputManager.Instance.SwitchCurrentMap(InputManager.ActionMap.Dialogue);
+    }
+
     private void OnDialogueEnd()
     {
         Debug.Log("testing testing 1 2 3");
@@ -154,6 +193,24 @@ public class DialogueManager : MonoBehaviour
     public void HideSelf()
     {
         GameManager.Instance.HideDialogueScreen();
+    }
+
+    public void HandleReturnToMainMenu()
+    {
+        StartCoroutine(ReturnToMainMenu());
+    }
+
+    private IEnumerator ReturnToMainMenu()
+    {
+        isInputPaused = true;
+        currentLineIndex++;
+        ScreenFade.DOFade(1f, 1f);
+        NpcText.text = "";
+        PlayerText.text = "";
+        SoundFXManager.Instance.PlaySoundFXClip(magicSound, transform.position, 0.6f, 0f);
+        yield return new WaitForSeconds(3f);
+
+        SceneManager.LoadScene("MainMenu");
     }
     
 }

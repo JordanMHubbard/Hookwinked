@@ -26,17 +26,11 @@ public class ToolTipManager : MonoBehaviour
     {
         toolTipName.text = name;
         toolTipDesc.text = description;
-        canvasGroup.DOFade(1f, 0.25f);
+        canvasGroup.DOFade(1f, 0.15f);
     }
     
     public void HideToolTip()
     {
-        StartCoroutine(FadeOut());
-    }
-
-    private IEnumerator FadeOut()
-    {
-        canvasGroup.DOFade(0f, 0.5f);
-        yield break;
+        canvasGroup.DOFade(0f, 0.15f);
     }
 }

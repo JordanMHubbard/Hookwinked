@@ -74,7 +74,7 @@ public class PerkSelectionUI : MonoBehaviour
 
     private IEnumerator FadeIn()
     {
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(1.5f);
 
         if (canvasGroup) canvasGroup.DOFade(1f, 1f);
     }

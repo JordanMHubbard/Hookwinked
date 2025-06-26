@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
 {
@@ -13,18 +14,14 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     [SerializeField] private AudioClip riserSound;
     [SerializeField] private AudioClip errorSound;
     [SerializeField] private AudioClip unlockSound;
-    private AudioSource riserSource;
-    private float unlockSpeed = 0.3f;
+    private GameObject riserObject;
+    private float unlockSpeed = 0.4f;
     private bool isHeld = false;
     private bool isUnlocked = false;
     private bool isToolTipActive;
 
     private void UnlockPerk()
     {
-        if (unlockSlider.value <= 0 && riserSource)
-        {
-            Destroy(riserSource.gameObject);
-        }
         if (unlockSlider.value < 1)
         {
             unlockSlider.value += unlockSpeed * Time.deltaTime;
@@ -36,9 +33,10 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 
             Debug.Log("Is unlocked");
             isUnlocked = true;
+            perkImage.DOColor(Color.white, 0.1f);
+            Destroy(riserObject);
             UISoundFXManager.Instance.PlayClickSound();
             SoundFXManager.Instance.PlaySoundFXClip(unlockSound, transform.position, 1f, 0f);
-            Destroy(riserSource.gameObject);
             perkSelectionUI.BuyPerk(perkIndex);
         }
     }
@@ -65,7 +63,7 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 
     private void StopUnlockingPerk()
     {
-        if (!isUnlocked && unlockSlider.value > 0) unlockSlider.value -= unlockSpeed * Time.deltaTime;
+        if (!isUnlocked && unlockSlider.value > 0) unlockSlider.value -= unlockSpeed * 2 * Time.deltaTime;
     }
 
     public void OnPointerEnter(PointerEventData pointerEventData)
@@ -73,6 +71,7 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
         if (!isToolTipActive)
         {
             ToolTipManager.Instance.SetAndShowToolTip(perkName, perkDescription);
+            if  (!isUnlocked) perkImage.DOColor(Color.gray, 0.1f);
             isToolTipActive = true;
         }
     }
@@ -82,6 +81,7 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
         if (isToolTipActive)
         {
             ToolTipManager.Instance.HideToolTip();
+            if  (!isUnlocked) perkImage.DOColor(Color.white, 0.1f);
             isToolTipActive = false;
         }
     }
@@ -98,15 +98,7 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 
             Debug.Log("Left mouse button pressed down.");
             isHeld = true;
-            if (riserSource)
-            {
-                riserSource.Play();
-            }
-            else
-            {
-                riserSource = SoundFXManager.Instance.LoopSoundFXClip(riserSound, transform.position,
-                0.5f, 0f).GetComponent<AudioSource>();
-            }
+            riserObject = SoundFXManager.Instance.LoopSoundFXClip(riserSound, transform.position, 0.5f, 0f);
         }
     }
     
@@ -118,7 +110,7 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 
             isHeld = false;
             Debug.Log("Left mouse button released.");
-            if (riserSource) riserSource.Pause();
+            Destroy(riserObject);
         }
     }
 }
