@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
     // Game Data
     public PlayerFishController PlayerController { get; set; }
     private int currentDay;
+    private int activeBoatsCount;
     private int boatFragmentsCount = 0;
     private int numDayRetries;
     [SerializeField] private List<DaySettings> daySettings;
@@ -76,6 +77,16 @@ public class GameManager : MonoBehaviour
         numDayRetries = 0;
         SaveSystem.Save();
     }
+    public void SetBoatCount(int boatCount) { activeBoatsCount = boatCount; }
+    public void DecrementBoatCount()
+    {
+        activeBoatsCount--;
+        Debug.Log("Decrease boat count: " + activeBoatsCount);
+        if (activeBoatsCount == 0 && currentDay == 4)
+        {
+            HomeManager.Instance.StartDayEnd();
+        }
+    }
     public void SetBoatFragmentsCount(int amount)
     {
         boatFragmentsCount = amount;
@@ -91,8 +102,9 @@ public class GameManager : MonoBehaviour
     public Vector3 GetRandomFishWaypoint() { 
         return fishWaypoints[UnityEngine.Random.Range(0, fishWaypoints.Count)].transform.position; }
     public PredatorSpawner GetPredatorSpawner() { return predatorSpawner; }
-    public int GetCurrentDay() {return currentDay;}
-    public int GetBoatFragmentsCount() {return boatFragmentsCount;}
+    public int GetCurrentDay() { return currentDay; }
+    public int GetActiveBoatsCount() { return activeBoatsCount; }
+    public int GetBoatFragmentsCount() { return boatFragmentsCount; }
     public Vector3 GetRandomBoatWaypoint() { 
         return boatWaypoints[UnityEngine.Random.Range(0, boatWaypoints.Count)].transform.position; }
     public List<PerkInfo> GetPerkList() {return perkList;}

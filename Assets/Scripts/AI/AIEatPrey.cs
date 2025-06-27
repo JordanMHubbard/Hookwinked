@@ -5,7 +5,14 @@ public class AIEatPrey : MonoBehaviour
 {
     protected AIFishController controller;
     protected PreyDetection preyDetect;
+    protected bool canEat;
     [SerializeField] private AudioClip[] eatSounds;
+
+    private void OnEnable()
+    {
+        HomeManager.Instance.OnDayFinished += StopEat;
+        canEat = true;
+    }
 
     protected virtual void Start()
     {
@@ -15,6 +22,8 @@ public class AIEatPrey : MonoBehaviour
     }
     protected virtual void OnTriggerEnter(Collider other)
     {
+        if (!canEat) return;
+
         if (other.CompareTag("Prey"))
         {
             SoundFXManager.Instance.PlayRandomSoundFXClip(eatSounds, transform, 1f, 1f, 0.2f, 0.1f);
@@ -23,4 +32,6 @@ public class AIEatPrey : MonoBehaviour
             GameManager.Instance.PreyConsumed(other.transform.parent.gameObject);
         }
     }
+
+    private void StopEat() { canEat = false; }
 }

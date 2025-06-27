@@ -40,7 +40,7 @@ public class SurviveScreenUI : MonoBehaviour
 
     private IEnumerator SurivedStatsAnim()
     {
-        UISoundFXManager.Instance.PlaySoundFXClip(transitionSound, transform.position, 0.6f, 0f);
+        UISoundFXManager.Instance.PlaySoundFXClip(transitionSound, null, transform.position, 0.6f, 0f);
         yield return new WaitForSeconds(2f);
         
         partyFishImage.transform.DOMove(partyFishPosition + new Vector3(700f, 150f, 0f), 0.5f);
@@ -52,14 +52,14 @@ public class SurviveScreenUI : MonoBehaviour
         StartCoroutine(ConfettiAnim());
         yield return new WaitForSeconds(0.5f);
         
-        UISoundFXManager.Instance.PlaySoundFXClip(partySound, transform.position, 0.5f, 0f);
+        UISoundFXManager.Instance.PlaySoundFXClip(partySound, null, transform.position, 0.5f, 0f);
         yield return new WaitForSeconds(1.5f);
 
         daysSurvivedImage.transform.DOScaleX(1f, 0.75f);
         yield return new WaitForSeconds(2f);
 
         numDaysObj.transform.DOScaleX(1f, 0.25f);
-        UISoundFXManager.Instance.PlaySoundFXClip(daySound, transform.position, 0.5f, 0f);
+        UISoundFXManager.Instance.PlaySoundFXClip(daySound, null, transform.position, 0.5f, 0f);
         yield return new WaitForSeconds(2f);
 
         StartCoroutine(ButtonsAnim());

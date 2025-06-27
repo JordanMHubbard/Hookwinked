@@ -55,7 +55,7 @@ public class DayNightCycle : MonoBehaviour
             yield return null;
         }
 
-        HomeManager.Instance.StartDayEnd();
+        if (GameManager.Instance.GetCurrentDay() != 4) HomeManager.Instance.StartDayEnd();
     }
 
     private void OnDisable()

@@ -14,11 +14,11 @@ public class UISoundFXManager : SoundFXPlayer
     
     public void PlayHoverSound()
     {
-        PlaySoundFXClip(hoverSound, transform.position, 0.5f, 0f);
+        PlaySoundFXClip(hoverSound, null, transform.position, 0.5f, 0f);
     }
 
     public void PlayClickSound()
     {
-        PlaySoundFXClip(clickSound, transform.position, 0.5f, 0f);
+        PlaySoundFXClip(clickSound, null, transform.position, 0.5f, 0f);
     }
 }

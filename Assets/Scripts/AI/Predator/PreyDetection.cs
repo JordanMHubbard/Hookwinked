@@ -18,7 +18,7 @@ public class PreyDetection : MonoBehaviour
         {
             Debug.LogError("ObstacleAvoidance: No AIFishController found on " + gameObject.name);
         }
-        
+
         nearbyPrey = new List<GameObject>();
         StartCoroutine(StartHunt());
     }

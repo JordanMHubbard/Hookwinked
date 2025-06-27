@@ -87,10 +87,12 @@ public class BoatSpawner : MonoBehaviour
             return;
         }
 
+        GameManager.Instance.SetBoatCount(numBoats);
+        
         while (numBoats > 0)
         {
             Vector3 spawnPosition = GetRandomPoint();
-            GameObject boatInstance = Instantiate(boatPrefab, spawnPosition, GetRandomRotation()); 
+            GameObject boatInstance = Instantiate(boatPrefab, spawnPosition, GetRandomRotation());
 
             Transform meshHolder = boatInstance.transform.Find("BoatMesh");
             if (meshHolder == null)
@@ -98,7 +100,7 @@ public class BoatSpawner : MonoBehaviour
                 Debug.LogError("boatMesh child not found on boat prefab!");
                 return;
             }
-            
+
             GameObject meshInstance = Instantiate(GetRandomMesh(), meshHolder);
             meshInstance.transform.localPosition = Vector3.zero;
             meshInstance.transform.localRotation = Quaternion.identity;

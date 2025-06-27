@@ -1,13 +1,20 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class SoundFXPlayer : MonoBehaviour
 {
+    [SerializeField] private AudioMixer audioMixer;
+    [SerializeField] private string volumeCategory;
     [SerializeField] private AudioSource soundFXobject;
 
-    public void Mute() { soundFXobject.volume = 0f; }
-    public void Unmute() { soundFXobject.volume = 1f; }
+    public void Mute()
+    {
+        Debug.Log("muted category: " + volumeCategory);
+        audioMixer.SetFloat(volumeCategory, -80f);
+    }
+    public void Unmute() { audioMixer.SetFloat(volumeCategory, 0f); }
     
-    public void PlaySoundFXClip(AudioClip audioClip, Vector3 position, float volume, float spatialBlend = 1f,
+    public void PlaySoundFXClip(AudioClip audioClip, Transform parent, Vector3 position, float volume, float spatialBlend = 1f,
         float volumeChange = 0f, float pitchChange = 0f)
     {
         if (!audioClip)
@@ -16,7 +23,9 @@ public class SoundFXPlayer : MonoBehaviour
             return;
         }
 
-        AudioSource audioSource = Instantiate(soundFXobject, position, Quaternion.identity);
+        AudioSource audioSource;
+        if (parent != null) { audioSource = Instantiate(soundFXobject, position, Quaternion.identity, parent); }
+        else { audioSource = Instantiate(soundFXobject, position, Quaternion.identity); }
         audioSource.spatialBlend = spatialBlend;
         audioSource.clip = audioClip;
         audioSource.volume = volume;
@@ -51,7 +60,7 @@ public class SoundFXPlayer : MonoBehaviour
         Destroy(audioSource.gameObject, clipLength);
     }
 
-    public GameObject LoopSoundFXClip(AudioClip audioClip, Vector3 position, float volume, float spatialBlend = 1f,
+    public GameObject LoopSoundFXClip(AudioClip audioClip, Transform parent, Vector3 position, float volume, float spatialBlend = 1f,
         float volumeChange = 0f, float pitchChange = 0f)
     {
         if (!audioClip)
@@ -59,8 +68,10 @@ public class SoundFXPlayer : MonoBehaviour
             Debug.LogWarning("audioClip does not exist!");
             return null;
         }
-
-        AudioSource audioSource = Instantiate(soundFXobject, position, Quaternion.identity);
+        
+        AudioSource audioSource;
+        if (parent != null) { audioSource = Instantiate(soundFXobject, position, Quaternion.identity, parent); }
+        else { audioSource = Instantiate(soundFXobject, position, Quaternion.identity); }
         audioSource.clip = audioClip;
         audioSource.spatialBlend = spatialBlend;
         audioSource.loop = true;

@@ -20,7 +20,7 @@ public class FragmentInteractable : MonoBehaviour, IInteractable
     public void Interact(GameObject interactor)
     {
         Debug.Log("fragment has been collected!");
-        SoundFXManager.Instance.PlaySoundFXClip(fragmentInteractSound, transform.position, 1f, 1f, 0f, 0.1f);
+        SoundFXManager.Instance.PlaySoundFXClip(fragmentInteractSound, null, transform.position, 1f, 1f, 0f, 0.1f);
         GameManager.Instance.SetBoatFragmentsCount(GameManager.Instance.GetBoatFragmentsCount() + 1);
         gameObject.SetActive(false);
     }

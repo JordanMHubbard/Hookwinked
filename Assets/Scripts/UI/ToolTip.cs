@@ -36,7 +36,7 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
             perkImage.DOColor(Color.white, 0.1f);
             Destroy(riserObject);
             UISoundFXManager.Instance.PlayClickSound();
-            SoundFXManager.Instance.PlaySoundFXClip(unlockSound, transform.position, 1f, 0f);
+            SoundFXManager.Instance.PlaySoundFXClip(unlockSound, null, transform.position, 1f, 0f);
             perkSelectionUI.BuyPerk(perkIndex);
         }
     }
@@ -92,13 +92,13 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
         {
             if (!perkSelectionUI.CanBuyPerk(perkIndex))
             {
-                SoundFXManager.Instance.PlaySoundFXClip(errorSound, transform.position, 0.75f, 0f);
+                SoundFXManager.Instance.PlaySoundFXClip(errorSound, null, transform.position, 0.75f, 0f);
                 return;
             }
 
             Debug.Log("Left mouse button pressed down.");
             isHeld = true;
-            riserObject = SoundFXManager.Instance.LoopSoundFXClip(riserSound, transform.position, 0.5f, 0f);
+            riserObject = SoundFXManager.Instance.LoopSoundFXClip(riserSound, null, transform.position, 0.5f, 0f);
         }
     }
     

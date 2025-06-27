@@ -160,7 +160,7 @@ public class FishEnergy : MonoBehaviour
         {
             energyBarFill.DOColor(Color.red, 1f);
             energyBarCover.DOColor(Color.red, 1f);
-            SoundFXManager.Instance.PlaySoundFXClip(nearDeathSound, transform.position, 1f, 1f, 0.1f, 0.05f);
+            SoundFXManager.Instance.PlaySoundFXClip(nearDeathSound, null, transform.position, 1f, 1f, 0.1f, 0.05f);
             yield return new WaitForSeconds(1f);
 
             energyBarFill.DOColor(Color.white, 1f);

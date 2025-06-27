@@ -29,7 +29,7 @@ public class ShockGrenade : MonoBehaviour
         {
             if (isOnCooldown) return;
 
-            SoundFXManager.Instance.PlaySoundFXClip(shockSound, transform.position, 1f, 1f, 0, 0.1f);
+            SoundFXManager.Instance.PlaySoundFXClip(shockSound, transform, transform.position, 1f, 1f, 0, 0.1f);
             FishEnergy energyComp = other.GetComponent<FishEnergy>();
             if (energyComp) energyComp.AddProgress(-10f);
             GameManager.Instance.ShowShockedEffect();
@@ -50,10 +50,10 @@ public class ShockGrenade : MonoBehaviour
         yield return new WaitForSeconds(Random.Range(minDropTime, maxDropTime));
         rb.useGravity = false;
 
-        SoundFXManager.Instance.PlaySoundFXClip(beepSound, transform.position, 1f);
+        SoundFXManager.Instance.PlaySoundFXClip(beepSound, transform, transform.position, 1f);
         yield return new WaitForSeconds(1.3f);
 
-        GameObject audio = SoundFXManager.Instance.LoopSoundFXClip(buzzSound, transform.position, 1f);
+        GameObject audio = SoundFXManager.Instance.LoopSoundFXClip(buzzSound, transform, transform.position, 1f);
         electricty.Play();
         isOnCooldown = false;
         yield return new WaitForSeconds(10f);

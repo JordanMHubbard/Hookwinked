@@ -92,12 +92,13 @@ public class DialogueManager : MonoBehaviour
     {
         isInputPaused = true;
         textBox.text = "";
-        SoundFXManager.Instance.PlaySoundFXClip(dialogueSound, transform.position, 0.6f, 0f, 0.05f, 0.3f);
+        SoundFXManager.Instance.PlaySoundFXClip(dialogueSound, null, transform.position, 0.6f, 0f, 0.05f, 0.3f);
 
         foreach (char letter in sentence.ToCharArray())
         {
             textBox.text += letter;
-            if (letter == ' ') SoundFXManager.Instance.PlaySoundFXClip(dialogueSound, transform.position, 0.6f, 0f, 0.05f, 0.3f);
+            if (letter == ' ') SoundFXManager.Instance.PlaySoundFXClip(dialogueSound, transform,
+                transform.position, 0.6f, 0f, 0.05f, 0.3f);
             yield return new WaitForSeconds(0.02f);
         }
 
@@ -128,7 +129,7 @@ public class DialogueManager : MonoBehaviour
         ScreenFade.DOFade(1f, 1f);
         NpcText.text = "";
         PlayerText.text = "";
-        SoundFXManager.Instance.PlaySoundFXClip(magicSound, transform.position, 0.6f, 0f);
+        SoundFXManager.Instance.PlaySoundFXClip(magicSound, null, transform.position, 0.6f, 0f);
         yield return new WaitForSeconds(intermissionTime);
 
         ShowNextDiaolgue();
@@ -207,7 +208,7 @@ public class DialogueManager : MonoBehaviour
         ScreenFade.DOFade(1f, 1f);
         NpcText.text = "";
         PlayerText.text = "";
-        SoundFXManager.Instance.PlaySoundFXClip(magicSound, transform.position, 0.6f, 0f);
+        SoundFXManager.Instance.PlaySoundFXClip(magicSound, null, transform.position, 0.6f, 0f);
         yield return new WaitForSeconds(3f);
 
         SceneManager.LoadScene("MainMenu");

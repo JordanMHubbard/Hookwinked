@@ -13,7 +13,7 @@ public class RockInteractable : MonoBehaviour, IInteractable
     public void Interact(GameObject interactor)
     {
         Debug.Log("rock has been interacted with!");
-        SoundFXManager.Instance.PlaySoundFXClip(rockInteractSound, transform.position, 1f, 1f, 0f, 0.1f);
+        SoundFXManager.Instance.PlaySoundFXClip(rockInteractSound, null, transform.position, 1f, 1f, 0f, 0.1f);
         gameObject.SetActive(false);
         ProjectileHandler projectileHandler = interactor.GetComponent<ProjectileHandler>();
         if (projectileHandler != null) projectileHandler.AddProjectile(gameObject);

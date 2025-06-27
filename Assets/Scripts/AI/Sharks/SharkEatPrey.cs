@@ -5,6 +5,7 @@ public class SharkEatPrey : AIEatPrey
 {
     private SharkController sharkController;
     [SerializeField] private AudioClip[] attackSounds;
+
     protected override void Start()
     {
         base.Start();
@@ -16,13 +17,15 @@ public class SharkEatPrey : AIEatPrey
 
     protected override void OnTriggerEnter(Collider other)
     {
+        if (!canEat) return;
+        
         base.OnTriggerEnter(other);
 
         if (other.CompareTag("Prey"))
         {
             HandleSharkEating();
         }
-        
+
         if (other.CompareTag("Player"))
         {
             HandleSharkEating();

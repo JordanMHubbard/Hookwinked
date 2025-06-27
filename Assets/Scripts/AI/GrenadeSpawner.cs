@@ -86,7 +86,7 @@ public class GrenadeSpawner : MonoBehaviour
     {
         yield return new WaitForSeconds(spawnDelay);
 
-        while (isEnabled)
+        while (isEnabled && GameManager.Instance.GetActiveBoatsCount() > 0)
         {
             yield return new WaitForSeconds(Random.Range(minSpawnCooldown, maxSpawnCooldown));
             CalculateSpawnPos();

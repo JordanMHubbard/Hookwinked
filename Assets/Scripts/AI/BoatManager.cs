@@ -75,7 +75,7 @@ public class BoatManager : MonoBehaviour
         Quaternion rotation = Quaternion.LookRotation(normal);
         Quaternion effectRotation = Quaternion.LookRotation(-normal);
         ShowDamageEffects(position, rotation, effectRotation);
-        SoundFXManager.Instance.PlaySoundFXClip(damageSound, position, 1.5f, 1f, 0.1f, 0.1f);
+        SoundFXManager.Instance.PlaySoundFXClip(damageSound, transform, position, 1.5f, 1f, 0.1f, 0.1f);
         
         // Drop fragment
         DropFragment(position);
@@ -83,8 +83,8 @@ public class BoatManager : MonoBehaviour
         // Apply damage
         if (timesDamaged++ >= 2)
         {
-            Flee(); 
-
+            Flee();
+            GameManager.Instance.DecrementBoatCount();
             // Spawn two new prey
             if (canSpawnFish)
             {
@@ -126,7 +126,7 @@ public class BoatManager : MonoBehaviour
         Debug.Log("We need to get outta here cap'n!");
         currentTarget = GameManager.Instance.GetRandomBoatWaypoint();
         
-        motorSoundRef = SoundFXManager.Instance.LoopSoundFXClip(motorSound, transform.position, 1f, 1f, 0.1f, 0.1f);
+        motorSoundRef = SoundFXManager.Instance.LoopSoundFXClip(motorSound, transform, transform.position, 1f, 1f, 0.1f, 0.1f);
         StartRotate();
         MoveTowardsTarget();
     }

@@ -34,7 +34,7 @@ public class GainedPerkUI : MonoBehaviour
 
         imageCanvas.DOFade(1f, 0.5f);
         nameCanvas.DOFade(1f, 0.5f);
-        SoundFXManager.Instance.PlaySoundFXClip(unlockSound, transform.position, 1f, 0f);
+        SoundFXManager.Instance.PlaySoundFXClip(unlockSound, null, transform.position, 1f, 0f);
         yield return new WaitForSeconds(1f);
 
         descriptionCanvas.DOFade(1f, 0.5f);

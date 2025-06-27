@@ -151,7 +151,7 @@ public class HookStruggleMinigame : MonoBehaviour
     {
         hookImage.SetActive(false);
         hook2Image.SetActive(true);
-        SoundFXManager.Instance.PlaySoundFXClip(releaseSound, transform.position, 1f, 0f);
+        SoundFXManager.Instance.PlaySoundFXClip(releaseSound, null, transform.position, 1f, 0f);
         fishImage.transform.DOMove(fishPosition + new Vector3(-150f, -20f, 0f), 0.75f).SetEase(Ease.OutCubic);
         hook2Image.transform.DORotate(hookRotation + new Vector3(0f, 0f, 50f), 0.5f);
         hook2Image.transform.DOMove(hook2Position + new Vector3(90f, 125f, 0f), 0.5f).SetEase(Ease.OutCubic);
@@ -159,7 +159,7 @@ public class HookStruggleMinigame : MonoBehaviour
 
     private void FishSwimAwayAnim()
     {
-        SoundFXManager.Instance.PlaySoundFXClip(swimSound, transform.position, 1f, 0f);
+        SoundFXManager.Instance.PlaySoundFXClip(swimSound, null, transform.position, 1f, 0f);
         fishImage.transform.DOMove(fishPosition + new Vector3(1200, 0f, 0f), 0.75f).SetEase(Ease.OutCubic);
     }
 

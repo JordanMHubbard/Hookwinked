@@ -50,8 +50,9 @@ public class ProjectileHandler : MonoBehaviour
         if (projectiles.Count > 0)
         {
             Debug.Log("Shot!");
-            SoundFXManager.Instance.PlaySoundFXClip(rockShootSound, transform.position, 0.8f, 0f, 0f, 0.1f);
             GameObject lastProjectile = projectiles[projectiles.Count - 1];
+            SoundFXManager.Instance.PlaySoundFXClip(rockShootSound, null,
+                transform.position, 0.8f, 0f, 0f, 0.1f);
             projectiles.RemoveAt(projectiles.Count - 1);
 
             Rigidbody rb = lastProjectile.GetComponent<Rigidbody>();
