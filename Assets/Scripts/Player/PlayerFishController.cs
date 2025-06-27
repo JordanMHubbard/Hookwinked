@@ -257,7 +257,7 @@ public class PlayerFishController : MonoBehaviour
 
     private IEnumerator PostHookedDash()
     {
-        float duration = 1.25f;
+        float duration = 1f;
         float taperOffRate = (currentSpeed - swimSpeed) / duration; // subtract desired end speed
 
         while (currentSpeed > swimSpeed)

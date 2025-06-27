@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1440035533261124897}
   - component: {fileID: 4062230673451398376}
   m_Layer: 0
-  m_Name: SoundFXObject
+  m_Name: UISoundFXObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41,11 +41,11 @@ AudioSource:
   m_GameObject: {fileID: 6376814319249780634}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 3641145594831652529, guid: 3a2b133d3ef70594da3cef92bb9f3c5a, type: 2}
+  OutputAudioMixerGroup: {fileID: -7404708221442738424, guid: 3a2b133d3ef70594da3cef92bb9f3c5a, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0

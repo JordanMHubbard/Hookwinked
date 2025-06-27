@@ -19,6 +19,7 @@ public class HookStruggleMinigame : MonoBehaviour
     [SerializeField] private AudioClip reelingSound;
     [SerializeField] private AudioClip stretchSound;
     [SerializeField] private AudioClip releaseSound;
+    [SerializeField] private AudioClip swimSound;
     [SerializeField] private AudioSource reelingSource;
     [SerializeField] private AudioSource stretchSource;
 
@@ -158,6 +159,7 @@ public class HookStruggleMinigame : MonoBehaviour
 
     private void FishSwimAwayAnim()
     {
+        SoundFXManager.Instance.PlaySoundFXClip(swimSound, transform.position, 1f, 0f);
         fishImage.transform.DOMove(fishPosition + new Vector3(1200, 0f, 0f), 0.75f).SetEase(Ease.OutCubic);
     }
 

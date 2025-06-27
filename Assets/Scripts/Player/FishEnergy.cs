@@ -113,6 +113,12 @@ public class FishEnergy : MonoBehaviour
 
         while (currentProgress > 0f && !shouldUpdate)
         {
+            if (isPaused)
+            {
+                shouldDepreciate = true;
+                yield break;
+            }
+
             currentProgress -= depreciateRate * Time.deltaTime;
             //Debug.Log("CurrentProgress: "+ currentProgress);
             energyBar.value = currentProgress / 100f;

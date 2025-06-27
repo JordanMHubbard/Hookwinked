@@ -215,6 +215,7 @@ public class GameManager : MonoBehaviour
     public void ShowDeathScreen(DeathScreenUI.DeathType deathType)
     {
         ambienceSource.Pause();
+        SoundFXManager.Instance.Mute();
         PlayerController.PausePlayer();
         deathScreenUI.ChooseRandomMessage(deathType);
         DeathScreen.SetActive(true);
@@ -223,6 +224,7 @@ public class GameManager : MonoBehaviour
     public void ShowSurviveScreen()
     {
         PlayerController.PausePlayer();
+        SoundFXManager.Instance.Mute();
         if (SceneTransitionManager.Instance)
         {
             StartCoroutine(SceneTransitionManager.Instance.TransitionIn(ActivateSurviveScreen));
