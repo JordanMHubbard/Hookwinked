@@ -77,7 +77,7 @@ MonoBehaviour:
   rb: {fileID: 8523063943330938975}
   grenade: {fileID: 4968246753363208450}
   minDropTime: 0.5
-  maxDropTime: 1.01
+  maxDropTime: 1.25
 --- !u!54 &8523063943330938975
 Rigidbody:
   m_ObjectHideFlags: 0

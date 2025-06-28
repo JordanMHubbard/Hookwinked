@@ -79,7 +79,7 @@ public class GrenadeSpawner : MonoBehaviour
             return;
         }
 
-        GameObject boatInstance = Instantiate(grenadePrefab, spawnPosition, Quaternion.identity);
+        GameObject grenadeInstance = Instantiate(grenadePrefab, spawnPosition, Quaternion.identity);
     }
 
     private IEnumerator StartSpawningGrenades()

@@ -40,7 +40,7 @@ public class SharkEatPrey : AIEatPrey
     {
         if (sharkController)
         {
-            SoundFXManager.Instance.PlayRandomSoundFXClip(attackSounds, transform, 1f, 1f, 0.2f, 0.1f);
+            SoundFXManager.Instance.PlayRandomSoundFXClip(attackSounds, transform, transform.position, 1f, 1f, 0.2f, 0.1f);
             sharkController.animator.Play("Attack");
             StartCoroutine(ReturnSharkToSwim(sharkController));
         }

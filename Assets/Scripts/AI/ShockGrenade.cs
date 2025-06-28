@@ -11,7 +11,7 @@ public class ShockGrenade : MonoBehaviour
     [SerializeField] private Rigidbody rb;
     [SerializeField] private GameObject grenade;
     [SerializeField] private float minDropTime = 0.5f;
-    [SerializeField] private float maxDropTime = 1.01f;
+    [SerializeField] private float maxDropTime = 1.25f;
     private bool isOnCooldown = true;
 
     private void Awake()

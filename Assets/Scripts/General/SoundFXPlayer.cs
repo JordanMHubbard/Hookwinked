@@ -38,7 +38,7 @@ public class SoundFXPlayer : MonoBehaviour
         Destroy(audioSource.gameObject, clipLength);
     }
 
-    public void PlayRandomSoundFXClip(AudioClip[] audioClips, Transform parent, float volume, float spatialBlend = 1f,
+    public void PlayRandomSoundFXClip(AudioClip[] audioClips, Transform parent, Vector3 position, float volume, float spatialBlend = 1f,
         float volumeChange = 0f, float pitchChange = 0f)
     {
         if (audioClips.Length < 1)
@@ -47,7 +47,9 @@ public class SoundFXPlayer : MonoBehaviour
             return;
         }
 
-        AudioSource audioSource = Instantiate(soundFXobject, parent.position, Quaternion.identity, parent);
+        AudioSource audioSource;
+        if (parent != null) { audioSource = Instantiate(soundFXobject, position, Quaternion.identity, parent); }
+        else { audioSource = Instantiate(soundFXobject, position, Quaternion.identity); }
         audioSource.clip = audioClips[Random.Range(0, audioClips.Length)];
         audioSource.spatialBlend = spatialBlend;
         audioSource.volume = volume;
@@ -84,7 +86,7 @@ public class SoundFXPlayer : MonoBehaviour
         return audioSource.gameObject;
     }
 
-    public GameObject LoopRandomSoundFXClip(AudioClip[] audioClips, Transform parent, float volume, float spatialBlend = 1f,
+    public GameObject LoopRandomSoundFXClip(AudioClip[] audioClips, Transform parent, Vector3 position, float volume, float spatialBlend = 1f,
         float volumeChange = 0f, float pitchChange = 0f)
     {
         if (audioClips.Length < 1)
@@ -93,7 +95,9 @@ public class SoundFXPlayer : MonoBehaviour
             return null;
         }
 
-        AudioSource audioSource = Instantiate(soundFXobject, parent.position, Quaternion.identity, parent);
+        AudioSource audioSource;
+        if (parent != null) { audioSource = Instantiate(soundFXobject, position, Quaternion.identity, parent); }
+        else { audioSource = Instantiate(soundFXobject, position, Quaternion.identity); }
         audioSource.clip = audioClips[Random.Range(0, audioClips.Length)];
         audioSource.spatialBlend = spatialBlend;
         audioSource.loop = true;

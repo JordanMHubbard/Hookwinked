@@ -105,7 +105,7 @@ public class PlayerFishController : MonoBehaviour
         HandleRoation();
         ShouldTilt();
 
-        if (InputManager.Instance.DashInput && !isDashOnCooldown)
+        if (InputManager.Instance.DashInput && !isDashOnCooldown && InputManager.Instance.SwimInput.y > 0f)
         {
             StartCoroutine(Dash());
         }
@@ -148,7 +148,7 @@ public class PlayerFishController : MonoBehaviour
         if (currentMovement.magnitude > 1f && !isSwimAudioOnCooldown && !isDashing)
         {
             StartCoroutine(HandleSwimAudioCooldown());
-            SoundFXManager.Instance.PlayRandomSoundFXClip(swimSounds, transform, 0.3f, 1f, 0f, 0.05f);
+            SoundFXManager.Instance.PlayRandomSoundFXClip(swimSounds, transform, transform.position, 0.3f, 1f, 0f, 0.05f);
         }
     }
 
@@ -215,14 +215,14 @@ public class PlayerFishController : MonoBehaviour
     {
         //Debug.Log("We eating prey 2nite");
         float energyProg = other.GetComponent<PreyManager>().GetEnergyValue();
-        SoundFXManager.Instance.PlayRandomSoundFXClip(eatSounds, transform, 1f, 1f, 0.2f, 0.1f);
+        SoundFXManager.Instance.PlayRandomSoundFXClip(eatSounds, transform, transform.position, 1f, 1f, 0.2f, 0.1f);
         energyComp.AddProgress(energyProg);
         GameManager.Instance.PreyConsumed(other.transform.parent.gameObject);
     }
 
     private IEnumerator Death(Collider other)
     {
-        SoundFXManager.Instance.PlayRandomSoundFXClip(eatSounds, transform, 1f, 1f, 0.2f, 0.1f);
+        SoundFXManager.Instance.PlayRandomSoundFXClip(eatSounds, transform, transform.position, 1f, 1f, 0.2f, 0.1f);
         yield return new WaitForSeconds(1f);
 
         PausePlayer();
@@ -239,7 +239,7 @@ public class PlayerFishController : MonoBehaviour
 
     private void BeginHookedMinigame(Collider other)
     {
-        SoundFXManager.Instance.PlayRandomSoundFXClip(eatSounds, transform, 1f, 1f, 0.2f, 0.1f);
+        SoundFXManager.Instance.PlayRandomSoundFXClip(eatSounds, transform, transform.position, 1f, 1f, 0.2f, 0.1f);
         energyComp.SetIsPaused(true);
         GameManager.Instance.PreyConsumed(other.transform.parent.gameObject);
         Debug.Log("Fight for your life!");
@@ -279,7 +279,7 @@ public class PlayerFishController : MonoBehaviour
 
         float ogDepRate = energyComp.GetDepreciationRate();
         energyComp.OnDash();
-        SoundFXManager.Instance.PlayRandomSoundFXClip(dashSounds, transform, 1f, 1f, 0.06f, 0.06f);
+        SoundFXManager.Instance.PlayRandomSoundFXClip(dashSounds, transform, transform.position, 1f, 1f, 0.06f, 0.06f);
 
         isDashOnCooldown = true;
         isDashing = true;
