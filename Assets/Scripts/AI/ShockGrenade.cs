@@ -24,6 +24,13 @@ public class ShockGrenade : MonoBehaviour
         PauseManager.Instance.OnPaused += PauseGrenade;
         PauseManager.Instance.OnUnpaused += UnpauseGrenade;
     }
+    
+    private void OnDisable()
+    {
+        PauseManager.Instance.OnPaused -= PauseGrenade;
+        PauseManager.Instance.OnUnpaused -= UnpauseGrenade;
+    }
+
     private void Start()
     {
         StartCoroutine(EnableGrenade());
