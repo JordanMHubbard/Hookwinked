@@ -10,7 +10,8 @@ public class DeathScreenUI : MonoBehaviour
     [SerializeField] private CanvasGroup textGroup;
     [SerializeField] private CanvasGroup restartGroup;
     [SerializeField] private CanvasGroup exitGroup;
-    public enum DeathType {Hooked, Exhaustion}
+    [SerializeField] private AudioClip failSound;
+    public enum DeathType { Hooked, Exhaustion }
     public DeathType causeOfDeath {get; private set;}
     private static readonly string[] hookedMessages = new string[] {
         "You were packaged and sold to the local supermarket",
@@ -53,6 +54,7 @@ public class DeathScreenUI : MonoBehaviour
     {
         yield return new WaitForSeconds(1.5f);
         textGroup.DOFade(1f, 2f);
+        UISoundFXManager.Instance.PlaySoundFXClip(failSound, null, transform.position, 0.8f, 0f);
 
         yield return new WaitForSeconds(1f);
         StartCoroutine(ButtonsAnim());

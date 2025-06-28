@@ -16,6 +16,7 @@ public class HookStruggleMinigame : MonoBehaviour
     [SerializeField] private CanvasGroup rightToolTip;
     [SerializeField] private Slider struggleMeter;
 
+    [SerializeField] private AudioClip alertSound;
     [SerializeField] private AudioClip reelingSound;
     [SerializeField] private AudioClip stretchSound;
     [SerializeField] private AudioClip releaseSound;
@@ -165,6 +166,7 @@ public class HookStruggleMinigame : MonoBehaviour
 
     private IEnumerator textAnim()
     {
+        SoundFXManager.Instance.PlaySoundFXClip(alertSound, null, transform.position, 1f, 0f);
         textPrompt.transform.DORotate(textRotation + new Vector3(0f, 0f, 2.5f), 0.04f);
         textPrompt.transform.DOScale(1.5f, 0.5f);
         yield return new WaitForSeconds(0.04f);

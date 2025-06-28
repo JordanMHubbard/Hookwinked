@@ -6,6 +6,7 @@ public class ShockGrenade : MonoBehaviour
     [SerializeField] private AudioClip beepSound;
     [SerializeField] private AudioClip buzzSound;
     [SerializeField] private AudioClip shockSound;
+    private GameObject audioObject;
     [SerializeField] private ParticleSystem electricty;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private GameObject grenade;
@@ -18,6 +19,11 @@ public class ShockGrenade : MonoBehaviour
         InitializeGrenadeRotation();
     }
 
+    private void OnEnable()
+    {
+        PauseManager.Instance.OnPaused += PauseGrenade;
+        PauseManager.Instance.OnUnpaused += UnpauseGrenade;
+    }
     private void Start()
     {
         StartCoroutine(EnableGrenade());
@@ -53,13 +59,13 @@ public class ShockGrenade : MonoBehaviour
         SoundFXManager.Instance.PlaySoundFXClip(beepSound, transform, transform.position, 1f);
         yield return new WaitForSeconds(1.3f);
 
-        GameObject audio = SoundFXManager.Instance.LoopSoundFXClip(buzzSound, transform, transform.position, 1f);
+        audioObject = SoundFXManager.Instance.LoopSoundFXClip(buzzSound, transform, transform.position, 1f);
         electricty.Play();
         isOnCooldown = false;
         yield return new WaitForSeconds(10f);
 
         isOnCooldown = true;
-        Destroy(audio);
+        Destroy(audioObject);
 
         yield return new WaitForSeconds(3f);
         Destroy(gameObject);
@@ -76,6 +82,16 @@ public class ShockGrenade : MonoBehaviour
         );
 
         grenade.transform.rotation *= Quaternion.Euler(randomOffset);
+    }
+
+    private void PauseGrenade()
+    {
+        Destroy(audioObject);
+    }
+
+    private void UnpauseGrenade()
+    {
+        audioObject = SoundFXManager.Instance.LoopSoundFXClip(buzzSound, transform, transform.position, 1f);
     }
 
 
