@@ -69,8 +69,9 @@ public class SaveSystem
     {
         if (File.Exists(SaveFileName()))
         {
-            File.Delete(SaveFileName());
-            Debug.Log("Save file deleted.");
+            saveData.GameData = GameSaveData.GetDefault();
+            File.WriteAllText(SaveFileName(), JsonUtility.ToJson(saveData, true));
+            Debug.Log("Game data reset");
         }
     }
 

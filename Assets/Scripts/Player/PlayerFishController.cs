@@ -262,6 +262,13 @@ public class PlayerFishController : MonoBehaviour
 
         while (currentSpeed > swimSpeed)
         {
+            float step = currentSpeed * Time.deltaTime;
+            if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, step + 1f))
+            {
+                Debug.Log("Hit " + hit.collider.name + ", stopping movement.");
+                break;
+            }
+
             transform.position += transform.forward * currentSpeed * Time.deltaTime;
             currentSpeed -= taperOffRate * Time.deltaTime;
 
