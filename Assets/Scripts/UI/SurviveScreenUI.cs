@@ -88,6 +88,7 @@ public class SurviveScreenUI : MonoBehaviour
 
     public void ContinueGame()
     {
+        SoundFXManager.Instance.Unmute();
         GameManager.Instance.ResetNumDayRetries();
         SceneManager.LoadScene("Perks");
     }

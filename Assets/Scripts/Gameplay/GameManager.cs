@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
     {
         { new PerkInfo("NitroFish", "An ethereal spirit hastens your stride. Gain faster top speed when using the swim burst ability", 8) },
         { new PerkInfo("Ocean's Endurance", "A quiet force steadies your soul, causing energy to drain more slowly", 12) },
-        { new PerkInfo("Coral-lateral Damage", "Imbued with great strength against your will, you're now able to hurl stones that deal damage to anything they strike", 0) },
+        { new PerkInfo("Coral-lateral Damage", "Imbued with great strength against your will, you're now able to destroy fishing boats by hurling stones at them", 0) },
         { new PerkInfo("Silent Assassin", "Your aura grows faint in the wild — prey senses you from a shorter distance", 6) }
     };
     [SerializeField] private List<Sprite> perkIcons;
@@ -66,7 +66,11 @@ public class GameManager : MonoBehaviour
     
     // Setters
     public void SetCurrentDay(int day) { currentDay = day; }
-    public void IncrementCurrentDay() { currentDay++; }
+    public void IncrementCurrentDay()
+    {
+        currentDay++;
+        SaveSystem.Save();
+    }
     public void IncrementNumDayRetries()
     {
         numDayRetries++;
