@@ -70,6 +70,8 @@ public class BoatManager : MonoBehaviour
 
     public void ApplyRockDamage(Vector3 point, Vector3 normal, GameObject rock)
     {
+        if (++timesDamaged > 3) return;
+
         // Show damage decal and effect
         Vector3 position = point + normal * -0.1f;
         Quaternion rotation = Quaternion.LookRotation(normal);
@@ -81,7 +83,7 @@ public class BoatManager : MonoBehaviour
         DropFragment(position);
 
         // Apply damage
-        if (timesDamaged++ >= 2)
+        if (timesDamaged == 3)
         {
             Flee();
             GameManager.Instance.DecrementBoatCount();

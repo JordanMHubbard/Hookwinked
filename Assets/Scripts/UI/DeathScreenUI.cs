@@ -72,11 +72,13 @@ public class DeathScreenUI : MonoBehaviour
 
     public void RestartDay()
     {
+        SoundFXManager.Instance.Unmute();
         GameManager.Instance.IncrementNumDayRetries();
         SceneManager.LoadScene("TheReef");
     }
     public void ExitToMenu()
     {
+        SoundFXManager.Instance.Unmute();
         SceneManager.LoadScene("MainMenu");
     }
 }
