@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject OptionsScreen;
     [SerializeField] private GameObject ControlsScreen;
     [SerializeField] private GameObject TitleImage;
+    [SerializeField] private CanvasGroup canvasGroup;
 
     private void Awake()
     {
@@ -43,19 +44,33 @@ public class MainMenu : MonoBehaviour
     public void OpenOptions()
     {
         OptionsScreen.SetActive(true);
-        gameObject.SetActive(false);
+        Hide();
     }
 
     public void OpenControls()
     {
         ControlsScreen.SetActive(true);
-        gameObject.SetActive(false);
+        Hide();
     }
 
     public void QuitGame()
     {
         Application.Quit();
     }
+
+    public void Show()
+    {
+        canvasGroup.interactable = true;
+        canvasGroup.blocksRaycasts = true;
+        canvasGroup.alpha = 1f;
+    }
+    public void Hide()
+    {
+        canvasGroup.interactable = false;
+        canvasGroup.blocksRaycasts = false;
+        canvasGroup.alpha = 0f;
+    }
+
 
     private void InitializeUI()
     {

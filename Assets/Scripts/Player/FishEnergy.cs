@@ -36,7 +36,7 @@ public class FishEnergy : MonoBehaviour
     {
         if (GameManager.Instance != null && GameManager.Instance.GetIsPerkUnlocked(1))
         {
-            depreciateRate = 1.5f;
+            depreciateRate = 1.25f;
             DashDepreciateRate = 4.5f;
             Debug.Log("Energy Depreciation is now 1.5 and 4.5 for dashing!");
         }
