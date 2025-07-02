@@ -22,6 +22,8 @@ public class OptionsManager : MonoBehaviour
         data.resWidth = Screen.currentResolution.width;
         data.resHeight = Screen.currentResolution.height;
         data.qualIndex = QualitySettings.GetQualityLevel();
+        data.isVsyncOn = QualitySettings.vSyncCount == 1 ? true : false;
+        data.maxFPS = Application.targetFrameRate;
     }
 
     public void Load(OptionsSaveData data)
@@ -30,6 +32,10 @@ public class OptionsManager : MonoBehaviour
         Screen.fullScreen = data.isFullscreen;
         Screen.SetResolution(data.resWidth, data.resHeight, Screen.fullScreen);
         QualitySettings.SetQualityLevel(data.qualIndex);
+        QualitySettings.vSyncCount = data.isVsyncOn ? 1 : 0;
+        Application.targetFrameRate = data.maxFPS;
+        Debug.Log("vsync is: " +QualitySettings.vSyncCount);
+        Debug.Log("current fps is: " +Application.targetFrameRate);
     }
 
     public void SaveDefault(ref OptionsSaveData data)
@@ -39,6 +45,8 @@ public class OptionsManager : MonoBehaviour
         data.resWidth = OptionsSaveData.GetDefault().resWidth;
         data.resHeight = OptionsSaveData.GetDefault().resHeight;
         data.qualIndex = OptionsSaveData.GetDefault().qualIndex;
+        data.isVsyncOn = OptionsSaveData.GetDefault().isVsyncOn;
+        data.maxFPS = OptionsSaveData.GetDefault().maxFPS;
     }
 
     #endregion
@@ -53,12 +61,20 @@ public struct OptionsSaveData
     public int resWidth;
     public int resHeight;
     public int qualIndex;
+    public bool isVsyncOn;
+    public int maxFPS;
 
     public static OptionsSaveData GetDefault()
     {
-        Resolution maxRes = Screen.resolutions.Length > 0 ?
-            Screen.resolutions[Screen.resolutions.Length - 1] :
-            Screen.currentResolution;
+        Resolution maxRes = Screen.currentResolution;
+        for (int i = Screen.resolutions.Length - 1; i >= 0; i--)
+        {
+            if (Screen.resolutions[i].width % 16 == 0 && Screen.resolutions[i].height % 9 == 0)
+            {
+                maxRes = Screen.resolutions[i];
+                break;
+            }
+        }
 
         return new OptionsSaveData
         {
@@ -66,7 +82,9 @@ public struct OptionsSaveData
             resWidth = maxRes.width,
             resHeight = maxRes.height,
             qualIndex = QualitySettings.names.Length - 1,
-            isFullscreen = true
+            isFullscreen = true,
+            isVsyncOn = false,
+            maxFPS = -1
         };
     }
     
