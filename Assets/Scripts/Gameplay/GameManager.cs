@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject DeathScreen;
     [SerializeField] private GameObject SurviveScreen;
     [SerializeField] private GameObject DayTransition;
+    [SerializeField] private GameObject TutorialScreen;
     [SerializeField] private TextMeshProUGUI CurrentDayText;
     [SerializeField] private CanvasGroup DayTransitionGroup;
     [SerializeField] private CanvasGroup CurrentDayGroup;
@@ -113,7 +114,7 @@ public class GameManager : MonoBehaviour
         return boatWaypoints[UnityEngine.Random.Range(0, boatWaypoints.Count)].transform.position; }
     public List<PerkInfo> GetPerkList() {return perkList;}
     public bool GetIsPerkUnlocked(int index) {return perkList[index].isUnlocked;}
-    public void PausePlayerEnergy(bool shouldPause) { PlayerController.PauseEnergy(shouldPause); }
+    public void PausePlayerEnergy(bool shouldPause) { if (PlayerController) PlayerController.PauseEnergy(shouldPause); }
     public void EnableHUD() { PlayerHUD.SetActive(true); }
     public void DisableHUD() { PlayerHUD.SetActive(false); }
 
@@ -162,6 +163,7 @@ public class GameManager : MonoBehaviour
         }
         if (HurtEffect != null) HurtEffect.gameObject.SetActive(false);
         if (ShockedEffect != null) ShockedEffect.gameObject.SetActive(false);
+        if (TutorialScreen != null) TutorialScreen.SetActive(false);
 
         // Perk Level
         if (PerkSelectionScreen != null) PerkSelectionScreen.SetActive(false);
@@ -187,10 +189,17 @@ public class GameManager : MonoBehaviour
         DayTransitionGroup.DOFade(0f, 3f);
         yield return new WaitForSeconds(3f);
 
-        InputManager.Instance.isInputPaused = false;
         DayTransition.SetActive(false);
-        if (PlayerController) PlayerController.GetEnergyComp().SetIsPaused(false);
-
+        if (currentDay == 0)
+        {
+            TutorialScreen.SetActive(true);
+        }
+        else
+        {
+            InputManager.Instance.isInputPaused = false;
+            if (PlayerController) PlayerController.GetEnergyComp().SetIsPaused(false);
+            DayNightCycle.Instance.StartDay();
+        }
     }
 
     public void ShowHurtEffect()

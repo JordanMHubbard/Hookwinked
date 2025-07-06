@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class DayNightCycle : MonoBehaviour
 {
+    public static DayNightCycle Instance {get; private set;}
     private Light sunlight;
     [SerializeField] private float daySpeed = 1f;
     private Vector3 currentRotation;
@@ -13,6 +14,9 @@ public class DayNightCycle : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+
         daySpeed = GameManager.Instance.GetCurrentDaySettings().daySpeed;
     }
 
@@ -24,7 +28,10 @@ public class DayNightCycle : MonoBehaviour
         sunlight = GetComponent<Light>();
         baseColor = fog.GetColor("_BaseColor");
         currentRotation = sunlight.transform.rotation.eulerAngles;
+    }
 
+    public void StartDay()
+    {
         StartCoroutine(DecreaseIntensity());
         StartCoroutine(LowerSun());
     }
