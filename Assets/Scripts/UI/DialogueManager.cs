@@ -26,7 +26,8 @@ public class DialogueManager : MonoBehaviour
     {
         Debug.Log("Today: " + GameManager.Instance.GetCurrentDay());
 
-        if (GameManager.Instance.GetCurrentDay() < 2)
+        int currentDay = GameManager.Instance.GetCurrentDay();
+        if (currentDay < 2)
         {
             if (AllDialogue.Count > GameManager.Instance.GetCurrentDay())
             {
@@ -34,7 +35,7 @@ public class DialogueManager : MonoBehaviour
                 StartCoroutine(PlayCurrentDayDialogue());
             }
         }
-        else if (GameManager.Instance.GetCurrentDay() == 4)
+        else if (currentDay >= 3)
         {
             if (AllDialogue.Count > GameManager.Instance.GetCurrentDay())
             {
