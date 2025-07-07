@@ -45,6 +45,7 @@ public class PauseManager : MonoBehaviour
         IsPaused = true;
         OnPaused?.Invoke();
         GameManager.Instance.PauseAmbience(true);
+        GameManager.Instance.PauseSuspenseMusic(true);
         GameManager.Instance.PausePlayerEnergy(true);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true; 
@@ -60,6 +61,7 @@ public class PauseManager : MonoBehaviour
         IsPaused = false;
         OnUnpaused?.Invoke();
         GameManager.Instance.PauseAmbience(false);
+        GameManager.Instance.PauseSuspenseMusic(false);
         GameManager.Instance.PausePlayerEnergy(false);
         Time.timeScale = 1f;
 

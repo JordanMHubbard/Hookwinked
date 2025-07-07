@@ -10,6 +10,7 @@ public class GrenadeSpawner : MonoBehaviour
     [SerializeField] private int minSpawnCooldown = 6;
     [SerializeField] private int maxSpawnCooldown = 14;
     [SerializeField] private LayerMask interactableLayer;
+
     private BoxCollider box;
 
     private void Awake()
@@ -85,6 +86,7 @@ public class GrenadeSpawner : MonoBehaviour
     private IEnumerator StartSpawningGrenades()
     {
         yield return new WaitForSeconds(spawnDelay);
+        GameManager.Instance.PlaySuspenseMusic();
 
         while (isEnabled && GameManager.Instance.GetActiveBoatsCount() > 0)
         {
@@ -103,6 +105,4 @@ public class GrenadeSpawner : MonoBehaviour
         bool isReachable = IsAreaReachable(desiredLoc, new Vector3(2, 2, 2));
         if (isReachable) SpawnGrenade(desiredLoc);
     }
-    
-
 }

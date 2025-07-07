@@ -59,6 +59,7 @@ public class HomeManager : MonoBehaviour
         HomeMessageGroup.gameObject.SetActive(false);
         GameManager.Instance.ShowSurviveScreen();
         GameManager.Instance.PauseAmbience(true);
+        GameManager.Instance.PauseSuspenseMusic(true);
     }
 
     private void ShowWaypoint()

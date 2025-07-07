@@ -62,8 +62,8 @@ public class GameManager : MonoBehaviour
         { new PerkInfo("Silent Assassin", "Your aura grows faint in the wild — prey senses you from a shorter distance", 6) }
     };
     [SerializeField] private List<Sprite> perkIcons;
-    [SerializeField] private AudioClip ambience;
     [SerializeField] private AudioSource ambienceSource;
+    [SerializeField] private AudioSource suspenseMusicSource;
     
     // Setters
     public void SetCurrentDay(int day) { currentDay = day; }
@@ -128,7 +128,6 @@ public class GameManager : MonoBehaviour
         InitializeUI();
         InitializeSpawners();
         SetPerkIcons();
-        ambienceSource.clip = ambience; 
     }
 
     private void Start()
@@ -144,10 +143,18 @@ public class GameManager : MonoBehaviour
     }
 
     public void PlayAmbience() { ambienceSource.Play(); }
+    public void PlaySuspenseMusic() { suspenseMusicSource.Play(); }
     public void PauseAmbience(bool shouldPause)
     {
-        if (shouldPause) { ambienceSource.Pause(); }
-        else { ambienceSource.UnPause(); }
+        if (shouldPause) ambienceSource.Pause(); 
+        else ambienceSource.UnPause();
+    }
+    public void PauseSuspenseMusic(bool shouldPause)
+    {
+        if (currentDay != 4) return;
+
+        if (shouldPause) suspenseMusicSource.Pause();
+        else suspenseMusicSource.UnPause();
     }
     
     // UI

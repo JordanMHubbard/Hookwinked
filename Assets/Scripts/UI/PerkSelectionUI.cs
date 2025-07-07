@@ -69,6 +69,13 @@ public class PerkSelectionUI : MonoBehaviour
     public void Continue()
     {
         GameManager.Instance.IncrementCurrentDay();
+        if (SceneTransitionManager.Instance)
+        {
+            StartCoroutine(SceneTransitionManager.Instance.TransitionIn(OpenReefLevel));
+        }
+    }
+    private void OpenReefLevel()
+    {
         SceneManager.LoadScene("TheReef");
     }
 
