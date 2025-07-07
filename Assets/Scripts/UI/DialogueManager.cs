@@ -74,7 +74,7 @@ public class DialogueManager : MonoBehaviour
 
         if (currentDialogue[currentLineIndex].shouldPauseAfter)
         {
-            StartCoroutine(HandleIntermission(3f));
+            StartCoroutine(HandleIntermission(4f));
         }
         else
         {

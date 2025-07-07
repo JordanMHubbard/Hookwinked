@@ -53,7 +53,7 @@ public class SharkPreyDetection : PreyDetection
 
         while (canHunt)
         {
-            yield return new WaitForSeconds(Random.Range(16, 40));
+            yield return new WaitForSeconds(Random.Range(15, 30));
 
             if (isNearPlayer) continue;
 

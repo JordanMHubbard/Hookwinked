@@ -38,7 +38,7 @@ public class GainedPerkUI : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         descriptionCanvas.DOFade(1f, 0.5f);
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(7f);
 
         titleAnnouncementCanvas.DOFade(0f, 1f);
         imageCanvas.DOFade(0f, 1f);
