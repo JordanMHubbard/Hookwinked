@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject OptionsScreen;
     [SerializeField] private GameObject ControlsScreen;
     [SerializeField] private GameObject TitleImage;
+    [SerializeField] private GameObject CreditsScreen;
     [SerializeField] private CanvasGroup canvasGroup;
 
     private void Awake()
@@ -53,6 +54,12 @@ public class MainMenu : MonoBehaviour
         Hide();
     }
 
+    public void OpenCredits()
+    {
+        CreditsScreen.SetActive(true);
+        Hide();
+    }
+
     public void QuitGame()
     {
         Application.Quit();
@@ -77,6 +84,7 @@ public class MainMenu : MonoBehaviour
         // Menus
         if (OptionsScreen != null) OptionsScreen.SetActive(false);
         if (ControlsScreen != null) ControlsScreen.SetActive(false);
+        if (CreditsScreen != null) CreditsScreen.SetActive(false);
     }
 
     private void TitleAnim()

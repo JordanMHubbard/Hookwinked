@@ -1,13 +1,17 @@
 using UnityEngine.Audio;
 using UnityEngine.UI;
 using UnityEngine;
+using TMPro;
 using System.Collections.Generic;
+using System;
 
 public class OptionsScreenUI : MonoBehaviour
 {
     [SerializeField] private AudioMixer mixer;
     [SerializeField] private Slider masterAudioSlider;
     [SerializeField] private Slider mouseSensSlider;
+    [SerializeField] private TextMeshProUGUI masterAudioText;
+    [SerializeField] private TextMeshProUGUI mouseSensText;
     [SerializeField] private TMPro.TMP_Dropdown windowDropdown;
     [SerializeField] private TMPro.TMP_Dropdown resolutionDropdown;
     [SerializeField] private TMPro.TMP_Dropdown qualityDropdown;
@@ -24,9 +28,11 @@ public class OptionsScreenUI : MonoBehaviour
     private void InitializeSettings()
     {
         mixer.GetFloat("masterVolume", out float vol);
-        masterAudioSlider.value = vol;
+        masterAudioSlider.value = Mathf.Round((vol + 80f) * 1.25f);
+        masterAudioText.text = masterAudioSlider.value.ToString();
 
         if (InputManager.Instance) mouseSensSlider.value = InputManager.Instance.mouseSensitivity * 10f;
+        mouseSensText.text = (Mathf.Round(mouseSensSlider.value * 100f) / 100f).ToString(); 
         windowDropdown.value = Screen.fullScreen ? 1 : 0;
         SetAvailableResolutions();
         qualityDropdown.value = QualitySettings.GetQualityLevel();
@@ -78,12 +84,19 @@ public class OptionsScreenUI : MonoBehaviour
 
     public void SetMasterVolume(float volume)
     {
-        mixer.SetFloat("masterVolume", volume);
+        float masterVol = Mathf.Round((volume / 100 * 30f) - 30f);
+
+        if (Mathf.Approximately(volume, 0)) mixer.SetFloat("masterVolume", -80);
+        else mixer.SetFloat("masterVolume", masterVol);
+
+        masterAudioText.text = Mathf.Round(volume).ToString();
     }
 
     public void SetMouseSens(float sensitivity)
     {
-        Debug.Log("Slider sens: " + sensitivity);
+        float sensText = Mathf.Round(sensitivity * 100f) / 100f;
+        mouseSensText.text = sensText.ToString();
+
         float sens = sensitivity / 10f;
         if (InputManager.Instance) InputManager.Instance.mouseSensitivity = sens;
         OptionsManager.Instance.defaultMouseSens = sens;
