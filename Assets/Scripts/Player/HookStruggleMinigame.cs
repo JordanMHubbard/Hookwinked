@@ -141,7 +141,7 @@ public class HookStruggleMinigame : MonoBehaviour
         yield return new WaitForSeconds(0.75f);
 
         FishSwimAwayAnim();
-        yield return new WaitForSeconds(0.75f);
+        yield return new WaitForSeconds(0.9f);
 
         Reset();
         GameManager.Instance.ExitHookedMinigame(true);
@@ -160,7 +160,7 @@ public class HookStruggleMinigame : MonoBehaviour
     private void FishSwimAwayAnim()
     {
         SoundFXManager.Instance.PlaySoundFXClip(swimSound, null, transform.position, 1f, 0f);
-        fishImage.DOAnchorPos(fishPosition + new Vector2(2600, 0f), 0.75f).SetEase(Ease.OutCubic);
+        fishImage.DOAnchorPos(fishPosition + new Vector2(2600, 0f), 0.9f).SetEase(Ease.OutCubic);
     }
 
     private IEnumerator textAnim()

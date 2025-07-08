@@ -398,6 +398,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SparkleParticles
       objectReference: {fileID: 0}
+    - target: {fileID: 1842583774786156554, guid: 283178156da471c4381dc830f8ef7b0d, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3558455478590916505, guid: 283178156da471c4381dc830f8ef7b0d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
