@@ -18,7 +18,12 @@ public class OptionsScreenUI : MonoBehaviour
     [SerializeField] private Toggle vsyncToggle;
     [SerializeField] private TMPro.TMP_Dropdown fpsDropdown;
     private Resolution[] resolutions;
+    private List<Resolution> filteredResolutions;
+    private Resolution selectedResolution;
+    private RefreshRate currentRefreshRate;
+    private FullScreenMode fullscreenMode;
     private int[] fpsValues = { 30, 60, 90, 120, 144, 165, 240, -1 };
+    private bool hasInitialized = false;
 
     private void Start()
     {
@@ -32,31 +37,57 @@ public class OptionsScreenUI : MonoBehaviour
         masterAudioText.text = masterAudioSlider.value.ToString();
 
         if (InputManager.Instance) mouseSensSlider.value = InputManager.Instance.mouseSensitivity * 10f;
-        mouseSensText.text = (Mathf.Round(mouseSensSlider.value * 100f) / 100f).ToString(); 
-        windowDropdown.value = Screen.fullScreen ? 1 : 0;
+        mouseSensText.text = (Mathf.Round(mouseSensSlider.value * 100f) / 100f).ToString();
+        SetCurrentWindowMode();
         SetAvailableResolutions();
         qualityDropdown.value = QualitySettings.GetQualityLevel();
         vsyncToggle.isOn = QualitySettings.vSyncCount == 1;
         SetDefaultMaxFPS();
+        hasInitialized = true;
+    }
+
+    private void SetCurrentWindowMode()
+    {
+        fullscreenMode = Screen.fullScreenMode;
+        switch (fullscreenMode)
+        {
+            case FullScreenMode.Windowed:
+                windowDropdown.value = 0;
+                break;
+            case FullScreenMode.FullScreenWindow:
+                windowDropdown.value = 1;
+                break;
+            case FullScreenMode.ExclusiveFullScreen:
+                windowDropdown.value = 2;
+                break;
+        }
     }
 
     private void SetAvailableResolutions()
     {
+        selectedResolution = Screen.currentResolution;
         resolutions = Screen.resolutions;
+        filteredResolutions = new List<Resolution>();
+
         resolutionDropdown.ClearOptions();
+        currentRefreshRate = Screen.currentResolution.refreshRateRatio;
+
         List<string> resOptions = new List<string>();
-
-
         int currentResIndex = 0;
         for (int i = 0; i < resolutions.Length; i++)
         {
-            if (resolutions[i].width % 16 != 0 || resolutions[i].height % 9 != 0) continue;
+            if (resolutions[i].refreshRateRatio.value == currentRefreshRate.value)
+            {
+                filteredResolutions.Add(resolutions[i]);
+            }
+        }
 
-            string option = resolutions[i].width + " x " + resolutions[i].height;
+        for (int i = 0; i < filteredResolutions.Count; i++)
+        {
+            string option = filteredResolutions[i].width + " x " + filteredResolutions[i].height;
             resOptions.Add(option);
-
-            if (resolutions[i].width == Screen.currentResolution.width &&
-                resolutions[i].height == Screen.currentResolution.height)
+            if (filteredResolutions[i].width == Screen.width &&
+                filteredResolutions[i].height == Screen.height)
             {
                 currentResIndex = i;
             }
@@ -84,6 +115,8 @@ public class OptionsScreenUI : MonoBehaviour
 
     public void SetMasterVolume(float volume)
     {
+        if (!hasInitialized) return;
+
         float masterVol = Mathf.Round((volume / 100 * 30f) - 30f);
 
         if (Mathf.Approximately(volume, 0)) mixer.SetFloat("masterVolume", -80);
@@ -94,6 +127,8 @@ public class OptionsScreenUI : MonoBehaviour
 
     public void SetMouseSens(float sensitivity)
     {
+        if (!hasInitialized) return;
+
         float sensText = Mathf.Round(sensitivity * 100f) / 100f;
         mouseSensText.text = sensText.ToString();
 
@@ -104,36 +139,52 @@ public class OptionsScreenUI : MonoBehaviour
     
     public void SetFullscreen(int windowIndex)
     {
+        if (!hasInitialized) return;
+
         switch (windowIndex)
         {
             case 0:
-                Screen.fullScreen = false;
+                fullscreenMode = FullScreenMode.Windowed;
+                Screen.SetResolution(selectedResolution.width, selectedResolution.height, fullscreenMode);
                 break;
             case 1:
-                Screen.fullScreen = true;
+                fullscreenMode = FullScreenMode.FullScreenWindow;
+                Screen.SetResolution(selectedResolution.width, selectedResolution.height, fullscreenMode);
+                break;
+            case 2:
+                fullscreenMode = FullScreenMode.ExclusiveFullScreen;
+                Screen.SetResolution(selectedResolution.width, selectedResolution.height, fullscreenMode);
                 break;
         }
     }
 
     public void SetResolution(int resIndex)
     {
-        Resolution resolution = resolutions[resIndex];
-        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+        if (!hasInitialized) return;
+        
+        selectedResolution = filteredResolutions[resIndex];
+        Screen.SetResolution(selectedResolution.width, selectedResolution.height, fullscreenMode);
     }
 
     public void SetQuality(int qualityIndex)
     {
+        if (!hasInitialized) return;
+
         QualitySettings.SetQualityLevel(qualityIndex);
     }
 
     public void SetVsync(bool isOn)
     {
+        if (!hasInitialized) return;
+
         QualitySettings.vSyncCount = isOn ? 1 : 0;
         Debug.Log("VSync is " + (isOn ? "ON" : "OFF"));
     }
 
     public void SetMaxFPS(int fpsIndex)
     {
+        if (!hasInitialized) return;
+
         Application.targetFrameRate = fpsValues[fpsIndex];
         Debug.Log("Max fps is " +Application.targetFrameRate);
     }

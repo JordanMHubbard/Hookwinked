@@ -22,7 +22,6 @@ public class MainMenu : MonoBehaviour
     private void Start()
     {
         SaveSystem.ResetSaveData();
-        SaveSystem.LoadOptions();
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
