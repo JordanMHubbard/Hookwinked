@@ -265,8 +265,11 @@ public class PlayerFishController : MonoBehaviour
             float step = currentSpeed * Time.deltaTime;
             if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, step + 1f))
             {
-                Debug.Log("Hit " + hit.collider.name + ", stopping movement.");
-                break;
+                if (hit.collider.CompareTag("Obstacle"))
+                {
+                    Debug.Log("Hit " + hit.collider.name + ", stopping movement.");
+                    break;
+                }
             }
 
             transform.position += transform.forward * currentSpeed * Time.deltaTime;

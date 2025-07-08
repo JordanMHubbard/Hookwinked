@@ -7,7 +7,7 @@ public class MainMenu : MonoBehaviour
     public static MainMenu Instance;
     [SerializeField] private GameObject OptionsScreen;
     [SerializeField] private GameObject ControlsScreen;
-    [SerializeField] private GameObject TitleImage;
+    [SerializeField] private RectTransform TitleImageTransform;
     [SerializeField] private GameObject CreditsScreen;
     [SerializeField] private CanvasGroup canvasGroup;
 
@@ -89,7 +89,7 @@ public class MainMenu : MonoBehaviour
 
     private void TitleAnim()
     {
-        Vector3 titlePos = TitleImage.transform.position;
-        TitleImage.transform.DOMove(titlePos + new Vector3(0f, 20f, 0f), 2f).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
+        TitleImageTransform.DOAnchorPos(TitleImageTransform.anchoredPosition +
+            new Vector2(0, 20), 2f).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
     }
 }

@@ -1,17 +1,18 @@
 using DG.Tweening;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HookStruggleMinigame : MonoBehaviour
 {
-    [SerializeField] private GameObject FishHookUI;
+    [SerializeField] private RectTransform FishHookUI;
     [SerializeField] private float duration = 2f;
     [SerializeField] private float boundsOffset = 5f;
-    [SerializeField] private GameObject fishImage;
-    [SerializeField] private GameObject hookImage;
-    [SerializeField] private GameObject hook2Image;
-    [SerializeField] private GameObject textPrompt;
+    [SerializeField] private RectTransform fishImage;
+    [SerializeField] private RectTransform hookImage;
+    [SerializeField] private RectTransform hook2Image;
+    [SerializeField] private RectTransform textPrompt;
     [SerializeField] private CanvasGroup leftToolTip;
     [SerializeField] private CanvasGroup rightToolTip;
     [SerializeField] private Slider struggleMeter;
@@ -24,15 +25,14 @@ public class HookStruggleMinigame : MonoBehaviour
     [SerializeField] private AudioSource reelingSource;
     [SerializeField] private AudioSource stretchSource;
 
-    private Vector3 fishPosition;
+    private Vector2 fishPosition;
     private Vector3 hookRotation;
-    private Vector3 hookPosition;
-    private Vector3 hook2Position;
+    private Vector2 hookPosition;
+    private Vector2 hook2Position;
     private Vector3 textRotation;
 
     private bool isGameActive;
-    private Vector3 originalPos;
-    private RectTransform rectTransform;
+    private Vector2 originalPos;
     private Vector2 currentInput;
     private Vector2 previousInput;
     private float currentSpeed;
@@ -40,13 +40,12 @@ public class HookStruggleMinigame : MonoBehaviour
 
     private void Awake()
     {
-        originalPos = FishHookUI.transform.position;
-        rectTransform = FishHookUI.GetComponent<RectTransform>();
-        fishPosition = fishImage.transform.position;
-        hookPosition = hookImage.transform.position;
-        hookRotation = hookImage.transform.rotation.eulerAngles;
-        hook2Position = hook2Image.transform.position;
-        textRotation = textPrompt.transform.rotation.eulerAngles;
+        originalPos = FishHookUI.anchoredPosition;
+        fishPosition = fishImage.anchoredPosition;
+        hookPosition = hookImage.anchoredPosition;
+        hookRotation = hookImage.localRotation.eulerAngles;
+        hook2Position = hook2Image.anchoredPosition;
+        textRotation = textPrompt.localRotation.eulerAngles;
         SetupAudio();
     }
 
@@ -82,7 +81,7 @@ public class HookStruggleMinigame : MonoBehaviour
         currentInput = InputManager.Instance.ShakeInput;
         float xOffset = Mathf.Clamp(currentInput.x, -boundsOffset, boundsOffset);
         //float yOffset = Mathf.Clamp(currentInput.y, -boundsOffset, boundsOffset);
-        FishHookUI.transform.position += new Vector3(xOffset, 0f, 0f) * 0.05f;
+        FishHookUI.anchoredPosition += new Vector2(xOffset, 0f) * 0.06f;
 
         currentSpeed = (currentInput - previousInput).magnitude;
         float struggleRate = Mathf.Clamp(currentSpeed * 0.2f, 0f, 5f) / 20f;
@@ -102,7 +101,7 @@ public class HookStruggleMinigame : MonoBehaviour
             {
                 struggleMeter.value -= rate * Time.deltaTime;
                 rate *= 0.2f;
-                if (rectTransform.localScale.x < 1.3f) rectTransform.localScale +=
+                if (FishHookUI.localScale.x < 1.3f) FishHookUI.localScale +=
                     Time.deltaTime * new Vector3(rate, rate, 0f);
             }
             else
@@ -117,7 +116,7 @@ public class HookStruggleMinigame : MonoBehaviour
             if (struggleMeter.value < 1)
             {
                 struggleMeter.value += 0.2f * Time.deltaTime;
-                if (rectTransform.localScale.x > 1f) rectTransform.localScale -=
+                if (FishHookUI.localScale.x > 1f) FishHookUI.localScale -=
                     Time.deltaTime * new Vector3(0.04f, 0.04f, 0f);
             }
             
@@ -135,7 +134,7 @@ public class HookStruggleMinigame : MonoBehaviour
         reelingSource.Stop();
         stretchSource.Stop();
         //GameManager.Instance.PlayerController.EndShake();
-        rectTransform.localScale = new Vector3(1f, 1f, 1f);
+        FishHookUI.localScale = new Vector3(1f, 1f, 1f);
         isGameActive = false;
         isAcceptingInput = false;
         BreakFreeHookAnim();
@@ -150,39 +149,39 @@ public class HookStruggleMinigame : MonoBehaviour
 
     private void BreakFreeHookAnim()
     {
-        hookImage.SetActive(false);
-        hook2Image.SetActive(true);
+        hookImage.gameObject.SetActive(false);
+        hook2Image.gameObject.SetActive(true);
         SoundFXManager.Instance.PlaySoundFXClip(releaseSound, null, transform.position, 1f, 0f);
-        fishImage.transform.DOMove(fishPosition + new Vector3(-150f, -20f, 0f), 0.75f).SetEase(Ease.OutCubic);
-        hook2Image.transform.DORotate(hookRotation + new Vector3(0f, 0f, 50f), 0.5f);
-        hook2Image.transform.DOMove(hook2Position + new Vector3(90f, 125f, 0f), 0.5f).SetEase(Ease.OutCubic);
+        fishImage.DOAnchorPos(fishPosition + new Vector2(-200f, -20f), 0.75f).SetEase(Ease.OutCubic);
+        hook2Image.DOLocalRotate(hookRotation + new Vector3(0f, 0f, 30f), 0.5f);
+        hook2Image.DOAnchorPos(hook2Position + new Vector2(140f, 180f), 0.5f).SetEase(Ease.OutCubic);
     }
 
     private void FishSwimAwayAnim()
     {
         SoundFXManager.Instance.PlaySoundFXClip(swimSound, null, transform.position, 1f, 0f);
-        fishImage.transform.DOMove(fishPosition + new Vector3(1200, 0f, 0f), 0.75f).SetEase(Ease.OutCubic);
+        fishImage.DOAnchorPos(fishPosition + new Vector2(2600, 0f), 0.75f).SetEase(Ease.OutCubic);
     }
 
     private IEnumerator textAnim()
     {
         SoundFXManager.Instance.PlaySoundFXClip(alertSound, null, transform.position, 1f, 0f);
-        textPrompt.transform.DORotate(textRotation + new Vector3(0f, 0f, 2.5f), 0.04f);
-        textPrompt.transform.DOScale(1.5f, 0.5f);
+        textPrompt.DOLocalRotate(textRotation + new Vector3(0f, 0f, 2.5f), 0.04f);
+        textPrompt.DOScale(1.5f, 0.5f);
         yield return new WaitForSeconds(0.04f);
 
         float count = 0;
         while (count < 6)
         {
-            textPrompt.transform.DORotate(textRotation + new Vector3(0f, 0f, -5f), 0.08f);
+            textPrompt.DOLocalRotate(textRotation + new Vector3(0f, 0f, -5f), 0.08f);
             yield return new WaitForSeconds(0.08f);
-            textPrompt.transform.DORotate(textRotation + new Vector3(0f, 0f, 5f), 0.08f);
+            textPrompt.DOLocalRotate(textRotation + new Vector3(0f, 0f, 5f), 0.08f);
             yield return new WaitForSeconds(0.08f);
             count++;
         }
 
-        textPrompt.transform.DOScale(1f, 0.5f);
-        textPrompt.transform.DORotate(textRotation, 0.04f);
+        textPrompt.DOScale(1f, 0.5f);
+        textPrompt.DOLocalRotate(textRotation, 0.04f);
         yield return new WaitForSeconds(0.2f);
 
         StartCoroutine(toolTipAnim());
@@ -208,13 +207,13 @@ public class HookStruggleMinigame : MonoBehaviour
 
     private void Reset()
     {
-        hook2Image.transform.position = hook2Position;
-        hookImage.transform.position = hookPosition;
-        hook2Image.transform.rotation = Quaternion.Euler(hookRotation);
-        fishImage.transform.position = fishPosition;
-        textPrompt.transform.rotation = Quaternion.Euler(textRotation);
+        hook2Image.anchoredPosition = hook2Position;
+        hookImage.anchoredPosition = hookPosition;
+        hook2Image.localRotation = Quaternion.Euler(hookRotation);
+        fishImage.anchoredPosition = fishPosition;
+        textPrompt.localRotation = Quaternion.Euler(textRotation);
         struggleMeter.value = 0.7f;
-        hookImage.SetActive(true);
-        hook2Image.SetActive(false);
+        hookImage.gameObject.SetActive(true);
+        hook2Image.gameObject.SetActive(false);
     }
 }

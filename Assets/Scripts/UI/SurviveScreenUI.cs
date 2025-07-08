@@ -6,13 +6,13 @@ using UnityEngine;
 
 public class SurviveScreenUI : MonoBehaviour
 { 
-    [SerializeField] private GameObject youSurvivedImage;
-    [SerializeField] private GameObject daysSurvivedImage;
-    [SerializeField] private GameObject numDaysObj;
+    [SerializeField] private RectTransform youSurvivedImage;
+    [SerializeField] private RectTransform daysSurvivedImage;
+    [SerializeField] private RectTransform numDaysObj;
     [SerializeField] private TextMeshProUGUI numDaysText;
-    [SerializeField] private GameObject confettiLeft;
-    [SerializeField] private GameObject confettiRight;
-    [SerializeField] private GameObject partyFishImage;
+    [SerializeField] private RectTransform confettiLeft;
+    [SerializeField] private RectTransform confettiRight;
+    [SerializeField] private RectTransform partyFishImage;
     [SerializeField] private CanvasGroup continueGroup;
     [SerializeField] private CanvasGroup exitGroup;
     [SerializeField] private AudioClip partySound;
@@ -25,9 +25,9 @@ public class SurviveScreenUI : MonoBehaviour
 
     private void Awake()
     {
-        confettiLPosition = confettiLeft.transform.position;
-        confettiRPosition = confettiLeft.transform.position;
-        partyFishPosition = partyFishImage.transform.position;
+        confettiLPosition = confettiLeft.anchoredPosition;
+        confettiRPosition = confettiRight.anchoredPosition;
+        partyFishPosition = partyFishImage.anchoredPosition;
 
         SaveSystem.Save();
         int dayNum = GameManager.Instance.GetCurrentDay() + 1;
@@ -43,10 +43,10 @@ public class SurviveScreenUI : MonoBehaviour
         UISoundFXManager.Instance.PlaySoundFXClip(transitionSound, null, transform.position, 0.6f, 0f);
         yield return new WaitForSeconds(2f);
         
-        partyFishImage.transform.DOMove(partyFishPosition + new Vector3(700f, 150f, 0f), 0.5f);
+        partyFishImage.DOAnchorPos(partyFishPosition + new Vector3(1400f, 400f, 0f), 0.5f);
         yield return new WaitForSeconds(1f);
         
-        youSurvivedImage.transform.DOScaleX(1f, 0.5f);
+        youSurvivedImage.DOScaleX(1f, 0.5f);
         yield return new WaitForSeconds(0.25f);
 
         StartCoroutine(ConfettiAnim());
@@ -55,10 +55,10 @@ public class SurviveScreenUI : MonoBehaviour
         UISoundFXManager.Instance.PlaySoundFXClip(partySound, null, transform.position, 0.5f, 0f);
         yield return new WaitForSeconds(1.5f);
 
-        daysSurvivedImage.transform.DOScaleX(1f, 0.75f);
+        daysSurvivedImage.DOScaleX(1f, 0.75f);
         yield return new WaitForSeconds(2f);
 
-        numDaysObj.transform.DOScaleX(1f, 0.25f);
+        numDaysObj.DOScaleX(1f, 0.25f);
         UISoundFXManager.Instance.PlaySoundFXClip(daySound, null, transform.position, 0.5f, 0f);
         yield return new WaitForSeconds(2f);
 
@@ -70,10 +70,10 @@ public class SurviveScreenUI : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
 
-        confettiLeft.transform.DOScale(1f, 0.5f);
-        confettiLeft.transform.DOMove(confettiLeft.transform.position + new Vector3(-50f, 50f, 0f), 0.75f).SetEase(Ease.OutCubic);
-        confettiRight.transform.DOScale(1f, 0.5f);
-        confettiRight.transform.DOMove(confettiRight.transform.position + new Vector3(50f, 50f, 0f), 0.75f).SetEase(Ease.OutCubic);
+        confettiLeft.DOScale(1f, 0.5f);
+        confettiLeft.DOAnchorPos(confettiLPosition + new Vector3(-180f, 80f, 0f), 0.75f).SetEase(Ease.OutCubic);
+        confettiRight.DOScale(1f, 0.5f);
+        confettiRight.DOAnchorPos(confettiRPosition + new Vector3(180f, 80f, 0f), 0.75f).SetEase(Ease.OutCubic);
     }
 
     private IEnumerator ButtonsAnim()
