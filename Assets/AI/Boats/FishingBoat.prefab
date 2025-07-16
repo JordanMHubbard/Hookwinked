@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 6337572123760715026}
   - component: {fileID: 4259835812721482164}
   - component: {fileID: 4889548127003290185}
+  - component: {fileID: 649570304805549097}
   m_Layer: 0
   m_Name: BoatMesh
   m_TagString: Obstacle
@@ -100,10 +101,111 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boatParent: {fileID: 2802294388433091577}
-  damageDecal: {fileID: 7290156255301585453, guid: a3716abf885648748b013d7b2525980d, type: 3}
+  damageDecals:
+  - {fileID: 7290156255301585453, guid: a3716abf885648748b013d7b2525980d, type: 3}
+  - {fileID: 7290156255301585453, guid: f25d034efc14b3f4b98671b5be6b41d1, type: 3}
+  - {fileID: 7290156255301585453, guid: 1e6a80be5873c8443b4e6c50ae5b72db, type: 3}
   boatFragment: {fileID: 7222412897078653909, guid: 11f6ee31aa301b347a1c64982ff377be, type: 3}
   damageEffect: {fileID: 2686636185225401814, guid: 039a3e59f2644144b87b674262dd1d6a, type: 3}
   damageSound: {fileID: 8300000, guid: bf7f25a33060b8b49b187aecc1200b71, type: 3}
-  motorSound: {fileID: 8300000, guid: c50cea89af29dc4428d796ec843fa667, type: 3}
+  finalDamageSound: {fileID: 8300000, guid: 23858e03f4440f340a94c41c78643e3b, type: 3}
+  motorSource: {fileID: 649570304805549097}
   maxSpeed: 4
   turnSpeed: 1
+--- !u!82 &649570304805549097
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3569174245825300410}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 3641145594831652529, guid: 3a2b133d3ef70594da3cef92bb9f3c5a, type: 2}
+  m_audioClip: {fileID: 8300000, guid: c50cea89af29dc4428d796ec843fa667, type: 3}
+  m_Resource: {fileID: 8300000, guid: c50cea89af29dc4428d796ec843fa667, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

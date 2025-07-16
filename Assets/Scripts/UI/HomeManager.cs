@@ -11,7 +11,8 @@ public class HomeManager : MonoBehaviour
 
     [SerializeField] private GameObject HomeWaypoint;
     [SerializeField] private CanvasGroup HomeMessageGroup;
-    public bool isDayOver {get; private set;}
+    [SerializeField] private AudioClip finishedSound;
+    public bool isDayOver { get; private set; }
 
     private void Awake()
     {
@@ -46,7 +47,9 @@ public class HomeManager : MonoBehaviour
     {
         HomeMessageGroup.gameObject.SetActive(true);
         HomeMessageGroup.DOFade(1f, 1f);
-        yield return new WaitForSeconds(3f);
+        SoundFXManager.Instance.PlaySoundFXClip(finishedSound, transform, transform.position, 0.75f, 0f);
+
+        yield return new WaitForSeconds(5f);
 
         HomeMessageGroup.DOFade(0f, 1f);
     }

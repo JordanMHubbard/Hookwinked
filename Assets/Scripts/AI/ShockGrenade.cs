@@ -4,15 +4,15 @@ using UnityEngine;
 public class ShockGrenade : MonoBehaviour
 {
     [SerializeField] private AudioClip beepSound;
-    [SerializeField] private AudioClip buzzSound;
     [SerializeField] private AudioClip shockSound;
-    private GameObject audioObject;
-    [SerializeField] private ParticleSystem electricty;
+    [SerializeField] private AudioSource buzzSource;
+        [SerializeField] private ParticleSystem electricty;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private GameObject grenade;
     [SerializeField] private float minDropTime = 0.5f;
     [SerializeField] private float maxDropTime = 1.25f;
     private bool isOnCooldown = true;
+    private bool isActive;
 
     private void Awake()
     {
@@ -66,13 +66,15 @@ public class ShockGrenade : MonoBehaviour
         SoundFXManager.Instance.PlaySoundFXClip(beepSound, transform, transform.position, 1f);
         yield return new WaitForSeconds(1.3f);
 
-        audioObject = SoundFXManager.Instance.LoopSoundFXClip(buzzSound, transform, transform.position, 1f);
+        isActive = true;
+        buzzSource.Play();
         electricty.Play();
         isOnCooldown = false;
         yield return new WaitForSeconds(10f);
 
         isOnCooldown = true;
-        Destroy(audioObject);
+        buzzSource.Stop();
+        isActive = false;
 
         yield return new WaitForSeconds(3f);
         Destroy(gameObject);
@@ -93,12 +95,12 @@ public class ShockGrenade : MonoBehaviour
 
     private void PauseGrenade()
     {
-        Destroy(audioObject);
+        if (isActive) buzzSource.Pause();
     }
 
     private void UnpauseGrenade()
     {
-        audioObject = SoundFXManager.Instance.LoopSoundFXClip(buzzSound, transform, transform.position, 1f);
+        if (isActive) buzzSource.Play();
     }
 
 

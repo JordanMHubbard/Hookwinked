@@ -11,10 +11,9 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     [SerializeField] private Slider unlockSlider;
     [SerializeField] private PerkSelectionUI perkSelectionUI;
     [SerializeField] private int perkIndex;
-    [SerializeField] private AudioClip riserSound;
+    [SerializeField] private AudioSource riserSource;
     [SerializeField] private AudioClip errorSound;
     [SerializeField] private AudioClip unlockSound;
-    private GameObject riserObject;
     private float unlockSpeed = 0.4f;
     private bool isHeld = false;
     private bool isUnlocked = false;
@@ -34,7 +33,7 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
             Debug.Log("Is unlocked");
             isUnlocked = true;
             perkImage.DOColor(Color.white, 0.1f);
-            Destroy(riserObject);
+            riserSource.Stop();
             UISoundFXManager.Instance.PlayClickSound();
             SoundFXManager.Instance.PlaySoundFXClip(unlockSound, null, transform.position, 1f, 0f);
             perkSelectionUI.BuyPerk(perkIndex);
@@ -98,7 +97,7 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 
             Debug.Log("Left mouse button pressed down.");
             isHeld = true;
-            riserObject = SoundFXManager.Instance.LoopSoundFXClip(riserSound, null, transform.position, 0.5f, 0f);
+            riserSource.Play(); //0.5 0
         }
     }
     
@@ -110,7 +109,7 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 
             isHeld = false;
             Debug.Log("Left mouse button released.");
-            Destroy(riserObject);
+            riserSource.Stop();
         }
     }
 }

@@ -4,12 +4,13 @@ using UnityEngine;
 public class BoatManager : MonoBehaviour
 {
     [SerializeField] private GameObject boatParent;
-    [SerializeField] private GameObject damageDecal;
+    [SerializeField] private List<GameObject> damageDecals;
     [SerializeField] private GameObject boatFragment;
     [SerializeField] private GameObject damageEffect;
     [SerializeField] private AudioClip damageSound;
-    [SerializeField] private AudioClip motorSound;
-    private GameObject motorSoundRef;
+    [SerializeField] private AudioClip finalDamageSound;
+    [SerializeField] private AudioSource motorSource;
+    private bool isMotorOn;
     public Color32 boatColor { get; set; }
     private int timesDamaged;
     private bool canSpawnFish;
@@ -47,6 +48,18 @@ public class BoatManager : MonoBehaviour
         BaitedPrey = GameManager.Instance.GetPreySpawner().SpawnLures(spawnCount);
     }
 
+    private void OnEnable()
+    {
+        PauseManager.Instance.OnPaused += PauseMotor;
+        PauseManager.Instance.OnUnpaused += UnpauseMotor;
+    }
+    
+    private void OnDisable()
+    {
+        PauseManager.Instance.OnPaused -= PauseMotor;
+        PauseManager.Instance.OnUnpaused -= UnpauseMotor;
+    }
+
     private void Start()
     {
         SetDamageColor();
@@ -61,7 +74,7 @@ public class BoatManager : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.GetComponent<RockInteractable>() != null)
-        { 
+        {
             Vector3 contactPoint = collision.GetContact(0).point;
             Vector3 contactNormal = collision.GetContact(0).normal;
             ApplyRockDamage(contactPoint, contactNormal, collision.gameObject);
@@ -77,8 +90,9 @@ public class BoatManager : MonoBehaviour
         Quaternion rotation = Quaternion.LookRotation(normal);
         Quaternion effectRotation = Quaternion.LookRotation(-normal);
         ShowDamageEffects(position, rotation, effectRotation);
-        SoundFXManager.Instance.PlaySoundFXClip(damageSound, transform, position, 1.5f, 1f, 0.1f, 0.1f);
-        
+        AudioClip hitSound = timesDamaged == 3 ? finalDamageSound : damageSound;
+        SoundFXManager.Instance.PlaySoundFXClip(hitSound, transform, position, 1f, 1f, 0.1f, 0.1f);
+
         // Drop fragment
         DropFragment(position);
 
@@ -90,23 +104,24 @@ public class BoatManager : MonoBehaviour
             // Spawn two new prey
             if (canSpawnFish)
             {
-                Debug.Log("Changing bait to prey"); 
+                Debug.Log("Changing bait to prey");
                 foreach (GameObject fish in BaitedPrey)
                 {
-                   PreyController controller = fish.GetComponent<PreyController>();
-                   if (controller != null) 
-                   {
+                    PreyController controller = fish.GetComponent<PreyController>();
+                    if (controller != null)
+                    {
                         controller.SetIsLure(false);
                         controller.SetLureStatus();
                         GameManager.Instance.PreyConsumed(controller.gameObject);
-                   }
+                    }
                 }
             }
-        } 
+        }
     }
 
     private void ShowDamageEffects(Vector3 position, Quaternion rotation, Quaternion effectRotation)
     {
+        GameObject damageDecal = damageDecals[timesDamaged - 1];
         Instantiate(damageDecal, position, rotation, boatParent.transform);
         GameObject effect = Instantiate(damageEffect, position, effectRotation);
         ParticleSystemRenderer ps = effect.GetComponent<ParticleSystemRenderer>();
@@ -127,8 +142,9 @@ public class BoatManager : MonoBehaviour
     {
         Debug.Log("We need to get outta here cap'n!");
         currentTarget = GameManager.Instance.GetRandomBoatWaypoint();
-        
-        motorSoundRef = SoundFXManager.Instance.LoopSoundFXClip(motorSound, transform, transform.position, 1f, 1f, 0.1f, 0.1f);
+
+        motorSource.Play();
+        isMotorOn = true;
         StartRotate();
         MoveTowardsTarget();
     }
@@ -143,9 +159,9 @@ public class BoatManager : MonoBehaviour
 
     private void Rotate()
     {
-        boatParent.transform.rotation = Quaternion.Slerp(boatParent.transform.rotation, Quaternion.LookRotation(directionToTarget), 
-            turnSpeed * Time.deltaTime); 
-        
+        boatParent.transform.rotation = Quaternion.Slerp(boatParent.transform.rotation, Quaternion.LookRotation(directionToTarget),
+            turnSpeed * Time.deltaTime);
+
         if (Quaternion.Angle(boatParent.transform.rotation, Quaternion.LookRotation(directionToTarget)) < 0.5f)
         {
             shouldRotate = false;
@@ -153,7 +169,7 @@ public class BoatManager : MonoBehaviour
     }
 
     private void MoveTowardsTarget()
-    {   
+    {
         if (currentSpeed < maxSpeed) currentSpeed *= 1f + (accelerationRate * Time.deltaTime);
         boatParent.transform.position += directionToTarget * currentSpeed * Time.deltaTime;
 
@@ -161,7 +177,8 @@ public class BoatManager : MonoBehaviour
         if (dist < 1f)
         {
             hasTarget = false;
-            Destroy(motorSoundRef);
+            motorSource.Stop();
+            isMotorOn = false;
         }
     }
 
@@ -189,5 +206,15 @@ public class BoatManager : MonoBehaviour
                 boatColor = new Color32(113, 194, 235, 255);
                 break;
         }
+    }
+    
+    private void PauseMotor()
+    {
+        if (isMotorOn) motorSource.Pause();
+    }
+
+    private void UnpauseMotor()
+    {
+        if (isMotorOn) motorSource.Play();
     }
 }

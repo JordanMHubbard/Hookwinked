@@ -92,17 +92,12 @@ public class AIFishController : MonoBehaviour
     // Determines whether to generate random target or follow prey
     public bool FindTarget()
     {
-        Vector3 locationOffset = new Vector3 (Random.Range(-15,15), Random.Range(-5,5), Random.Range(-15,15));
+        Vector3 locationOffset = new Vector3(Random.Range(-15, 15), Random.Range(-5, 5), Random.Range(-15, 15));
         targetLocation = transform.position + locationOffset;
         //Debug.Log("targetLocation = " + targetLocation);
 
-        if (!IsAreaReachable(targetLocation, new Vector3(2, 2, 2)))
-        {
-            //Debug.Log("Area blocked!");
-            return false;
-        } 
-        
-        return true;
+        bool reachable = IsAreaReachable(targetLocation, new Vector3(1f, 1f, 1f));
+        return reachable;
     }
 
     // Determines fish orientation based on target location and obstacles
