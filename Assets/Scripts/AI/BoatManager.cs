@@ -44,7 +44,7 @@ public class BoatManager : MonoBehaviour
 
         // Spawn random number of bait
         int spawnCount = GameManager.Instance.GetCurrentDaySettings().GetBaitCount();
-        BaitedPrey = GameManager.Instance.GetPreySpawner().SpawnBait(spawnCount);
+        BaitedPrey = GameManager.Instance.GetPreySpawner().SpawnLures(spawnCount);
     }
 
     private void Start()
@@ -96,8 +96,8 @@ public class BoatManager : MonoBehaviour
                    PreyController controller = fish.GetComponent<PreyController>();
                    if (controller != null) 
                    {
-                        controller.SetIsBait(false, false);
-                        controller.SetBaitStatus();
+                        controller.SetIsLure(false);
+                        controller.SetLureStatus();
                         GameManager.Instance.PreyConsumed(controller.gameObject);
                    }
                 }

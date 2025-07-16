@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
     private int currentDay;
     private int activeBoatsCount;
     private int boatFragmentsCount = 0;
+    private int currentDayFragmentsCount = 0;
     private int numDayRetries;
     [SerializeField] private List<DaySettings> daySettings;
     [SerializeField] private List<GameObject> boatWaypoints;
@@ -97,6 +98,8 @@ public class GameManager : MonoBehaviour
         boatFragmentsCount = amount;
         if (FragmentsCountText) FragmentsCountText.text = boatFragmentsCount.ToString();
     }
+    public void IncrementCurrentDayFragments() { currentDayFragmentsCount++; }
+    public void ResetFragmentsCount() { boatFragmentsCount -= currentDayFragmentsCount; }
     public void SetRockCount(int amount) { RockCountText.text = amount.ToString(); }
     public void SetPerkList(List<PerkInfo> perks) {perkList = perks;}
 
@@ -110,8 +113,10 @@ public class GameManager : MonoBehaviour
     public int GetCurrentDay() { return currentDay; }
     public int GetActiveBoatsCount() { return activeBoatsCount; }
     public int GetBoatFragmentsCount() { return boatFragmentsCount; }
-    public Vector3 GetRandomBoatWaypoint() { 
-        return boatWaypoints[UnityEngine.Random.Range(0, boatWaypoints.Count)].transform.position; }
+    public Vector3 GetRandomBoatWaypoint()
+    {
+        return boatWaypoints[UnityEngine.Random.Range(0, boatWaypoints.Count)].transform.position;
+    }
     public List<PerkInfo> GetPerkList() {return perkList;}
     public bool GetIsPerkUnlocked(int index) {return perkList[index].isUnlocked;}
     public void PausePlayerEnergy(bool shouldPause) { if (PlayerController) PlayerController.PauseEnergy(shouldPause); }
@@ -142,6 +147,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // AUDIO
     public void PlayAmbience() { ambienceSource.Play(); }
     public void PlaySuspenseMusic() { suspenseMusicSource.Play(); }
     public void PauseAmbience(bool shouldPause)
@@ -156,6 +162,26 @@ public class GameManager : MonoBehaviour
         if (shouldPause) suspenseMusicSource.Pause();
         else suspenseMusicSource.UnPause();
     }
+
+    public void FadeOutSuspenseMusic()
+    {
+        StartCoroutine(FadeOutAudio(suspenseMusicSource, 3f));
+    }
+
+    public IEnumerator FadeOutAudio(AudioSource source, float duration)
+    {
+        float startVolume = source.volume;
+
+        while (source.volume > 0)
+        {
+            source.volume -= startVolume * Time.deltaTime / duration;
+            yield return null;
+        }
+
+        source.Stop();
+        source.volume = startVolume;
+    }
+
     
     // UI
     private void InitializeUI()
@@ -247,6 +273,7 @@ public class GameManager : MonoBehaviour
     public void ShowDeathScreen(DeathScreenUI.DeathType deathType)
     {
         ambienceSource.Pause();
+        suspenseMusicSource.Pause();
         SoundFXManager.Instance.Mute();
         PlayerController.PausePlayer();
         deathScreenUI.ChooseRandomMessage(deathType);

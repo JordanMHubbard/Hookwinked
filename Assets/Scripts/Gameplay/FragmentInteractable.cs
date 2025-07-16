@@ -29,6 +29,7 @@ public class FragmentInteractable : MonoBehaviour, IInteractable
         isCollected = true;
         Debug.Log("fragment has been collected!");
         SoundFXManager.Instance.PlaySoundFXClip(fragmentInteractSound, null, transform.position, 1f, 1f, 0f, 0.1f);
+        GameManager.Instance.IncrementCurrentDayFragments();
         GameManager.Instance.SetBoatFragmentsCount(GameManager.Instance.GetBoatFragmentsCount() + 1);
         gameObject.SetActive(false);
     }

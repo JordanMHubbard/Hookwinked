@@ -251,7 +251,7 @@ public class PlayerFishController : MonoBehaviour
         currentSpeed = 12f;
         isFrozen = true;
         energyComp.AddProgress(-10f);
-        energyComp.SetIsPaused(false);
+        if (!HomeManager.Instance.isDayOver) energyComp.SetIsPaused(false);
         StartCoroutine(PostHookedDash());
     }
 

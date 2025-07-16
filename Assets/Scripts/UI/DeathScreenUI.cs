@@ -29,6 +29,7 @@ public class DeathScreenUI : MonoBehaviour
     private void OnEnable()
     {
         StartCoroutine(FadeText());
+        GameManager.Instance.ResetFragmentsCount();
     }
 
     public void ChooseRandomMessage(DeathType causeOfDeath)

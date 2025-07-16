@@ -11,7 +11,7 @@ public class HomeManager : MonoBehaviour
 
     [SerializeField] private GameObject HomeWaypoint;
     [SerializeField] private CanvasGroup HomeMessageGroup;
-    private bool isDayOver;
+    public bool isDayOver {get; private set;}
 
     private void Awake()
     {
@@ -36,6 +36,7 @@ public class HomeManager : MonoBehaviour
     public void StartDayEnd()
     {
         isDayOver = true;
+        GameManager.Instance.FadeOutSuspenseMusic();
         GameManager.Instance.PausePlayerEnergy(true);
         ShowWaypoint();
         StartCoroutine(ManageMessage());
@@ -59,7 +60,6 @@ public class HomeManager : MonoBehaviour
         HomeMessageGroup.gameObject.SetActive(false);
         GameManager.Instance.ShowSurviveScreen();
         GameManager.Instance.PauseAmbience(true);
-        GameManager.Instance.PauseSuspenseMusic(true);
     }
 
     private void ShowWaypoint()

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PreySpawner : AIFishSpawner
 {
-    [SerializeField] private List<GameObject> baitMeshes;
     private void Awake()
     {
         int preyCount = GameManager.Instance.GetCurrentDaySettings().preyCount;
@@ -58,7 +57,7 @@ public class PreySpawner : AIFishSpawner
         StartCoroutine(SpawnPreyDelayed(prey));
     }
 
-    public List<GameObject> SpawnBait(int fishCount)
+    public List<GameObject> SpawnLures(int fishCount)
     {
         List<GameObject> fish = new List<GameObject>();
 
@@ -84,23 +83,9 @@ public class PreySpawner : AIFishSpawner
 
             GameObject meshInstance;
 
-            int choice = Random.Range(0, 4);
-            if (choice > 0)
-            {
-                meshInstance = Instantiate(GetRandomMesh(fishMeshes), meshHolder);
-                PreyController controller = fishInstance.GetComponent<PreyController>();
-                if (controller != null) controller.SetIsBait(true, false);
-            }
-            else
-            {
-                meshInstance = Instantiate(GetRandomMesh(baitMeshes), meshHolder);
-                PreyController controller = fishInstance.GetComponent<PreyController>();
-                if (controller != null)
-                {
-                    controller.SetIsBait(true, true);
-                    Debug.Log("Using Bait Mesh");
-                }
-            }
+            meshInstance = Instantiate(GetRandomMesh(fishMeshes), meshHolder);
+            PreyController controller = fishInstance.GetComponent<PreyController>();
+            if (controller != null) controller.SetIsLure(true);
         
             // Play animation
             Animator animator = meshHolder.GetComponent<Animator>();
