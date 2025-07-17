@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f7dd1ae437b09754a98c69d06d5ebd68
+guid: 2872965633f3f1e47be4f85a326eda50
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Tutorial3 1_0
+      name: HWIcon_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1769
-        height: 1168
+        width: 1024
+        height: 1024
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -125,8 +125,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c0b2a649f1da5a14198b3c7f0a7ccfc8
-      internalID: -1812575586
+      spriteID: 71b3025769cacd14eaab6a227cb84dd3
+      internalID: -24272756
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: f6b5e5350299ac845a8aee3f559e6a64
+    spriteID: 1d62bb5452fec254385eac9aa1fe606c
     internalID: 0
     vertices: []
     indices: 
@@ -145,7 +145,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Tutorial3 1_0: -1812575586
+      HWIcon_0: -24272756
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
