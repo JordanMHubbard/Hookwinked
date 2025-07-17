@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
     {
         { new PerkInfo("NitroFish", "An ethereal spirit hastens your stride. Gain faster top speed when using the swim boost ability", 8) },
         { new PerkInfo("Ocean's Endurance", "A quiet force steadies your soul, causing energy to drain more slowly", 12) },
-        { new PerkInfo("Coral-lateral Damage", "Imbued with great strength against your will, you're now able to destroy fishing boats by hurling stones at them, decreasing the amount of bait in the local area", 0) },
+        { new PerkInfo("Coral-lateral Damage", "Imbued with great strength against your will, you're now able to damage boats with stones and drive fishermen away", 0) },
         { new PerkInfo("Silent Assassin", "Your aura grows faint in the wild — prey senses you from a shorter distance", 6) }
     };
     [SerializeField] private List<Sprite> perkIcons;
