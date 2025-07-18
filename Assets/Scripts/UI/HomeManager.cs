@@ -71,5 +71,10 @@ public class HomeManager : MonoBehaviour
         Vector3 waypointPos = HomeWaypoint.transform.position;
         HomeWaypoint.transform.DOMove(waypointPos + new Vector3(0f, 1f, 0f), 2f).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
     }
+
+    public void GameOver()
+    {
+        OnDayFinished?.Invoke();
+    }
     
 }

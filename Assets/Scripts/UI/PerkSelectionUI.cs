@@ -34,12 +34,12 @@ public class PerkSelectionUI : MonoBehaviour
     // Perk Unlocks
     public bool CanBuyPerk(int index)
     {
-        return perkList[index].fragmentCost < totalShipFragments;
+        return perkList[index].fragmentCost <= totalShipFragments;
     }
     
     public void BuyPerk(int index)
     {
-        if (perkList[index].fragmentCost < totalShipFragments && !perkList[index].isUnlocked)
+        if (perkList[index].fragmentCost <= totalShipFragments && !perkList[index].isUnlocked)
         {
             UnlockPerk(index);
             totalShipFragments -= perkList[index].fragmentCost;

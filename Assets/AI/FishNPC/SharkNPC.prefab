@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultSwimSpeed: 3.5
-  fasterSwimSpeed: 6
+  fasterSwimSpeed: 5.5
   speedUpDuration: 2
   speedUpCooldown: 2
   rotationMult: 0.8

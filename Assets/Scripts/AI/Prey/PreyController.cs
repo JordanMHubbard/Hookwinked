@@ -17,7 +17,7 @@ public class PreyController : AIFishController
 
         if (GameManager.Instance != null && GameManager.Instance.GetIsPerkUnlocked(3))
         {
-            predatorDetectionBox.size = new Vector3(5.5f, 4f, 5.5f);
+            predatorDetectionBox.size = new Vector3(4f, 2f, 4f);
             Debug.Log("Add Silent Assassin functionality");
         }
 

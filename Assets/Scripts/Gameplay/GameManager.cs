@@ -276,6 +276,7 @@ public class GameManager : MonoBehaviour
         suspenseMusicSource.Pause();
         SoundFXManager.Instance.Mute();
         PlayerController.PausePlayer();
+        HomeManager.Instance.GameOver();
         deathScreenUI.ChooseRandomMessage(deathType);
         DeathScreen.SetActive(true);
     }

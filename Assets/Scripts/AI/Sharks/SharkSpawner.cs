@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SharkSpawner : AIFishSpawner
 {
-    [SerializeField] private float spawnDelay = 15f;
+    [SerializeField] private int spawnDelay = 10;
 
     protected override void Start()
     {
@@ -26,7 +26,7 @@ public class SharkSpawner : AIFishSpawner
 
     private void RandomizeSpawnDelay()
     {
-        spawnDelay += Random.Range(0, 16);
+        spawnDelay += Random.Range(0, 10);
         Debug.Log("New spawn delay: " + spawnDelay);
     }
 }
