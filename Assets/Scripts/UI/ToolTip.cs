@@ -89,6 +89,8 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     {
         if (pointerEventData.button == PointerEventData.InputButton.Left)
         {
+            if (isUnlocked) return;
+
             if (!perkSelectionUI.CanBuyPerk(perkIndex))
             {
                 SoundFXManager.Instance.PlaySoundFXClip(errorSound, null, transform.position, 0.75f, 0f);
@@ -97,7 +99,7 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 
             Debug.Log("Left mouse button pressed down.");
             isHeld = true;
-            riserSource.Play(); //0.5 0
+            riserSource.Play(); 
         }
     }
     

@@ -38,7 +38,7 @@ public class FishEnergy : MonoBehaviour
         {
             depreciateRate = 1.25f;
             DashDepreciateRate = 4.5f;
-            Debug.Log("Energy Depreciation is now 1.5 and 4.5 for dashing!");
+            Debug.Log("Energy Depreciation is now 1.25 and 4.5 for dashing!");
         }
     }
     private void Start()
