@@ -24,7 +24,7 @@ Website: https://www.jordanhubbard.me/
 
 Play the game here: https://moonfroot.itch.io/hookwinked
 
-You’re welcome to use or modify this code for personal or educational purposes. However, you may *not* use this project, in whole or in part, for training AI models or datasets, or for any commercial purposes without explicit permission.
+**You’re welcome to use or modify this code for personal or educational purposes. However, you may *not* use this project, in whole or in part, for training AI models or datasets, or for any commercial purposes without explicit permission.**
 
 
 
