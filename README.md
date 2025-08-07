@@ -4,6 +4,7 @@
 
 - First-person underwater movement
 - Light survival mechanics
+- 3D AI pathfinding and obstacle avoidance
 - Perk-based skill progression system
 - Simple narrative with dialogue interactions
 - Built with Unity 6
